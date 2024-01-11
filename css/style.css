@@ -1,0 +1,52 @@
+/* Reseteo de padding y margin */
+* {
+    margin: 0;
+    padding: 0;
+  }
+
+/* Colores y estructura del Body */
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: black;
+    text-align: center;
+}
+
+/* Decoración de h1 */
+h1 {
+    border: 3px solid darkslategray;
+    padding: 10px;
+    color: darkslategray;
+    margin: 10px;
+    border-radius: 10px;
+}
+
+/* Decoración de párrafos */
+p {
+    border: 10px solid rgb(24, 48, 48);
+    padding: 10px;
+    color: white;
+    background-color: darkslategray;
+    margin: 10px;
+    border-radius: 30px;
+}
+
+/* Decoración de botones */
+button {
+    background-color: darkslategray;
+    color: white;
+    border: 3px solid rgb(24, 48, 48);
+    padding: 10px;
+    font-weight: bold;
+    border-radius: 300px;
+    transition: 1s;
+}
+
+button:hover {
+    background-color: rgb(24, 48, 48);
+    border: 3px solid white;
+}
