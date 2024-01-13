@@ -1,3 +1,25 @@
+class Personaje {
+    constructor( clase ) {
+        this.clase = clase;
+        this.agilidad = 0;
+        this.constitucion = 0;
+        this.destreza = 0;
+        this.fuerza = 0;
+        this.inteligencia = 0;
+        this.ataque = 0;
+        this.defensa = 0;
+        this.hp = 0;
+        this.precision = 0;
+        this.evasion = 0;
+        this.velocidad = 0;
+        }
+        
+    
+    ladrar(){
+        alert("woof!");
+    }
+}
+
 /* ***** Funciones ***** */
 
 // Solicito el nombre
