@@ -7,7 +7,7 @@ function boxMullerTransform() {
     return z0;
 }
 
-//                                           20      3
+//                                           20      2
 function getNormallyDistributedRandomNumber(mean, stddev) {
     const z0 = boxMullerTransform();
     
@@ -45,7 +45,7 @@ class Personaje {
     
     // Cálculo de atributos base sin modificadores de raza y clase
     calcularAtributo(){
-        return getNormallyDistributedRandomNumber(20, 3);
+        return getNormallyDistributedRandomNumber(20, 2);
     }
 
     // Cálculo de la agilidad inicial en función de la raza y la clase seleccionadas
