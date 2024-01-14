@@ -140,7 +140,7 @@ class Personaje {
             this.precision = Math.round(this.destreza*2);
             this.evasion = Math.round(this.agilidad+this.destreza);
             this.velocidad = Math.round(this.agilidad);
-            this.precisionArma = 0.85;
+            this.precisionArma = 0.9;
         }
     }
 
@@ -249,7 +249,7 @@ class Personaje {
 }
 
 class PoolPersonajes {
-
+    // realizar búsquedas
 }
 
 class Juego {
@@ -298,125 +298,6 @@ function validarClase(clase) {
     } else {
         return false
     }
-}
-
-// Función que asigna el ataque en función de la clase
-function asignarAtaque(clase) {
-    sorteo = Math.random();
-    if ( clase == "g" ) {
-        ataque = Math.round( 15 + 5 * ( sorteo - 0.4 ) );
-    } else if ( clase == "b" ) {
-        ataque = Math.round( 19 + 7 * ( sorteo - 0.5 ) );
-    } else {
-        ataque = Math.round( 13 + 10 * ( sorteo - 0.6 ) );
-    }
-    return ataque
-}
-
-// Función que asignan los HP (Hit Points) en función de la clase
-function asignarHp(clase) {
-    sorteo = Math.random();
-    if ( clase == "g" ) {
-        hp = Math.round( 100 + 20 * ( sorteo - 0.5 ) );
-    } else if ( clase == "b" ) {
-        hp = Math.round( 120 + 15 * ( sorteo - 0.6 ) );
-    } else {
-        hp = Math.round( 85 + 10 * ( sorteo - 0.25 ) );
-    }
-    return hp
-}
-
-// Función que asigna la precisión en función de la clase
-function asignarPrecision(clase) {
-    if ( clase == "g" ) {
-        precision = 0.95;
-    } else if ( clase == "b" ) {
-        precision = 0.75;
-    } else {
-        precision = 1;
-    }
-    return precision
-}
-
-// Función que asigna la evasión en función de la clase
-function asignarEvasion(clase) {
-    if ( clase == "g" ) {
-        evasion = 0.05;
-    } else if ( clase == "b" ) {
-        evasion = 0.01;
-    } else {
-        evasion = 0.2;
-    }
-    return evasion
-}
-
-// Función que asignan la velocidad en función de la clase
-function asignarVelocidad(clase) {
-    sorteo = Math.random();
-    if ( clase == "g" ) {
-        velocidad = Math.round( 12 + 5 * ( sorteo - 0.3 ) );
-    } else if ( clase == "b" ) {
-        velocidad = Math.round( 10 + 3 * ( sorteo - 0.4 ) );
-    } else {
-        velocidad = Math.round( 15 + 7 * ( sorteo - 0.25 ) );
-    }
-    return velocidad
-}
-
-// Función que controla si el ataque se dirige al objetivo
-function preciso(precision) {
-    sorteo = Math.random();
-    if ( precision >= sorteo ) {
-        return true
-    } else {
-        return false
-    }
-}
-
-// Función que controla si el objetivo evade el ataque
-function evadido(evasion) {
-    sorteo = Math.random();
-    if ( evasion >= sorteo ) {
-        return true
-    } else {
-        return false
-    }
-}
-
-// Función que designa el ataque del jugador
-function jugadorAtacar() {
-    controlPrecision = preciso(precisionJugador);
-    controlEvasion = evadido(evasionRival);
-    if ( controlPrecision && !controlEvasion ) {
-        hpRival = hpRival - ataqueJugador;
-        if ( hpRival <= 0 ) {
-            mensaje = "El Rival ha sido derrotado";
-            hpRival = 0;
-        } else {
-            mensaje = "Al Rival le queda " + hpRival + " de HP";
-        }
-    } else {
-        mensaje = "El ataque de " + nombreJugador + " ha fallado";
-    }
-    console.log(mensaje);
-}
-
-// Función que designa el ataque del rival
-function rivalAtacar() {
-    controlPrecision = preciso(precisionRival);
-    controlEvasion = evadido(evasionJugador);
-    if ( controlPrecision && !controlEvasion ) {
-        hpJugador = hpJugador - ataqueRival;
-        if ( hpJugador <= 0 ) {
-            mensaje = nombreJugador + " ha sido derrotado";
-            hpJugador = 0;
-        } else {
-            mensaje = "A " + nombreJugador + " le queda " + hpJugador + " de HP";
-        }
-    } else {
-        mensaje = "El ataque de Rival ha fallado";
-    }
-    console.log(mensaje);
 }
 
 /* Empiezo a crear variables y a utilizar las funciones */
