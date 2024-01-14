@@ -11,37 +11,241 @@ function boxMullerTransform() {
 function getNormallyDistributedRandomNumber(mean, stddev) {
     const z0 = boxMullerTransform();
     
-    return z0 * stddev + mean;
+    return Math.round(z0 * stddev + mean);
 }
 
-
 class Personaje {
-    constructor( clase ) {
+    constructor( raza, clase ) {
+        this.raza = raza;
         this.clase = clase;
-        this.agilidad = 0;
-        this.constitucion = 0;
-        this.destreza = 0;
-        this.fuerza = 0;
-        this.inteligencia = 0;
+        this.nivel = 1;
+        this.agilidad = this.calcularAtributo();
+        this.constitucion = this.calcularAtributo();
+        this.destreza = this.calcularAtributo();
+        this.fuerza = this.calcularAtributo();
+        this.inteligencia = this.calcularAtributo();
         this.ataque = 0;
-        this.defensa = 0;
-        this.hp = 0;
+        this.vida = 0;
+        this.mana = 0;
         this.precision = 0;
         this.evasion = 0;
         this.velocidad = 0;
+        this.calculoAgilidad( this.raza, this.clase );
+        this.calculoConstitucion( this.raza, this.clase );
+        this.calculoDestreza( this.raza, this.clase );
+        this.calculoFuerza( this.raza, this.clase );
+        this.calculoInteligencia( this.raza, this.clase );
+        this.calculoAtaque( this.clase );
+        this.calculoVida( this.clase );
+        this.calculoMana( this.clase );
+        this.calculoPrecision( this.clase );
+        this.calculoEvasion( this.clase );
+        this.calculoVelocidad( this.clase );
         }
-        
     
-    ladrar(){
-        alert("woof!");
+    // Cálculo de atributos base sin modificadores de raza y clase
+    calcularAtributo(){
+        return getNormallyDistributedRandomNumber(20, 3);
     }
+
+    // Cálculo de la agilidad inicial en función de la raza y la clase seleccionadas
+    calculoAgilidad( raza, clase ){
+        if( raza == "humano" ){
+            this.agilidad += 1;
+        } else if( raza == "elfo" ){
+            this.agilidad += 2;
+        } else if( raza == "elfo oscuro" ){
+            this.agilidad += 3;
+        } else if( raza == "enano" ){
+            this.agilidad += -1;
+        } else if( raza == "gnomo" ){
+            this.agilidad += 2;
+        } else {
+            this.agilidad += 0;
+        }
+
+        if( clase == "rogue" ){
+            this.agilidad += 3;
+        } else if( clase == "guerrero" ){
+            this.agilidad += 0;
+        } else {
+            this.agilidad += 0;
+        }
+    }
+
+    // Cálculo de la constitucion inicial en función de la raza y la clase seleccionadas
+    calculoConstitucion( raza, clase ){
+        if( raza == "humano" ){
+            this.constitucion += 1;
+        } else if( raza == "elfo" ){
+            this.constitucion += 0;
+        } else if( raza == "elfo oscuro" ){
+            this.constitucion += -1;
+        } else if( raza == "enano" ){
+            this.constitucion += 3;
+        } else if( raza == "gnomo" ){
+            this.constitucion += -1;
+        } else {
+            this.constitucion += 3;
+        }
+
+        if( clase == "rogue" ){
+            this.constitucion += 0;
+        } else if( clase == "guerrero" ){
+            this.constitucion += 1;
+        } else {
+            this.constitucion += 2;
+        }
+    }
+
+    // Cálculo de la destreza inicial en función de la raza y la clase seleccionadas
+    calculoDestreza( raza, clase ){
+        if( raza == "humano" ){
+            this.destreza += 1;
+        } else if( raza == "elfo" ){
+            this.destreza += 2;
+        } else if( raza == "elfo oscuro" ){
+            this.destreza += 3;
+        } else if( raza == "enano" ){
+            this.destreza += 1;
+        } else if( raza == "gnomo" ){
+            this.destreza += 1;
+        } else {
+            this.destreza += 0;
+        }
+
+        if( clase == "rogue" ){
+            this.destreza += 3;
+        } else if( clase == "guerrero" ){
+            this.destreza += 3;
+        } else {
+            this.destreza += 0;
+        }
+    }
+
+    // Cálculo de la fuerza inicial en función de la raza y la clase seleccionadas
+    calculoFuerza( raza, clase ){
+        if( raza == "humano" ){
+            this.fuerza += 1;
+        } else if( raza == "elfo" ){
+            this.fuerza += -1;
+        } else if( raza == "elfo oscuro" ){
+            this.fuerza += -1;
+        } else if( raza == "enano" ){
+            this.fuerza += 2;
+        } else if( raza == "gnomo" ){
+            this.fuerza += -1;
+        } else {
+            this.fuerza += 5;
+        }
+
+        if( clase == "rogue" ){
+            this.fuerza += -1;
+        } else if( clase == "guerrero" ){
+            this.fuerza += 2;
+        } else {
+            this.fuerza += 5;
+        }
+    }
+
+    // Cálculo de la inteligencia inicial en función de la raza y la clase seleccionadas
+    calculoInteligencia( raza, clase ){
+        if( raza == "humano" ){
+            this.inteligencia += 1;
+        } else if( raza == "elfo" ){
+            this.inteligencia += 2;
+        } else if( raza == "elfo oscuro" ){
+            this.inteligencia += 1;
+        } else if( raza == "enano" ){
+            this.inteligencia += 0;
+        } else if( raza == "gnomo" ){
+            this.inteligencia += 4;
+        } else {
+            this.inteligencia += -3;
+        }
+
+        if( clase == "rogue" ){
+            this.inteligencia += 0;
+        } else if( clase == "guerrero" ){
+            this.inteligencia += -1;
+        } else {
+            this.inteligencia += -2;
+        }
+    }
+
+    // Cálculo del ataque inicial en función de la clase seleccionada
+    calculoAtaque( clase ){
+        if( clase == "rogue" ){
+            this.ataque = Math.round(14*(1+(this.agilidad+this.destreza+this.fuerza)/300));
+        } else if( clase == "guerrero" ){
+            this.ataque = Math.round(17*(1+(this.destreza*0.25+this.fuerza*0.75)/100));
+        } else {
+            this.ataque = Math.round(22*(1+this.fuerza/100));
+        }
+    }
+
+    // Cálculo de la vida inicial en función de la clase seleccionada
+    calculoVida( clase ){
+        if( clase == "rogue" ){
+            this.vida = Math.round(30+this.constitucion*3);
+        } else if( clase == "guerrero" ){
+            this.vida = Math.round(40+this.constitucion*3);
+        } else {
+            this.vida = Math.round(50+this.constitucion*3);
+        }
+    }
+
+    // Cálculo del maná inicial en función de la clase seleccionada
+    calculoMana( clase ){
+        if( clase == "rogue" ){
+            this.mana = Math.round(20+this.inteligencia*2);
+        } else if( clase == "guerrero" ){
+            this.mana = Math.round(15+this.inteligencia);
+        } else {
+            this.mana = Math.round(10+this.inteligencia);
+        }
+    }
+
+    // Cálculo de la precisión inicial en función de la clase seleccionada
+    calculoPrecision( clase ){
+        if( clase == "rogue" ){
+            this.precision = Math.round(this.destreza*2);
+        } else if( clase == "guerrero" ){
+            this.precision = Math.round(this.destreza*2);
+        } else {
+            this.precision = Math.round(this.destreza*2);
+        }
+    }
+
+    // Cálculo de la evasión inicial en función de la clase seleccionada
+    calculoEvasion( clase ){
+        if( clase == "rogue" ){
+            this.evasion = Math.round((this.agilidad+this.destreza)*1.5);
+        } else if( clase == "guerrero" ){
+            this.evasion = Math.round((this.agilidad+this.destreza)*1.2);
+        } else {
+            this.evasion = Math.round(this.agilidad+this.destreza);
+        }
+    }
+
+    // Cálculo de la velocidad inicial en función de la clase seleccionada
+    calculoVelocidad( clase ){
+        if( clase == "rogue" ){
+            this.velocidad = Math.round(this.agilidad*1.5);
+        } else if( clase == "guerrero" ){
+            this.velocidad = Math.round(this.agilidad);
+        } else {
+            this.velocidad = Math.round(this.agilidad);
+        }
+    }
+
 }
 
 /* ***** Funciones ***** */
 
 // Solicito el nombre
 function solicitarNombre(){
-    nombreSolicitado = prompt("Ingrese su nombre de jugador (entre 5 y 10 caracteres)");
+    nombreSolicitado = prompt("Ingrese su nombre de jugador (entre 3 y 15 caracteres)");
     nombreSolicitado = nombreSolicitado.replace(/\s+/g, '');
     return nombreSolicitado
 }
