@@ -34,17 +34,8 @@ class Personaje {
         this.precision = 0;
         this.evasion = 0;
         this.velocidad = 0;
-        this.calculoAgilidad( this.raza, this.clase );
-        this.calculoConstitucion( this.raza, this.clase );
-        this.calculoDestreza( this.raza, this.clase );
-        this.calculoFuerza( this.raza, this.clase );
-        this.calculoInteligencia( this.raza, this.clase );
-        this.calculoAtaque( this.clase );
-        this.calculoVida( this.clase );
-        this.calculoMana( this.clase );
-        this.calculoPrecision( this.clase );
-        this.calculoEvasion( this.clase );
-        this.calculoVelocidad( this.clase );
+        this.calculoAtributosPrincipales( this.raza, this.clase );
+        this.calculoAtributosDerivados( this.clase );
         }
     
     // Cálculo de atributos principales base sin modificadores de raza y clase
@@ -52,7 +43,7 @@ class Personaje {
         return getNormallyDistributedRandomNumber(20, 2);
     }
     
-    // Cálculo de los atributos principales inicial en función de la raza y la clase seleccionadas
+    // Cálculo de los atributos principales iniciales en función de la raza y la clase seleccionadas
     calculoAtributosPrincipales( raza, clase ){
         if( raza == "humano" ){
             this.agilidad += 1;
@@ -113,193 +104,28 @@ class Personaje {
         }
     }
 
-    // Cálculo de la agilidad inicial en función de la raza y la clase seleccionadas
-    calculoAgilidad( raza, clase ){
-        if( raza == "humano" ){
-            this.agilidad += 1;
-        } else if( raza == "elfo" ){
-            this.agilidad += 2;
-        } else if( raza == "elfo oscuro" ){
-            this.agilidad += 3;
-        } else if( raza == "enano" ){
-            this.agilidad += -1;
-        } else if( raza == "gnomo" ){
-            this.agilidad += 2;
-        } else {
-            this.agilidad += 0;
-        }
-
-        if( clase == "rogue" ){
-            this.agilidad += 3;
-        } else if( clase == "guerrero" ){
-            this.agilidad += 0;
-        } else {
-            this.agilidad += 0;
-        }
-    }
-
-    // Cálculo de la constitucion inicial en función de la raza y la clase seleccionadas
-    calculoConstitucion( raza, clase ){
-        if( raza == "humano" ){
-            this.constitucion += 1;
-        } else if( raza == "elfo" ){
-            this.constitucion += 0;
-        } else if( raza == "elfo oscuro" ){
-            this.constitucion += -1;
-        } else if( raza == "enano" ){
-            this.constitucion += 3;
-        } else if( raza == "gnomo" ){
-            this.constitucion += -1;
-        } else {
-            this.constitucion += 3;
-        }
-
-        if( clase == "rogue" ){
-            this.constitucion += 0;
-        } else if( clase == "guerrero" ){
-            this.constitucion += 1;
-        } else {
-            this.constitucion += 2;
-        }
-    }
-
-    // Cálculo de la destreza inicial en función de la raza y la clase seleccionadas
-    calculoDestreza( raza, clase ){
-        if( raza == "humano" ){
-            this.destreza += 1;
-        } else if( raza == "elfo" ){
-            this.destreza += 2;
-        } else if( raza == "elfo oscuro" ){
-            this.destreza += 3;
-        } else if( raza == "enano" ){
-            this.destreza += 1;
-        } else if( raza == "gnomo" ){
-            this.destreza += 1;
-        } else {
-            this.destreza += 0;
-        }
-
-        if( clase == "rogue" ){
-            this.destreza += 3;
-        } else if( clase == "guerrero" ){
-            this.destreza += 3;
-        } else {
-            this.destreza += 0;
-        }
-    }
-
-    // Cálculo de la fuerza inicial en función de la raza y la clase seleccionadas
-    calculoFuerza( raza, clase ){
-        if( raza == "humano" ){
-            this.fuerza += 1;
-        } else if( raza == "elfo" ){
-            this.fuerza += -1;
-        } else if( raza == "elfo oscuro" ){
-            this.fuerza += -1;
-        } else if( raza == "enano" ){
-            this.fuerza += 2;
-        } else if( raza == "gnomo" ){
-            this.fuerza += -1;
-        } else {
-            this.fuerza += 5;
-        }
-
-        if( clase == "rogue" ){
-            this.fuerza += -1;
-        } else if( clase == "guerrero" ){
-            this.fuerza += 2;
-        } else {
-            this.fuerza += 5;
-        }
-    }
-
-    // Cálculo de la inteligencia inicial en función de la raza y la clase seleccionadas
-    calculoInteligencia( raza, clase ){
-        if( raza == "humano" ){
-            this.inteligencia += 1;
-        } else if( raza == "elfo" ){
-            this.inteligencia += 2;
-        } else if( raza == "elfo oscuro" ){
-            this.inteligencia += 1;
-        } else if( raza == "enano" ){
-            this.inteligencia += 0;
-        } else if( raza == "gnomo" ){
-            this.inteligencia += 4;
-        } else {
-            this.inteligencia += -3;
-        }
-
-        if( clase == "rogue" ){
-            this.inteligencia += 0;
-        } else if( clase == "guerrero" ){
-            this.inteligencia += -1;
-        } else {
-            this.inteligencia += -2;
-        }
-    }
-
-    // Cálculo del ataque inicial en función de la clase seleccionada
-    calculoAtaque( clase ){
+    // Cálculo de los atributos derivados iniciales en función de la clase seleccionada
+    calculoAtributosDerivados( clase ){
         if( clase == "rogue" ){
             this.ataque = Math.round(14*(1+(this.agilidad+this.destreza+this.fuerza)/300));
-        } else if( clase == "guerrero" ){
-            this.ataque = Math.round(17*(1+(this.destreza*0.25+this.fuerza*0.75)/100));
-        } else {
-            this.ataque = Math.round(22*(1+this.fuerza/100));
-        }
-    }
-
-    // Cálculo de la vida inicial en función de la clase seleccionada
-    calculoVida( clase ){
-        if( clase == "rogue" ){
             this.vida = Math.round(30+this.constitucion*3);
-        } else if( clase == "guerrero" ){
-            this.vida = Math.round(40+this.constitucion*3);
-        } else {
-            this.vida = Math.round(50+this.constitucion*3);
-        }
-    }
-
-    // Cálculo del maná inicial en función de la clase seleccionada
-    calculoMana( clase ){
-        if( clase == "rogue" ){
             this.mana = Math.round(20+this.inteligencia*2);
-        } else if( clase == "guerrero" ){
-            this.mana = Math.round(15+this.inteligencia);
-        } else {
-            this.mana = Math.round(10+this.inteligencia);
-        }
-    }
-
-    // Cálculo de la precisión inicial en función de la clase seleccionada
-    calculoPrecision( clase ){
-        if( clase == "rogue" ){
             this.precision = Math.round(this.destreza*2);
-        } else if( clase == "guerrero" ){
-            this.precision = Math.round(this.destreza*2);
-        } else {
-            this.precision = Math.round(this.destreza*2);
-        }
-    }
-
-    // Cálculo de la evasión inicial en función de la clase seleccionada
-    calculoEvasion( clase ){
-        if( clase == "rogue" ){
             this.evasion = Math.round((this.agilidad+this.destreza)*1.5);
-        } else if( clase == "guerrero" ){
-            this.evasion = Math.round((this.agilidad+this.destreza)*1.2);
-        } else {
-            this.evasion = Math.round(this.agilidad+this.destreza);
-        }
-    }
-
-    // Cálculo de la velocidad inicial en función de la clase seleccionada
-    calculoVelocidad( clase ){
-        if( clase == "rogue" ){
             this.velocidad = Math.round(this.agilidad*1.5);
         } else if( clase == "guerrero" ){
+            this.ataque = Math.round(17*(1+(this.destreza*0.25+this.fuerza*0.75)/100));
+            this.vida = Math.round(40+this.constitucion*3);
+            this.mana = Math.round(15+this.inteligencia);
+            this.precision = Math.round(this.destreza*2);
+            this.evasion = Math.round((this.agilidad+this.destreza)*1.2);
             this.velocidad = Math.round(this.agilidad);
         } else {
+            this.ataque = Math.round(22*(1+this.fuerza/100));
+            this.vida = Math.round(50+this.constitucion*3);
+            this.mana = Math.round(10+this.inteligencia);
+            this.precision = Math.round(this.destreza*2);
+            this.evasion = Math.round(this.agilidad+this.destreza);
             this.velocidad = Math.round(this.agilidad);
         }
     }
