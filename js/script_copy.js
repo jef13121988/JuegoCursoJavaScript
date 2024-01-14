@@ -1,3 +1,4 @@
+// Funciones para la utilización de la distribución estándar
 function boxMullerTransform() {
     const u1 = Math.random();
     const u2 = Math.random();
@@ -14,16 +15,19 @@ function getNormallyDistributedRandomNumber(mean, stddev) {
     return Math.round(z0 * stddev + mean);
 }
 
+// Clase en la que se arma al personaje
 class Personaje {
     constructor( raza, clase ) {
         this.raza = raza;
         this.clase = clase;
         this.nivel = 1;
+        // Atributos principales
         this.agilidad = this.calcularAtributo();
         this.constitucion = this.calcularAtributo();
         this.destreza = this.calcularAtributo();
         this.fuerza = this.calcularAtributo();
         this.inteligencia = this.calcularAtributo();
+        // Atributos derivados
         this.ataque = 0;
         this.vida = 0;
         this.mana = 0;
@@ -43,9 +47,70 @@ class Personaje {
         this.calculoVelocidad( this.clase );
         }
     
-    // Cálculo de atributos base sin modificadores de raza y clase
+    // Cálculo de atributos principales base sin modificadores de raza y clase
     calcularAtributo(){
         return getNormallyDistributedRandomNumber(20, 2);
+    }
+    
+    // Cálculo de los atributos principales inicial en función de la raza y la clase seleccionadas
+    calculoAtributosPrincipales( raza, clase ){
+        if( raza == "humano" ){
+            this.agilidad += 1;
+            this.constitucion += 1;
+            this.destreza += 1;
+            this.fuerza += 1;
+            this.inteligencia += 1;
+        } else if( raza == "elfo" ){
+            this.agilidad += 2;
+            this.constitucion += 0;
+            this.destreza += 2;
+            this.fuerza += -1;
+            this.inteligencia += 2;
+        } else if( raza == "elfo oscuro" ){
+            this.agilidad += 3;
+            this.constitucion += -1;
+            this.destreza += 3;
+            this.fuerza += -1;
+            this.inteligencia += 1;
+        } else if( raza == "enano" ){
+            this.agilidad += -1;
+            this.constitucion += 3;
+            this.destreza += 1;
+            this.fuerza += 2;
+            this.inteligencia += 0;
+        } else if( raza == "gnomo" ){
+            this.agilidad += 2;
+            this.constitucion += -1;
+            this.destreza += 1;
+            this.fuerza += -1;
+            this.inteligencia += 4;
+        } else {
+            this.agilidad += 0;
+            this.constitucion += 3;
+            this.destreza += 0;
+            this.fuerza += 5;
+            this.inteligencia += -3;
+        }
+
+        if( clase == "rogue" ){
+            this.agilidad += 3;
+            this.constitucion += 0;
+            this.destreza += 3;
+            this.fuerza += -1;
+            this.inteligencia += 0;
+        } else if( clase == "guerrero" ){
+            this.agilidad += 0;
+            this.constitucion += 1;
+            this.destreza += 3;
+            this.fuerza += 2;
+            this.inteligencia += -1;
+        } else {
+            this.agilidad += 0;
+            this.constitucion += 2;
+            this.destreza += 0;
+            this.fuerza += 5;
+            this.inteligencia += -2;
+        }
     }
 
     // Cálculo de la agilidad inicial en función de la raza y la clase seleccionadas
