@@ -17,59 +17,70 @@ function getNormallyDistributedRandomNumber(mean, stddev) {
 
 // Clase en la que se arma al personaje
 class Personaje {
-    constructor( raza, clase ) {
+
+    /* -------------------------------- Atributos ------------------------------- */
+
+    constructor( nombre, raza, clase ) {
+
+        this.nombre = nombre;
         this.raza = raza;
         this.clase = clase;
-        this.nivel = 1;
+        this.nivel = 1; // No tiene aplicación práctica en esta versión, pero se puede aumentar
+
         // Atributos principales
         this.agilidad = this.calcularAtributo();
         this.constitucion = this.calcularAtributo();
         this.destreza = this.calcularAtributo();
         this.fuerza = this.calcularAtributo();
-        this.inteligencia = this.calcularAtributo();
+        this.inteligencia = this.calcularAtributo(); // No tiene aplicación práctica en esta versión, pero se puede aumentar
         // Atributos derivados
         this.ataque = 0;
         this.vida = 0;
-        this.mana = 0;
+        this.mana = 0; // No tiene aplicación práctica en esta versión, pero se puede aumentar
         this.precision = 0;
         this.evasion = 0;
         this.velocidad = 0;
-        this.calculoAtributosPrincipales( this.raza, this.clase );
-        this.calculoAtributosDerivados( this.clase );
+        this.precisionArma = 0;
+
+        // Métodos para definir atributos
+        this.calculoAtributosPrincipales();
+        this.calculoAtributosDerivados();
         }
     
+    /* --------------------------------- Métodos -------------------------------- */
+
     // Cálculo de atributos principales base sin modificadores de raza y clase
     calcularAtributo(){
         return getNormallyDistributedRandomNumber(20, 2);
     }
     
     // Cálculo de los atributos principales iniciales en función de la raza y la clase seleccionadas
-    calculoAtributosPrincipales( raza, clase ){
-        if( raza == "humano" ){
+    calculoAtributosPrincipales(){
+        if( this.raza == "humano" ){
             this.agilidad += 1;
             this.constitucion += 1;
             this.destreza += 1;
             this.fuerza += 1;
             this.inteligencia += 1;
-        } else if( raza == "elfo" ){
+        } else if( this.raza == "elfo" ){
             this.agilidad += 2;
             this.constitucion += 0;
             this.destreza += 2;
             this.fuerza += -1;
             this.inteligencia += 2;
-        } else if( raza == "elfo oscuro" ){
+        } else if( this.raza == "elfo oscuro" ){
             this.agilidad += 3;
             this.constitucion += -1;
             this.destreza += 3;
             this.fuerza += -1;
             this.inteligencia += 1;
-        } else if( raza == "enano" ){
+        } else if( this.raza == "enano" ){
             this.agilidad += -1;
             this.constitucion += 3;
             this.destreza += 1;
             this.fuerza += 2;
             this.inteligencia += 0;
-        } else if( raza == "gnomo" ){
+        } else if( this.raza == "gnomo" ){
             this.agilidad += 2;
             this.constitucion += -1;
             this.destreza += 1;
@@ -83,13 +94,13 @@ class Personaje {
             this.inteligencia += -3;
         }
 
-        if( clase == "rogue" ){
+        if( this.clase == "rogue" ){
             this.agilidad += 3;
             this.constitucion += 0;
             this.destreza += 3;
             this.fuerza += -1;
             this.inteligencia += 0;
-        } else if( clase == "guerrero" ){
+        } else if( this.clase == "guerrero" ){
             this.agilidad += 0;
             this.constitucion += 1;
             this.destreza += 3;
@@ -105,21 +116,23 @@ class Personaje {
     }
 
     // Cálculo de los atributos derivados iniciales en función de la clase seleccionada
-    calculoAtributosDerivados( clase ){
-        if( clase == "rogue" ){
+    calculoAtributosDerivados(){
+        if( this.clase == "rogue" ){
             this.ataque = Math.round(14*(1+(this.agilidad+this.destreza+this.fuerza)/300));
             this.vida = Math.round(30+this.constitucion*3);
             this.mana = Math.round(20+this.inteligencia*2);
             this.precision = Math.round(this.destreza*2);
             this.evasion = Math.round((this.agilidad+this.destreza)*1.5);
             this.velocidad = Math.round(this.agilidad*1.5);
-        } else if( clase == "guerrero" ){
+            this.precisionArma = 1;
+        } else if( this.clase == "guerrero" ){
             this.ataque = Math.round(17*(1+(this.destreza*0.25+this.fuerza*0.75)/100));
             this.vida = Math.round(40+this.constitucion*3);
             this.mana = Math.round(15+this.inteligencia);
             this.precision = Math.round(this.destreza*2);
             this.evasion = Math.round((this.agilidad+this.destreza)*1.2);
             this.velocidad = Math.round(this.agilidad);
+            this.precisionArma = 0.95;
         } else {
             this.ataque = Math.round(22*(1+this.fuerza/100));
             this.vida = Math.round(50+this.constitucion*3);
@@ -127,9 +140,120 @@ class Personaje {
             this.precision = Math.round(this.destreza*2);
             this.evasion = Math.round(this.agilidad+this.destreza);
             this.velocidad = Math.round(this.agilidad);
+            this.precisionArma = 0.85;
         }
     }
 
+    // Realiza el ataque contra un objetivo
+    atacar( objetivo ){
+        controlPrecision = precisiónAtaque(objetivo);
+        if ( controlPrecision ) {
+            objetivo.vida = objetivo.vida - this.ataque;
+            if ( objetivo.vida <= 0 ) {
+                mensaje = `${this.nombre} ha ganado. ${objetivo.nombre} ha sido derrotado`;
+                objetivo.vida = 0;
+            } else {
+                mensaje = `A ${objetivo.nombre} le queda ${objetivo.vida} de vida`;
+            }
+        } else {
+            mensaje = `El ataque de ${this.nombre} ha fallado`;
+        }
+        console.log(mensaje);
+    }
+
+    // Define si el ataque va a impactar
+    precisiónAtaque( objetivo ){
+        preciso = this.precisionArma*this.precision/objetivo.evasion;
+        sorteo = Math.random();
+        if ( preciso >= sorteo ) {
+            return true
+        } else {
+            return false
+        }
+    }
+
+    // Aumenta en un nivel y actualiza los atributos
+    subirNivel(){
+        this.nivel += 1
+
+        // Se le agrega un mínimo a cada habilidad
+        this.agilidad += 5;
+        this.constitucion += 5;
+        this.destreza += 5;
+        this.fuerza += 5;
+        this.inteligencia += 5;
+
+        // Luego varía en función de la raza
+        if( this.raza == "humano" ){
+            this.agilidad += 0;
+            this.constitucion += 1;
+            this.destreza += 1;
+            this.fuerza += 0;
+            this.inteligencia += 1;
+        } else if( this.raza == "elfo" ){
+            this.agilidad += 1;
+            this.constitucion += 0;
+            this.destreza += 1;
+            this.fuerza += 0;
+            this.inteligencia += 1;
+        } else if( this.raza == "elfo oscuro" ){
+            this.agilidad += 2;
+            this.constitucion += 0;
+            this.destreza += 1;
+            this.fuerza += 0;
+            this.inteligencia += 0;
+        } else if( this.raza == "enano" ){
+            this.agilidad += 0;
+            this.constitucion += 2;
+            this.destreza += 0;
+            this.fuerza += 1;
+            this.inteligencia += 0;
+        } else if( this.raza == "gnomo" ){
+            this.agilidad += 1;
+            this.constitucion += 0;
+            this.destreza += 0;
+            this.fuerza += 0;
+            this.inteligencia += 2;
+        } else {
+            this.agilidad += 0;
+            this.constitucion += 1;
+            this.destreza += 0;
+            this.fuerza += 2;
+            this.inteligencia += 0;
+        }
+        
+        // Finalmente varía en función de la clase
+        if( this.clase == "rogue" ){
+            this.agilidad += 2;
+            this.constitucion += -1;
+            this.destreza += 2;
+            this.fuerza += 0;
+            this.inteligencia += 0;
+        } else if( this.clase == "guerrero" ){
+            this.agilidad += -1;
+            this.constitucion += 1;
+            this.destreza += 2;
+            this.fuerza += 2;
+            this.inteligencia += -1;
+        } else {
+            this.agilidad += -1;
+            this.constitucion += 2;
+            this.destreza += 0;
+            this.fuerza += 3;
+            this.inteligencia += -1;
+        }
+
+        calculoAtributosDerivados();
+    }
+
+}
+
+class PoolPersonajes {
+
+}
+
+class Juego {
+    // hacer control con velocidad ataque, inicia el ataque del jugador y del rival
 }
 
 /* ***** Funciones ***** */
