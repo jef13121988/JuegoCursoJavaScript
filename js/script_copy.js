@@ -26,6 +26,8 @@ class Personaje {
         this.raza = raza;
         this.clase = clase;
         this.nivel = 1; // No tiene aplicación práctica en esta versión, pero se puede aumentar
+        this.experiencia = 0;
+        this.experienciaOtorgada = 50;
 
         // Atributos principales
         this.agilidad = this.calcularAtributo();
@@ -45,7 +47,7 @@ class Personaje {
         // Métodos para definir atributos
         this.calculoAtributosPrincipales();
         this.calculoAtributosDerivados();
-        }
+    }
     
     /* --------------------------------- Métodos -------------------------------- */
 
@@ -56,31 +58,31 @@ class Personaje {
     
     // Cálculo de los atributos principales iniciales en función de la raza y la clase seleccionadas
     calculoAtributosPrincipales(){
-        if( this.raza == "humano" ){
+        if( this.raza === "humano" ){
             this.agilidad += 1;
             this.constitucion += 1;
             this.destreza += 1;
             this.fuerza += 1;
             this.inteligencia += 1;
-        } else if( this.raza == "elfo" ){
+        } else if( this.raza === "elfo" ){
             this.agilidad += 2;
             this.constitucion += 0;
             this.destreza += 2;
             this.fuerza += -1;
             this.inteligencia += 2;
-        } else if( this.raza == "elfo oscuro" ){
+        } else if( this.raza === "elfo oscuro" ){
             this.agilidad += 3;
             this.constitucion += -1;
             this.destreza += 3;
             this.fuerza += -1;
             this.inteligencia += 1;
-        } else if( this.raza == "enano" ){
+        } else if( this.raza === "enano" ){
             this.agilidad += -1;
             this.constitucion += 3;
             this.destreza += 1;
             this.fuerza += 2;
             this.inteligencia += 0;
-        } else if( this.raza == "gnomo" ){
+        } else if( this.raza === "gnomo" ){
             this.agilidad += 2;
             this.constitucion += -1;
             this.destreza += 1;
@@ -94,13 +96,13 @@ class Personaje {
             this.inteligencia += -3;
         }
 
-        if( this.clase == "rogue" ){
+        if( this.clase === "rogue" ){
             this.agilidad += 3;
             this.constitucion += 0;
             this.destreza += 3;
             this.fuerza += -1;
             this.inteligencia += 0;
-        } else if( this.clase == "guerrero" ){
+        } else if( this.clase === "guerrero" ){
             this.agilidad += 0;
             this.constitucion += 1;
             this.destreza += 3;
@@ -117,7 +119,7 @@ class Personaje {
 
     // Cálculo de los atributos derivados iniciales en función de la clase seleccionada
     calculoAtributosDerivados(){
-        if( this.clase == "rogue" ){
+        if( this.clase === "rogue" ){
             this.ataque = Math.round(14*(1+(this.agilidad+this.destreza+this.fuerza)/300));
             this.vida = Math.round(30+this.constitucion*3);
             this.mana = Math.round(20+this.inteligencia*2);
@@ -125,7 +127,7 @@ class Personaje {
             this.evasion = Math.round((this.agilidad+this.destreza)*1.5);
             this.velocidad = Math.round(this.agilidad*1.5);
             this.precisionArma = 1;
-        } else if( this.clase == "guerrero" ){
+        } else if( this.clase === "guerrero" ){
             this.ataque = Math.round(17*(1+(this.destreza*0.25+this.fuerza*0.75)/100));
             this.vida = Math.round(40+this.constitucion*3);
             this.mana = Math.round(15+this.inteligencia);
@@ -175,6 +177,7 @@ class Personaje {
     // Aumenta en un nivel y actualiza los atributos
     subirNivel(){
         this.nivel += 1
+        this.experiencia = 0;
 
         // Se le agrega un mínimo a cada habilidad
         this.agilidad += 5;
@@ -184,31 +187,31 @@ class Personaje {
         this.inteligencia += 5;
 
         // Luego varía en función de la raza
-        if( this.raza == "humano" ){
+        if( this.raza === "humano" ){
             this.agilidad += 0;
             this.constitucion += 1;
             this.destreza += 1;
             this.fuerza += 0;
             this.inteligencia += 1;
-        } else if( this.raza == "elfo" ){
+        } else if( this.raza === "elfo" ){
             this.agilidad += 1;
             this.constitucion += 0;
             this.destreza += 1;
             this.fuerza += 0;
             this.inteligencia += 1;
-        } else if( this.raza == "elfo oscuro" ){
+        } else if( this.raza === "elfo oscuro" ){
             this.agilidad += 2;
             this.constitucion += 0;
             this.destreza += 1;
             this.fuerza += 0;
             this.inteligencia += 0;
-        } else if( this.raza == "enano" ){
+        } else if( this.raza === "enano" ){
             this.agilidad += 0;
             this.constitucion += 2;
             this.destreza += 0;
             this.fuerza += 1;
             this.inteligencia += 0;
-        } else if( this.raza == "gnomo" ){
+        } else if( this.raza === "gnomo" ){
             this.agilidad += 1;
             this.constitucion += 0;
             this.destreza += 0;
@@ -223,13 +226,13 @@ class Personaje {
         }
         
         // Finalmente varía en función de la clase
-        if( this.clase == "rogue" ){
+        if( this.clase === "rogue" ){
             this.agilidad += 2;
             this.constitucion += -1;
             this.destreza += 2;
             this.fuerza += 0;
             this.inteligencia += 0;
-        } else if( this.clase == "guerrero" ){
+        } else if( this.clase === "guerrero" ){
             this.agilidad += -1;
             this.constitucion += 1;
             this.destreza += 2;
@@ -248,8 +251,125 @@ class Personaje {
 
 }
 
+// Clase que arma el pool con 10 personajes para elegir al que tenga mejores atributos
 class PoolPersonajes {
-    // realizar búsquedas
+    constructor( nombre, raza, clase ) {
+
+        this.nombre = nombre;
+        this.raza = raza;
+        this.clase = clase;
+        this.arreglo = [];
+
+        this.crearPersonajes();
+    }
+    
+    // Creo el array con 10 Personajes
+    crearPersonajes(){
+        for (let i = 0; i < 10; i++) {
+            this.arreglo.push(new Personaje( this.nombre, this.raza, this.clase ));
+        }
+
+    }
+    
+    // Busco el máximo en agilidad
+    calcularMaxAgilidad(){
+        // Calculo el máximo
+        const maximo=this.arreglo.reduce((acumulado,item)=>((acumulado<item.agilidad) ? (acumulado=item.agilidad) : acumulado),0);
+
+        // Filtro el máximo y lo retorno
+        return this.arreglo.filter(item => item.agilidad === maximo)
+    }
+
+    // Busco el máximo en constitución
+    calcularMaxConstitucion(){
+        // Calculo el máximo
+        const maximo=this.arreglo.reduce((acumulado,item)=>((acumulado<item.constitucion) ? (acumulado=item.constitucion) : acumulado),0);
+
+        // Filtro el máximo y lo retorno
+        return this.arreglo.filter(item => item.constitucion === maximo)
+    }
+
+    // Busco el máximo en destreza
+    calcularMaxDestreza(){
+        // Calculo el máximo
+        const maximo=this.arreglo.reduce((acumulado,item)=>((acumulado<item.destreza) ? (acumulado=item.destreza) : acumulado),0);
+
+        // Filtro el máximo y lo retorno
+        return this.arreglo.filter(item => item.destreza === maximo)
+    }
+
+    // Busco el máximo en fuerza
+    calcularMaxFuerza(){
+        // Calculo el máximo
+        const maximo=this.arreglo.reduce((acumulado,item)=>((acumulado<item.fuerza) ? (acumulado=item.fuerza) : acumulado),0);
+
+        // Filtro el máximo y lo retorno
+        return this.arreglo.filter(item => item.fuerza === maximo)
+    }
+
+    // Busco el máximo en inteligencia
+    calcularMaxInteligencia(){
+        // Calculo el máximo
+        const maximo=this.arreglo.reduce((acumulado,item)=>((acumulado<item.inteligencia) ? (acumulado=item.inteligencia) : acumulado),0);
+
+        // Filtro el máximo y lo retorno
+        return this.arreglo.filter(item => item.inteligencia === maximo)
+    }
+
+    // Busco el máximo en ataque
+    calcularMaxAtaque(){
+        // Calculo el máximo
+        const maximo=this.arreglo.reduce((acumulado,item)=>((acumulado<item.ataque) ? (acumulado=item.ataque) : acumulado),0);
+
+        // Filtro el máximo y lo retorno
+        return this.arreglo.filter(item => item.ataque === maximo)
+    }
+
+    // Busco el máximo en vida
+    calcularMaxVida(){
+        // Calculo el máximo
+        const maximo=this.arreglo.reduce((acumulado,item)=>((acumulado<item.vida) ? (acumulado=item.vida) : acumulado),0);
+
+        // Filtro el máximo y lo retorno
+        return this.arreglo.filter(item => item.vida === maximo)
+    }
+
+    // Busco el máximo en maná
+    calcularMaxMana(){
+        // Calculo el máximo
+        const maximo=this.arreglo.reduce((acumulado,item)=>((acumulado<item.mana) ? (acumulado=item.mana) : acumulado),0);
+
+        // Filtro el máximo y lo retorno
+        return this.arreglo.filter(item => item.mana === maximo)
+    }
+
+    // Busco el máximo en precisión
+    calcularMaxPrecision(){
+        // Calculo el máximo
+        const maximo=this.arreglo.reduce((acumulado,item)=>((acumulado<item.precision) ? (acumulado=item.precision) : acumulado),0);
+
+        // Filtro el máximo y lo retorno
+        return this.arreglo.filter(item => item.precision === maximo)
+    }
+
+    // Busco el máximo en evasión
+    calcularMaxEvasion(){
+        // Calculo el máximo
+        const maximo=this.arreglo.reduce((acumulado,item)=>((acumulado<item.evasion) ? (acumulado=item.evasion) : acumulado),0);
+
+        // Filtro el máximo y lo retorno
+        return this.arreglo.filter(item => item.evasion === maximo)
+    }
+
+    // Busco el máximo en velocidad
+    calcularMaxVelocidad(){
+        // Calculo el máximo
+        const maximo=this.arreglo.reduce((acumulado,item)=>((acumulado<item.velocidad) ? (acumulado=item.velocidad) : acumulado),0);
+
+        // Filtro el máximo y lo retorno
+        return this.arreglo.filter(item => item.velocidad === maximo)
+    }
+
 }
 
 class Juego {
