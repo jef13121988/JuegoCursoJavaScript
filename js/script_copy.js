@@ -390,11 +390,13 @@ class ElJuego {
         this.clase = "";
         this.nombreRival = "";
         this.jugador = "";
+        this.jugadorRival = "";
 
         this.controlNombre();
         this.controlRaza();
         this.controlClase();
         this.controlNombreRival();
+        this.crearJugadorRival();
         this.empezar();
 
     }
@@ -444,7 +446,7 @@ class ElJuego {
         razaSolicitada = razaSolicitada.toLowerCase();
 
         if ( razaSolicitada === "a" ) {
-            sorteo = Math.random();
+            let sorteo = Math.random();
             if ( sorteo > 5/6 ) {
                 razaSolicitada = "h";
             } else if ( sorteo > 2/3 ){
@@ -501,7 +503,7 @@ class ElJuego {
         claseSolicitada = claseSolicitada.toLowerCase();
 
         if ( claseSolicitada === "a" ) {
-            sorteo = Math.random();
+            let sorteo = Math.random();
             if ( sorteo > 0.67 ) {
                 claseSolicitada = "g";
             } else if ( sorteo > 0.34 ){
@@ -539,6 +541,7 @@ class ElJuego {
 
     }
 
+    // Creo el pool de personajes e indico como interactuar
     empezar(){
         this.personajes = new PoolPersonajes( this.nombre, this.raza, this.clase );
 
@@ -561,8 +564,10 @@ Cuando haya definido el personaje a utilizar, fíjese el el índice del mismo, e
 
     }
 
+    // Se selecciona un personaje para que el juego avance
     seguir(){
         let personajeElegido = prompt("Indique el índice del personaje con el que desea continuar");
+
         while ( isNaN(parseInt(personajeElegido)) || parseInt(personajeElegido)<1 || parseInt(personajeElegido)>10 ){
             personajeElegido = prompt("Indique el índice del personaje con el que desea continuar");
         }
@@ -573,8 +578,44 @@ Cuando haya definido el personaje a utilizar, fíjese el el índice del mismo, e
 
     }
 
+    // Creo al personaje del rival
+    crearJugadorRival(){
+        let razaRival = "";
+        let claseRival = "";
+
+        // Sorteo la raza
+        let sorteo = Math.random();
+        if ( sorteo > 5/6 ) {
+            razaRival = "humano";
+        } else if ( sorteo > 2/3 ){
+            razaRival = "elfo";
+        } else if ( sorteo > 0.5 ){
+            razaRival = "elfo oscuro";
+        } else if ( sorteo > 1/3 ){
+            razaRival = "enano";
+        } else if ( sorteo > 1/6 ){
+            razaRival = "gnomo";
+        } else {
+            razaRival = "orco";
+        }
+
+        // Sorteo la clase
+        sorteo = Math.random();
+        if ( sorteo > 0.67 ) {
+            claseRival = "guerrero";
+        } else if ( sorteo > 0.34 ){
+            claseRival = "bárbaro";
+        } else {
+            claseRival = "rogue";
+        }
+
+        // Creo el personaje
+        this.jugadorRival = new Personaje( this.nombreRival, razaRival, claseRival )
+        this.jugadorRival.indice = -1;
+    }
+
     // hacer control con velocidad ataque, inicia el ataque del jugador y del rival
-    // generar rival
+    // iniciar pelea
 
 }
 
