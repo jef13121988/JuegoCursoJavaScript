@@ -28,6 +28,7 @@ class Personaje {
         this.nivel = 1; // No tiene aplicación práctica en esta versión, pero se puede aumentar
         this.experiencia = 0;
         this.experienciaOtorgada = 50;
+        this.indice = 0;
 
         // Atributos principales
         this.agilidad = this.calcularAtributo();
@@ -272,6 +273,7 @@ class PoolPersonajes {
     crearPersonajes(){
         for (let i = 0; i < 10; i++) {
             this.arreglo.push(new Personaje( this.nombre, this.raza, this.clase ));
+            this.arreglo[i].indice = i + 1;
         }
 
     }
@@ -377,7 +379,7 @@ class PoolPersonajes {
 
 }
 
-class Juego {
+class ElJuego {
 
     /* -------------------------------- Atributos ------------------------------- */
 
@@ -387,9 +389,14 @@ class Juego {
         this.raza = "";
         this.clase = "";
         this.nombreRival = "";
+        this.jugador = "";
 
         this.controlNombre();
+        this.controlRaza();
+        this.controlClase();
         this.controlNombreRival();
+        this.empezar();
+
     }
 
     /* --------------------------------- Métodos -------------------------------- */
@@ -431,11 +438,69 @@ class Juego {
         }
     }
 
+    // Solicito la raza
+    solicitarRaza(){
+        let razaSolicitada = prompt("Ingrese una raza ('h' = humano, 'e' = elfo, 'eo' = elfo oscuro, 'en' = enano, 'g' = gnomo, 'o' = orco, 'a' = aleatorio)");
+        razaSolicitada = razaSolicitada.toLowerCase();
+
+        if ( razaSolicitada === "a" ) {
+            sorteo = Math.random();
+            if ( sorteo > 5/6 ) {
+                razaSolicitada = "h";
+            } else if ( sorteo > 2/3 ){
+                razaSolicitada = "e";
+            } else if ( sorteo > 0.5 ){
+                razaSolicitada = "eo";
+            } else if ( sorteo > 1/3 ){
+                razaSolicitada = "en";
+            } else if ( sorteo > 1/6 ){
+                razaSolicitada = "g";
+            } else {
+                razaSolicitada = "o";
+            }
+        }
+
+        return razaSolicitada
+    }
+
+    // Valido la raza suministrada por el usuario, puede ser: 'h' = humano, 'e' = elfo, 'eo' = elfo oscuro,
+    // 'en' = enano, 'g' = gnomo, 'o' = orco, 'a' = aleatorio, este último se sortea en la función solicitarRaza()
+    validarRaza( raza ) {
+        if ( raza === "h" || raza === "e" || raza === "eo" || raza === "en" || raza === "g" || raza === "o" ) {
+            return true
+        } else {
+            return false
+        }
+    }
+
+    // Solicito y valido la raza del usuario
+    controlRaza(){
+        while ( ! this.validarRaza( this.raza ) ) {
+            this.raza = this.solicitarRaza();
+        }
+
+        if ( this.raza === "h" ) {
+            this.raza = "humano";
+        } else if ( this.raza === "e" ) {
+            this.raza = "elfo";
+        } else if ( this.raza === "eo" ) {
+            this.raza = "elfo oscuro";
+        } else if ( this.raza === "en" ) {
+            this.raza = "enano";
+        } else if ( this.raza === "g" ) {
+            this.raza = "gnomo";
+        } else {
+            this.raza = "orco";
+        }
+
+    }
+
     // Solicito la clase
     solicitarClase(){
-        claseSolicitada = prompt("Ingrese una clase ('g' = guerrero, 'b' = bárbaro, 'r' = rogue, 'a' = aleatorio)");
+        let claseSolicitada = prompt("Ingrese una clase ('g' = guerrero, 'b' = bárbaro, 'r' = rogue, 'a' = aleatorio)");
         claseSolicitada = claseSolicitada.toLowerCase();
-        if ( claseSolicitada == "a" ) {
+
+        if ( claseSolicitada === "a" ) {
             sorteo = Math.random();
             if ( sorteo > 0.67 ) {
                 claseSolicitada = "g";
@@ -445,12 +510,13 @@ class Juego {
                 claseSolicitada = "r";
             }
         }
+
         return claseSolicitada
     }
 
     // Valido la clase suministrada por el usuario, puede ser: 'g' = guerrero, 'b' = bárbaro, 'r' = rogue, 'a' = aleatorio, este último se sortea en la función solicitarClase()
     validarClase( clase ) {
-        if ( clase == "g" || clase == "b" || clase == "r" ) {
+        if ( clase === "g" || clase === "b" || clase === "r" ) {
             return true
         } else {
             return false
@@ -462,24 +528,54 @@ class Juego {
         while ( ! this.validarClase( this.clase ) ) {
             this.clase = this.solicitarClase();
         }
+
+        if ( this.clase === "g" ) {
+            this.clase = "guerrero";
+        } else if ( this.clase === "b" ) {
+            this.clase = "bárbaro";
+        } else {
+            this.clase = "rogue";
+        }
+
     }
+
+    empezar(){
+        this.personajes = new PoolPersonajes( this.nombre, this.raza, this.clase );
+
+        alert(`Se crearon 10 personajes con los parámetros indicados para que pueda elegir el más conveniente.`);
+
+        alert(`Escribiendo en la consola 'juego.personajes.funcion()', siendo 'funcion()' la función de máximos deseada, puede ir navegando indagando en los atributos de los personajes.`);
+        
+        alert(`Se accede al array mediante 'juego.personajes.arreglo', así se podrá visualizar personajes específicos o aplicar funciones de arrays.`);
+
+        alert(`Cuando haya definido el personaje a utilizar, fíjese el el índice del mismo, escribe en la consola 'juego.seguir()' y se le solicitará el índice seleccionado.`);
+
+        console.log(`Se crearon 10 personajes con los parámetros indicados para que pueda elegir el más conveniente.
+
+Escribiendo en la consola 'juego.personajes.funcion()', siendo 'funcion()' la función de máximos deseada, puede ir navegando indagando en los atributos de los personajes.
+
+Se accede al array mediante 'juego.personajes.arreglo', así se podrá visualizar personajes específicos o aplicar funciones de arrays.
+
+Cuando haya definido el personaje a utilizar, fíjese el el índice del mismo, escribe en la consola 'juego.seguir()' y se le solicitará el índice seleccionado.
+        `);
+
+    }
+
+    seguir(){
+        let personajeElegido = prompt("Indique el índice del personaje con el que desea continuar");
+        while ( isNaN(parseInt(personajeElegido)) || parseInt(personajeElegido)<1 || parseInt(personajeElegido)>10 ){
+            personajeElegido = prompt("Indique el índice del personaje con el que desea continuar");
+        }
+
+        personajeElegido = parseInt(personajeElegido)-1;
+
+        this.jugador = this.personajes.arreglo[personajeElegido];
+
+    }
+
     // hacer control con velocidad ataque, inicia el ataque del jugador y del rival
     // generar rival
-    // solicitar raza y clase
-    // definir raza y clase para crear Personaje
-}
 
-/* ***** Funciones ***** */
-
-
-/* Empiezo a crear variables y a utilizar las funciones */
-
-// Solicito y valido la clase del rival del usuario
-
-alert("Seleccione la clase de su rival")
-
-while ( ! validarClase( claseRival ) ) {
-    claseRival = solicitarClase();
 }
 
 // Presento Stats
