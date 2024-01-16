@@ -149,7 +149,8 @@ class Personaje {
 
     // Realiza el ataque contra un objetivo
     atacar( objetivo ){
-        controlPrecision = precisiónAtaque(objetivo);
+        let controlPrecision = this.precisionAtaque( objetivo );
+        let mensaje = "";
         if ( controlPrecision ) {
             objetivo.vida = objetivo.vida - this.ataque;
             if ( objetivo.vida <= 0 ) {
@@ -165,9 +166,9 @@ class Personaje {
     }
 
     // Define si el ataque va a impactar
-    precisiónAtaque( objetivo ){
-        preciso = this.precisionArma*this.precision/objetivo.evasion;
-        sorteo = Math.random();
+    precisionAtaque( objetivo ){
+        let preciso = this.precisionArma*this.precision/objetivo.evasion;
+        let sorteo = Math.random();
         if ( preciso >= sorteo ) {
             return true;
         } else {
@@ -576,6 +577,12 @@ Cuando haya definido el personaje a utilizar, fíjese el el índice del mismo, e
 
         this.jugador = this.personajes.arreglo[personajeElegido];
 
+        let combatir = confirm("Confirme si quiere iniciar el combate o finalizamos");
+
+        if ( combatir ){
+            this.combate();
+        }
+        
     }
 
     // Creo al personaje del rival
@@ -612,6 +619,46 @@ Cuando haya definido el personaje a utilizar, fíjese el el índice del mismo, e
         // Creo el personaje
         this.jugadorRival = new Personaje( this.nombreRival, razaRival, claseRival )
         this.jugadorRival.indice = -1;
+    }
+
+    combate(){
+        while( this.jugador.vida > 0 && this.jugadorRival.vida >0 ){
+
+            if( this.jugador.velocidad > this.jugadorRival.velocidad ){
+                this.jugador.atacar( this.jugadorRival );
+
+                if( this.jugadorRival.vida > 0 ){
+                    this.jugadorRival.atacar( this.jugador );
+                }
+                
+            } else if( this.jugador.velocidad < this.jugadorRival.velocidad ){
+                this.jugadorRival.atacar( this.jugador );
+
+                if( this.jugador.vida > 0 ){
+                    this.jugador.atacar( this.jugadorRival );
+                }
+
+            } else {
+                let sorteo = Math.random();
+
+                if( sorteo >= 0.5){
+                    this.jugador.atacar( this.jugadorRival );
+
+                    if( this.jugadorRival.vida > 0 ){
+                        this.jugadorRival.atacar( this.jugador );
+                    }
+
+                } else {
+                    this.jugadorRival.atacar( this.jugador );
+
+                    if( this.jugador.vida > 0 ){
+                        this.jugador.atacar( this.jugadorRival );
+                    }
+
+                }
+
+            }
+        }
     }
 
     // hacer control con velocidad ataque, inicia el ataque del jugador y del rival
