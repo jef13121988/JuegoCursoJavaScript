@@ -1,20 +1,3 @@
-// Funciones para la utilización de la distribución estándar
-function boxMullerTransform() {
-    const u1 = Math.random();
-    const u2 = Math.random();
-    
-    const z0 = Math.sqrt(-2.0 * Math.log(u1)) * Math.cos(2.0 * Math.PI * u2);
-    
-    return z0;
-}
-
-//                                           20      2
-function getNormallyDistributedRandomNumber(mean, stddev) {
-    const z0 = boxMullerTransform();
-    
-    return Math.round(z0 * stddev + mean);
-}
-
 // Clase en la que se arma al personaje
 class Personaje {
 
@@ -26,9 +9,9 @@ class Personaje {
         this.raza = raza;
         this.clase = clase;
         this.nivel = 1; // No tiene aplicación práctica en esta versión, pero se puede aumentar
-        this.experiencia = 0;
-        this.experienciaOtorgada = 50;
-        this.indice = 0;
+        this.experiencia = 0; // No tiene aplicación práctica en esta versión
+        this.experienciaOtorgada = 50; // No tiene aplicación práctica en esta versión
+        this.indice = 0; // Para indexar los personajes del arreglo del pool
 
         // Atributos principales
         this.agilidad = this.calcularAtributo();
@@ -52,9 +35,26 @@ class Personaje {
     
     /* --------------------------------- Métodos -------------------------------- */
 
+    // Funciones para la utilización de la distribución estándar
+    boxMullerTransform() {
+        const u1 = Math.random();
+        const u2 = Math.random();
+        
+        const z0 = Math.sqrt(-2.0 * Math.log(u1)) * Math.cos(2.0 * Math.PI * u2);
+        
+        return z0;
+    }
+
+    // Función que genera el valor aleatorio (media = 20, desviación estándar = 2)
+    getNormallyDistributedRandomNumber(mean, stddev) {
+        const z0 = this.boxMullerTransform();
+        
+        return Math.round(z0 * stddev + mean);
+}
+
     // Cálculo de atributos principales base sin modificadores de raza y clase
     calcularAtributo(){
-        return getNormallyDistributedRandomNumber(20, 2);
+        return this.getNormallyDistributedRandomNumber(20, 2);
     }
     
     // Cálculo de los atributos principales iniciales en función de la raza y la clase seleccionadas
@@ -93,8 +93,8 @@ class Personaje {
             this.agilidad += 0;
             this.constitucion += 3;
             this.destreza += 0;
-            this.fuerza += 5;
-            this.inteligencia += -3;
+            this.fuerza += 4;
+            this.inteligencia += -2;
         }
 
         if( this.clase === "rogue" ){
@@ -113,8 +113,8 @@ class Personaje {
             this.agilidad += 0;
             this.constitucion += 2;
             this.destreza += 0;
-            this.fuerza += 5;
-            this.inteligencia += -2;
+            this.fuerza += 4;
+            this.inteligencia += -1;
         }
     }
 
@@ -125,7 +125,7 @@ class Personaje {
             this.vida = Math.round(30+this.constitucion*3);
             this.mana = Math.round(20+this.inteligencia*2);
             this.precision = Math.round(this.destreza*2);
-            this.evasion = Math.round((this.agilidad+this.destreza)*1.5);
+            this.evasion = Math.round((this.agilidad*1.2+this.destreza*0.8)*1.3);
             this.velocidad = Math.round(this.agilidad*1.5);
             this.precisionArma = 1;
         } else if( this.clase === "guerrero" ){
@@ -133,7 +133,7 @@ class Personaje {
             this.vida = Math.round(40+this.constitucion*3);
             this.mana = Math.round(15+this.inteligencia);
             this.precision = Math.round(this.destreza*2);
-            this.evasion = Math.round((this.agilidad+this.destreza)*1.2);
+            this.evasion = Math.round((this.agilidad*1.2+this.destreza*0.8)*1.1);
             this.velocidad = Math.round(this.agilidad);
             this.precisionArma = 0.95;
         } else {
@@ -141,7 +141,7 @@ class Personaje {
             this.vida = Math.round(50+this.constitucion*3);
             this.mana = Math.round(10+this.inteligencia);
             this.precision = Math.round(this.destreza*2);
-            this.evasion = Math.round(this.agilidad+this.destreza);
+            this.evasion = Math.round(this.agilidad*1.2+this.destreza*0.8);
             this.velocidad = Math.round(this.agilidad);
             this.precisionArma = 0.9;
         }
@@ -192,23 +192,23 @@ class Personaje {
         if( this.raza === "humano" ){
             this.agilidad += 0;
             this.constitucion += 1;
-            this.destreza += 1;
+            this.destreza += 0;
             this.fuerza += 0;
             this.inteligencia += 1;
         } else if( this.raza === "elfo" ){
             this.agilidad += 1;
             this.constitucion += 0;
             this.destreza += 1;
-            this.fuerza += 0;
+            this.fuerza += -1;
             this.inteligencia += 1;
         } else if( this.raza === "elfo oscuro" ){
             this.agilidad += 2;
             this.constitucion += 0;
             this.destreza += 1;
-            this.fuerza += 0;
+            this.fuerza += -1;
             this.inteligencia += 0;
         } else if( this.raza === "enano" ){
-            this.agilidad += 0;
+            this.agilidad += -1;
             this.constitucion += 2;
             this.destreza += 0;
             this.fuerza += 1;
@@ -217,22 +217,22 @@ class Personaje {
             this.agilidad += 1;
             this.constitucion += 0;
             this.destreza += 0;
-            this.fuerza += 0;
+            this.fuerza += -1;
             this.inteligencia += 2;
         } else {
             this.agilidad += 0;
             this.constitucion += 1;
             this.destreza += 0;
             this.fuerza += 2;
-            this.inteligencia += 0;
+            this.inteligencia += -1;
         }
         
         // Finalmente varía en función de la clase
         if( this.clase === "rogue" ){
             this.agilidad += 2;
             this.constitucion += -1;
-            this.destreza += 2;
-            this.fuerza += 0;
+            this.destreza += 3;
+            this.fuerza += -1;
             this.inteligencia += 0;
         } else if( this.clase === "guerrero" ){
             this.agilidad += -1;
@@ -407,7 +407,7 @@ class ElJuego {
     // Solicito el nombre
     solicitarNombre(){
         let nombreSolicitado = prompt("Ingrese su nombre de jugador (entre 3 y 15 caracteres)");
-        nombreSolicitado = nombreSolicitado.replace(/\s+/g, '');
+        nombreSolicitado = nombreSolicitado.replace(/\s+/g, ''); // Elimino los espacios
         return nombreSolicitado;
     }
 
@@ -430,7 +430,7 @@ class ElJuego {
     // Solicito el nombre del rival
     solicitarNombreRival(){
         let nombreSolicitado = prompt("Ingrese el nombre de su rival (entre 3 y 15 caracteres)");
-        nombreSolicitado = nombreSolicitado.replace(/\s+/g, '');
+        nombreSolicitado = nombreSolicitado.replace(/\s+/g, ''); // Elimino los espacios
         return nombreSolicitado;
     }
 
@@ -666,8 +666,12 @@ Cuando haya definido el personaje a utilizar, fíjese el el índice del mismo, e
 
 }
 
-// Presento Stats
+// Creo una instancia del juego
+juego = new ElJuego();
 
+
+// Presento Stats
+/*
 console.log("Los stats de " + nombreJugador + " son:");
 console.log("HP: " + hpJugador );
 console.log("Ataque: " + ataqueJugador );
@@ -686,3 +690,4 @@ console.log("La clase del rival es " + claseRival );
 console.log("*************");
 
 inicio = confirm("Los stats aparecen en la consola, deseas continuar?");
+*/
