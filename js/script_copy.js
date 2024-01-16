@@ -168,9 +168,9 @@ class Personaje {
         preciso = this.precisionArma*this.precision/objetivo.evasion;
         sorteo = Math.random();
         if ( preciso >= sorteo ) {
-            return true
+            return true;
         } else {
-            return false
+            return false;
         }
     }
 
@@ -253,6 +253,9 @@ class Personaje {
 
 // Clase que arma el pool con 10 personajes para elegir al que tenga mejores atributos
 class PoolPersonajes {
+
+    /* -------------------------------- Atributos ------------------------------- */
+
     constructor( nombre, raza, clase ) {
 
         this.nombre = nombre;
@@ -262,7 +265,9 @@ class PoolPersonajes {
 
         this.crearPersonajes();
     }
-    
+
+    /* --------------------------------- Métodos -------------------------------- */
+
     // Creo el array con 10 Personajes
     crearPersonajes(){
         for (let i = 0; i < 10; i++) {
@@ -277,7 +282,7 @@ class PoolPersonajes {
         const maximo=this.arreglo.reduce((acumulado,item)=>((acumulado<item.agilidad) ? (acumulado=item.agilidad) : acumulado),0);
 
         // Filtro el máximo y lo retorno
-        return this.arreglo.filter(item => item.agilidad === maximo)
+        return this.arreglo.filter(item => item.agilidad === maximo);
     }
 
     // Busco el máximo en constitución
@@ -286,7 +291,7 @@ class PoolPersonajes {
         const maximo=this.arreglo.reduce((acumulado,item)=>((acumulado<item.constitucion) ? (acumulado=item.constitucion) : acumulado),0);
 
         // Filtro el máximo y lo retorno
-        return this.arreglo.filter(item => item.constitucion === maximo)
+        return this.arreglo.filter(item => item.constitucion === maximo);
     }
 
     // Busco el máximo en destreza
@@ -295,7 +300,7 @@ class PoolPersonajes {
         const maximo=this.arreglo.reduce((acumulado,item)=>((acumulado<item.destreza) ? (acumulado=item.destreza) : acumulado),0);
 
         // Filtro el máximo y lo retorno
-        return this.arreglo.filter(item => item.destreza === maximo)
+        return this.arreglo.filter(item => item.destreza === maximo);
     }
 
     // Busco el máximo en fuerza
@@ -304,7 +309,7 @@ class PoolPersonajes {
         const maximo=this.arreglo.reduce((acumulado,item)=>((acumulado<item.fuerza) ? (acumulado=item.fuerza) : acumulado),0);
 
         // Filtro el máximo y lo retorno
-        return this.arreglo.filter(item => item.fuerza === maximo)
+        return this.arreglo.filter(item => item.fuerza === maximo);
     }
 
     // Busco el máximo en inteligencia
@@ -313,7 +318,7 @@ class PoolPersonajes {
         const maximo=this.arreglo.reduce((acumulado,item)=>((acumulado<item.inteligencia) ? (acumulado=item.inteligencia) : acumulado),0);
 
         // Filtro el máximo y lo retorno
-        return this.arreglo.filter(item => item.inteligencia === maximo)
+        return this.arreglo.filter(item => item.inteligencia === maximo);
     }
 
     // Busco el máximo en ataque
@@ -322,7 +327,7 @@ class PoolPersonajes {
         const maximo=this.arreglo.reduce((acumulado,item)=>((acumulado<item.ataque) ? (acumulado=item.ataque) : acumulado),0);
 
         // Filtro el máximo y lo retorno
-        return this.arreglo.filter(item => item.ataque === maximo)
+        return this.arreglo.filter(item => item.ataque === maximo);
     }
 
     // Busco el máximo en vida
@@ -331,7 +336,7 @@ class PoolPersonajes {
         const maximo=this.arreglo.reduce((acumulado,item)=>((acumulado<item.vida) ? (acumulado=item.vida) : acumulado),0);
 
         // Filtro el máximo y lo retorno
-        return this.arreglo.filter(item => item.vida === maximo)
+        return this.arreglo.filter(item => item.vida === maximo);
     }
 
     // Busco el máximo en maná
@@ -340,7 +345,7 @@ class PoolPersonajes {
         const maximo=this.arreglo.reduce((acumulado,item)=>((acumulado<item.mana) ? (acumulado=item.mana) : acumulado),0);
 
         // Filtro el máximo y lo retorno
-        return this.arreglo.filter(item => item.mana === maximo)
+        return this.arreglo.filter(item => item.mana === maximo);
     }
 
     // Busco el máximo en precisión
@@ -349,7 +354,7 @@ class PoolPersonajes {
         const maximo=this.arreglo.reduce((acumulado,item)=>((acumulado<item.precision) ? (acumulado=item.precision) : acumulado),0);
 
         // Filtro el máximo y lo retorno
-        return this.arreglo.filter(item => item.precision === maximo)
+        return this.arreglo.filter(item => item.precision === maximo);
     }
 
     // Busco el máximo en evasión
@@ -358,7 +363,7 @@ class PoolPersonajes {
         const maximo=this.arreglo.reduce((acumulado,item)=>((acumulado<item.evasion) ? (acumulado=item.evasion) : acumulado),0);
 
         // Filtro el máximo y lo retorno
-        return this.arreglo.filter(item => item.evasion === maximo)
+        return this.arreglo.filter(item => item.evasion === maximo);
     }
 
     // Busco el máximo en velocidad
@@ -367,78 +372,107 @@ class PoolPersonajes {
         const maximo=this.arreglo.reduce((acumulado,item)=>((acumulado<item.velocidad) ? (acumulado=item.velocidad) : acumulado),0);
 
         // Filtro el máximo y lo retorno
-        return this.arreglo.filter(item => item.velocidad === maximo)
+        return this.arreglo.filter(item => item.velocidad === maximo);
     }
 
 }
 
 class Juego {
+
+    /* -------------------------------- Atributos ------------------------------- */
+
+    constructor(){
+
+        this.nombre = "";
+        this.raza = "";
+        this.clase = "";
+        this.nombreRival = "";
+
+        this.controlNombre();
+        this.controlNombreRival();
+    }
+
+    /* --------------------------------- Métodos -------------------------------- */
+    
+    // Solicito el nombre
+    solicitarNombre(){
+        let nombreSolicitado = prompt("Ingrese su nombre de jugador (entre 3 y 15 caracteres)");
+        nombreSolicitado = nombreSolicitado.replace(/\s+/g, '');
+        return nombreSolicitado;
+    }
+
+    // Valido el nombre suministrado por el usuario, entre 3 y 15 caracteres, no puede arrancar con números
+    validarNombre( nombre ) {
+        if ( nombre.length >= 3 && nombre.length <= 15 && isNaN(parseInt(nombre)) ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // Solicito y valido el nombre al usuario
+    controlNombre(){
+        while ( ! this.validarNombre( this.nombre ) ) {
+            this.nombre = this.solicitarNombre();
+        }
+    }
+
+    // Solicito el nombre del rival
+    solicitarNombreRival(){
+        let nombreSolicitado = prompt("Ingrese el nombre de su rival (entre 3 y 15 caracteres)");
+        nombreSolicitado = nombreSolicitado.replace(/\s+/g, '');
+        return nombreSolicitado;
+    }
+
+    // Solicito y valido el nombre del rival
+    controlNombreRival(){
+        while ( ! this.validarNombre( this.nombreRival ) ) {
+            this.nombreRival = this.solicitarNombreRival();
+        }
+    }
+
+    // Solicito la clase
+    solicitarClase(){
+        claseSolicitada = prompt("Ingrese una clase ('g' = guerrero, 'b' = bárbaro, 'r' = rogue, 'a' = aleatorio)");
+        claseSolicitada = claseSolicitada.toLowerCase();
+        if ( claseSolicitada == "a" ) {
+            sorteo = Math.random();
+            if ( sorteo > 0.67 ) {
+                claseSolicitada = "g";
+            } else if ( sorteo > 0.34 ){
+                claseSolicitada = "b";
+            } else {
+                claseSolicitada = "r";
+            }
+        }
+        return claseSolicitada
+    }
+
+    // Valido la clase suministrada por el usuario, puede ser: 'g' = guerrero, 'b' = bárbaro, 'r' = rogue, 'a' = aleatorio, este último se sortea en la función solicitarClase()
+    validarClase( clase ) {
+        if ( clase == "g" || clase == "b" || clase == "r" ) {
+            return true
+        } else {
+            return false
+        }
+    }
+
+    // Solicito y valido la clase del usuario
+    controlClase(){
+        while ( ! this.validarClase( this.clase ) ) {
+            this.clase = this.solicitarClase();
+        }
+    }
     // hacer control con velocidad ataque, inicia el ataque del jugador y del rival
+    // generar rival
+    // solicitar raza y clase
+    // definir raza y clase para crear Personaje
 }
 
 /* ***** Funciones ***** */
 
-// Solicito el nombre
-function solicitarNombre(){
-    nombreSolicitado = prompt("Ingrese su nombre de jugador (entre 3 y 15 caracteres)");
-    nombreSolicitado = nombreSolicitado.replace(/\s+/g, '');
-    return nombreSolicitado
-}
-
-// Valido el nombre suministrado por el usuario, entre 3 y 15 caracteres, no puede arrancar con números
-function validarNombre(nombre) {
-    if ( nombre.length >= 3 && nombre.length <= 15 && isNaN(parseInt(nombre)) ) {
-        return true
-    } else {
-        return false
-    }
-}
-
-// Solicito la clase
-function solicitarClase(){
-    claseSolicitada = prompt("Ingrese una clase ('g' = guerrero, 'b' = bárbaro, 'r' = rogue, 'a' = aleatorio)");
-    claseSolicitada = claseSolicitada.toLowerCase();
-    if ( claseSolicitada == "a" ) {
-        sorteo = Math.random();
-        if ( sorteo > 0.67 ) {
-            claseSolicitada = "g";
-        } else if ( sorteo > 0.34 ){
-            claseSolicitada = "b";
-        } else {
-            claseSolicitada = "r";
-        }
-    }
-    return claseSolicitada
-}
-
-// Valido la clase suministrada por el usuario, puede ser: 'g' = guerrero, 'b' = bárbaro, 'r' = rogue, 'a' = aleatorio, este último se sortea en la función solicitarClase()
-function validarClase(clase) {
-    if ( clase == "g" || clase == "b" || clase == "r" ) {
-        return true
-    } else {
-        return false
-    }
-}
 
 /* Empiezo a crear variables y a utilizar las funciones */
-
-// Defino las variables
-let nombreJugador = "";
-let claseJugador = "";
-let claseRival = "";
-
-// Solicito y valido el nombre al usuario
-while ( ! validarNombre( nombreJugador ) ) {
-    nombreJugador = solicitarNombre();
-}
-
-// Solicito y valido la clase del usuario
-
-alert("Seleccione su clase")
-
-while ( ! validarClase( claseJugador ) ) {
-    claseJugador = solicitarClase();
-}
 
 // Solicito y valido la clase del rival del usuario
 
@@ -447,22 +481,6 @@ alert("Seleccione la clase de su rival")
 while ( ! validarClase( claseRival ) ) {
     claseRival = solicitarClase();
 }
-
-// Cálculo de stats del jugador
-
-let ataqueJugador = asignarAtaque(claseJugador);
-let hpJugador = asignarHp(claseJugador);
-let precisionJugador = asignarPrecision(claseJugador);
-let evasionJugador = asignarEvasion(claseJugador);
-let velocidadJugador = asignarVelocidad(claseJugador);
-
-// Cálculo de stats del rival
-
-let ataqueRival = asignarAtaque(claseRival);
-let hpRival = asignarHp(claseRival);
-let precisionRival = asignarPrecision(claseRival);
-let evasionRival = asignarEvasion(claseRival);
-let velocidadRival = asignarVelocidad(claseRival);
 
 // Presento Stats
 
