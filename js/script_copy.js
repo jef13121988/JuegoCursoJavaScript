@@ -149,7 +149,7 @@ class Personaje {
 
     // Realiza el ataque contra un objetivo
     atacar( objetivo ){
-        let controlPrecision = this.precisionAtaque( objetivo );
+        const controlPrecision = this.precisionAtaque( objetivo );
         let mensaje = "";
         if ( controlPrecision ) {
             objetivo.vida = objetivo.vida - this.ataque;
@@ -167,8 +167,8 @@ class Personaje {
 
     // Define si el ataque va a impactar
     precisionAtaque( objetivo ){
-        let preciso = this.precisionArma*this.precision/objetivo.evasion;
-        let sorteo = Math.random();
+        const preciso = this.precisionArma*this.precision/objetivo.evasion;
+        const sorteo = Math.random();
         if ( preciso >= sorteo ) {
             return true;
         } else {
@@ -447,7 +447,7 @@ class ElJuego {
         razaSolicitada = razaSolicitada.toLowerCase();
 
         if ( razaSolicitada === "a" ) {
-            let sorteo = Math.random();
+            const sorteo = Math.random();
             if ( sorteo > 5/6 ) {
                 razaSolicitada = "h";
             } else if ( sorteo > 2/3 ){
@@ -504,7 +504,7 @@ class ElJuego {
         claseSolicitada = claseSolicitada.toLowerCase();
 
         if ( claseSolicitada === "a" ) {
-            let sorteo = Math.random();
+            const sorteo = Math.random();
             if ( sorteo > 0.67 ) {
                 claseSolicitada = "g";
             } else if ( sorteo > 0.34 ){
@@ -577,7 +577,7 @@ Cuando haya definido el personaje a utilizar, fíjese el el índice del mismo, e
 
         this.jugador = this.personajes.arreglo[personajeElegido];
 
-        let combatir = confirm("Confirme si quiere iniciar el combate o finalizamos");
+        const combatir = confirm("Confirme si quiere iniciar el combate o finalizamos");
 
         if ( combatir ){
             this.combate();
@@ -591,26 +591,26 @@ Cuando haya definido el personaje a utilizar, fíjese el el índice del mismo, e
         let claseRival = "";
 
         // Sorteo la raza
-        let sorteo = Math.random();
-        if ( sorteo > 5/6 ) {
+        const sorteo1 = Math.random();
+        if ( sorteo1 > 5/6 ) {
             razaRival = "humano";
-        } else if ( sorteo > 2/3 ){
+        } else if ( sorteo1 > 2/3 ){
             razaRival = "elfo";
-        } else if ( sorteo > 0.5 ){
+        } else if ( sorteo1 > 0.5 ){
             razaRival = "elfo oscuro";
-        } else if ( sorteo > 1/3 ){
+        } else if ( sorteo1 > 1/3 ){
             razaRival = "enano";
-        } else if ( sorteo > 1/6 ){
+        } else if ( sorteo1 > 1/6 ){
             razaRival = "gnomo";
         } else {
             razaRival = "orco";
         }
 
         // Sorteo la clase
-        sorteo = Math.random();
-        if ( sorteo > 0.67 ) {
+        const sorteo2 = Math.random();
+        if ( sorteo2 > 0.67 ) {
             claseRival = "guerrero";
-        } else if ( sorteo > 0.34 ){
+        } else if ( sorteo2 > 0.34 ){
             claseRival = "bárbaro";
         } else {
             claseRival = "rogue";
@@ -639,7 +639,7 @@ Cuando haya definido el personaje a utilizar, fíjese el el índice del mismo, e
                 }
 
             } else {
-                let sorteo = Math.random();
+                const sorteo = Math.random();
 
                 if( sorteo >= 0.5){
                     this.jugador.atacar( this.jugadorRival );
@@ -686,25 +686,3 @@ console.log("La clase del rival es " + claseRival );
 console.log("*************");
 
 inicio = confirm("Los stats aparecen en la consola, deseas continuar?");
-
-if ( inicio ) {
-    if ( velocidadJugador >= velocidadRival ) {
-        while ( hpJugador > 0 && hpRival > 0 ) {
-            jugadorAtacar();
-            if ( hpRival == 0 ) {
-                break
-            }
-            rivalAtacar();
-        }
-    } else {
-        while ( hpJugador > 0 && hpRival > 0 ) {
-            rivalAtacar();
-            if ( hpJugador == 0 ) {
-                break
-            }
-            jugadorAtacar();
-        }
-    }
-}
-
-alert("Finalizado");
