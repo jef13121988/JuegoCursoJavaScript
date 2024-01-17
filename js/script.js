@@ -5,6 +5,7 @@ class Personaje {
 
     constructor( nombre, raza, clase ) {
 
+        // Atributos generales
         this.nombre = nombre;
         this.raza = raza;
         this.clase = clase;
@@ -251,6 +252,61 @@ class Personaje {
         calculoAtributosDerivados();
     }
 
+    // Muestra los stats del personaje
+    mostrarStats(){
+        console.log(`Los stats de ${this.nombre} son:
+
+Atributos generales:
+    - Raza: ${this.raza}.
+    - Clase: ${this.clase}.
+    - Nivel: ${this.nivel}.
+    - Experiencia: ${this.experiencia}.
+    - Precisión del arma: ${this.precisionArma}.
+
+Atributos principales:
+    - Agilidad: ${this.agilidad}.
+    - Constitución: ${this.constitucion}.
+    - Destreza: ${this.destreza}.
+    - Fuerza: ${this.fuerza}.
+    - Inteligencia: ${this.inteligencia}.
+
+Atributos derivados:
+    - Ataque: ${this.ataque}.
+    - Vida: ${this.vida}.
+    - Maná: ${this.mana}.
+    - Precisión: ${this.precision}.
+    - Evasión: ${this.evasion}.
+    - Velocidad: ${this.velocidad}.
+
+`)
+    }
+
+    // Realiza la copia de un personaje
+    copiarPersonaje(){
+        // crea una instancia de la clase
+        const copia = new Personaje( this.nombre, this.raza, this.clase );
+
+        // Copia los valores en la nueva instancia
+        copia.nivel = this.nivel;
+        copia.nivel = this.experiencia;
+        copia.nivel = this.experienciaOtorgada;
+        copia.nivel = this.indice;
+        copia.agilidad = this.agilidad;
+        copia.constitucion = this.constitucion;
+        copia.destreza = this.destreza;
+        copia.fuerza = this.fuerza;
+        copia.inteligencia = this.inteligencia;
+        copia.ataque = this.ataque;
+        copia.vida = this.vida;
+        copia.mana = this.mana;
+        copia.precision = this.precision;
+        copia.evasion = this.evasion;
+        copia.velocidad = this.velocidad;
+        copia.precisionArma = this.precisionArma;
+
+        return copia;
+    }
+
 }
 
 // Clase que arma el pool con 10 personajes para elegir al que tenga mejores atributos
@@ -280,7 +336,7 @@ class PoolPersonajes {
     }
     
     // Busco el máximo en agilidad
-    calcularMaxAgilidad(){
+    maxAgilidad(){
         // Calculo el máximo
         const maximo=this.arreglo.reduce((acumulado,item)=>((acumulado<item.agilidad) ? (acumulado=item.agilidad) : acumulado),0);
 
@@ -289,7 +345,7 @@ class PoolPersonajes {
     }
 
     // Busco el máximo en constitución
-    calcularMaxConstitucion(){
+    maxConstitucion(){
         // Calculo el máximo
         const maximo=this.arreglo.reduce((acumulado,item)=>((acumulado<item.constitucion) ? (acumulado=item.constitucion) : acumulado),0);
 
@@ -298,7 +354,7 @@ class PoolPersonajes {
     }
 
     // Busco el máximo en destreza
-    calcularMaxDestreza(){
+    maxDestreza(){
         // Calculo el máximo
         const maximo=this.arreglo.reduce((acumulado,item)=>((acumulado<item.destreza) ? (acumulado=item.destreza) : acumulado),0);
 
@@ -307,7 +363,7 @@ class PoolPersonajes {
     }
 
     // Busco el máximo en fuerza
-    calcularMaxFuerza(){
+    maxFuerza(){
         // Calculo el máximo
         const maximo=this.arreglo.reduce((acumulado,item)=>((acumulado<item.fuerza) ? (acumulado=item.fuerza) : acumulado),0);
 
@@ -316,7 +372,7 @@ class PoolPersonajes {
     }
 
     // Busco el máximo en inteligencia
-    calcularMaxInteligencia(){
+    maxInteligencia(){
         // Calculo el máximo
         const maximo=this.arreglo.reduce((acumulado,item)=>((acumulado<item.inteligencia) ? (acumulado=item.inteligencia) : acumulado),0);
 
@@ -325,7 +381,7 @@ class PoolPersonajes {
     }
 
     // Busco el máximo en ataque
-    calcularMaxAtaque(){
+    maxAtaque(){
         // Calculo el máximo
         const maximo=this.arreglo.reduce((acumulado,item)=>((acumulado<item.ataque) ? (acumulado=item.ataque) : acumulado),0);
 
@@ -334,7 +390,7 @@ class PoolPersonajes {
     }
 
     // Busco el máximo en vida
-    calcularMaxVida(){
+    maxVida(){
         // Calculo el máximo
         const maximo=this.arreglo.reduce((acumulado,item)=>((acumulado<item.vida) ? (acumulado=item.vida) : acumulado),0);
 
@@ -343,7 +399,7 @@ class PoolPersonajes {
     }
 
     // Busco el máximo en maná
-    calcularMaxMana(){
+    maxMana(){
         // Calculo el máximo
         const maximo=this.arreglo.reduce((acumulado,item)=>((acumulado<item.mana) ? (acumulado=item.mana) : acumulado),0);
 
@@ -352,7 +408,7 @@ class PoolPersonajes {
     }
 
     // Busco el máximo en precisión
-    calcularMaxPrecision(){
+    maxPrecision(){
         // Calculo el máximo
         const maximo=this.arreglo.reduce((acumulado,item)=>((acumulado<item.precision) ? (acumulado=item.precision) : acumulado),0);
 
@@ -361,7 +417,7 @@ class PoolPersonajes {
     }
 
     // Busco el máximo en evasión
-    calcularMaxEvasion(){
+    maxEvasion(){
         // Calculo el máximo
         const maximo=this.arreglo.reduce((acumulado,item)=>((acumulado<item.evasion) ? (acumulado=item.evasion) : acumulado),0);
 
@@ -370,7 +426,7 @@ class PoolPersonajes {
     }
 
     // Busco el máximo en velocidad
-    calcularMaxVelocidad(){
+    maxVelocidad(){
         // Calculo el máximo
         const maximo=this.arreglo.reduce((acumulado,item)=>((acumulado<item.velocidad) ? (acumulado=item.velocidad) : acumulado),0);
 
@@ -577,7 +633,11 @@ Cuando haya definido el personaje a utilizar, fíjese el el índice del mismo, e
 
         this.jugador = this.personajes.arreglo[personajeElegido];
 
-        const combatir = confirm("Confirme si quiere iniciar el combate o finalizamos");
+        this.jugador.mostrarStats();
+        this.jugadorRival.mostrarStats();
+
+        const combatir = confirm(`Los stats aparecen en la consola.
+Confirme si quiere iniciar el combate o finalizamos`);
 
         if ( combatir ){
             this.combate();
@@ -621,38 +681,44 @@ Cuando haya definido el personaje a utilizar, fíjese el el índice del mismo, e
         this.jugadorRival.indice = -1;
     }
 
+    // La función controla la velocidad y da lugar al combate entre los jugadores
     combate(){
-        while( this.jugador.vida > 0 && this.jugadorRival.vida >0 ){
 
-            if( this.jugador.velocidad > this.jugadorRival.velocidad ){
-                this.jugador.atacar( this.jugadorRival );
+        // Realiza una copia para no pisar los atributos originales
+        const jugador1 = this.jugador.copiarPersonaje();
+        const jugador2 = this.jugadorRival.copiarPersonaje();
 
-                if( this.jugadorRival.vida > 0 ){
-                    this.jugadorRival.atacar( this.jugador );
+        while( jugador1.vida > 0 && jugador2.vida >0 ){
+
+            if( jugador1.velocidad > jugador2.velocidad ){
+                jugador1.atacar( jugador2 );
+
+                if( jugador2.vida > 0 ){
+                    jugador2.atacar( jugador1 );
                 }
                 
-            } else if( this.jugador.velocidad < this.jugadorRival.velocidad ){
-                this.jugadorRival.atacar( this.jugador );
+            } else if( jugador1.velocidad < jugador2.velocidad ){
+                jugador2.atacar( jugador1 );
 
-                if( this.jugador.vida > 0 ){
-                    this.jugador.atacar( this.jugadorRival );
+                if( jugador1.vida > 0 ){
+                    jugador1.atacar( jugador2 );
                 }
 
             } else {
                 const sorteo = Math.random();
 
                 if( sorteo >= 0.5){
-                    this.jugador.atacar( this.jugadorRival );
+                    jugador1.atacar( jugador2 );
 
-                    if( this.jugadorRival.vida > 0 ){
-                        this.jugadorRival.atacar( this.jugador );
+                    if( jugador2.vida > 0 ){
+                        jugador2.atacar( jugador1 );
                     }
 
                 } else {
-                    this.jugadorRival.atacar( this.jugador );
+                    jugador2.atacar( jugador1 );
 
-                    if( this.jugador.vida > 0 ){
-                        this.jugador.atacar( this.jugadorRival );
+                    if( jugador1.vida > 0 ){
+                        jugador1.atacar( jugador2 );
                     }
 
                 }
@@ -667,27 +733,4 @@ Cuando haya definido el personaje a utilizar, fíjese el el índice del mismo, e
 }
 
 // Creo una instancia del juego
-juego = new ElJuego();
-
-
-// Presento Stats
-/*
-console.log("Los stats de " + nombreJugador + " son:");
-console.log("HP: " + hpJugador );
-console.log("Ataque: " + ataqueJugador );
-console.log("Precisión: " + precisionJugador );
-console.log("Evasión: " + evasionJugador );
-console.log("Velocidad: " + velocidadJugador );
-console.log("La clase de " + nombreJugador +  " es " + claseJugador );
-console.log("*************");
-console.log("Los stats del Rival son:");
-console.log("HP: " + hpRival );
-console.log("Ataque: " + ataqueRival );
-console.log("Precisión: " + precisionRival );
-console.log("Evasión: " + evasionRival );
-console.log("Velocidad: " + velocidadRival );
-console.log("La clase del rival es " + claseRival );
-console.log("*************");
-
-inicio = confirm("Los stats aparecen en la consola, deseas continuar?");
-*/
+const juego = new ElJuego();
