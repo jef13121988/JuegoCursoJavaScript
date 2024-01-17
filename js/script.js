@@ -123,27 +123,27 @@ class Personaje {
         if( this.clase === "rogue" ){
             this.ataque = Math.round(14*(1+(this.agilidad+this.destreza+this.fuerza)/300));
             this.vida = Math.round(30+this.constitucion*3);
-            this.mana = Math.round(20+this.inteligencia*2);
+            this.mana = Math.round(20+this.inteligencia*1.3);
             this.precision = Math.round(this.destreza*2);
-            this.evasion = Math.round((this.agilidad*1.2+this.destreza*0.8)*1.3);
+            this.evasion = Math.round((this.agilidad*4/3+this.destreza*2/3)*1.5);
             this.velocidad = Math.round(this.agilidad*1.5);
             this.precisionArma = 1;
         } else if( this.clase === "guerrero" ){
-            this.ataque = Math.round(17*(1+(this.destreza*0.25+this.fuerza*0.75)/100));
+            this.ataque = Math.round(19*(1+(this.destreza*0.25+this.fuerza*0.75)/100));
             this.vida = Math.round(40+this.constitucion*3);
             this.mana = Math.round(15+this.inteligencia);
             this.precision = Math.round(this.destreza*2);
-            this.evasion = Math.round((this.agilidad*1.2+this.destreza*0.8)*1.1);
+            this.evasion = Math.round((this.agilidad*4/3+this.destreza*2/3)*1.3);
             this.velocidad = Math.round(this.agilidad);
-            this.precisionArma = 0.95;
+            this.precisionArma = 1;
         } else {
-            this.ataque = Math.round(22*(1+this.fuerza/100));
+            this.ataque = Math.round(25*(1+this.fuerza/100));
             this.vida = Math.round(50+this.constitucion*3);
             this.mana = Math.round(10+this.inteligencia);
             this.precision = Math.round(this.destreza*2);
-            this.evasion = Math.round(this.agilidad*1.2+this.destreza*0.8);
+            this.evasion = Math.round(this.agilidad*4/3+this.destreza*2/3);
             this.velocidad = Math.round(this.agilidad);
-            this.precisionArma = 0.9;
+            this.precisionArma = 1;
         }
     }
 
