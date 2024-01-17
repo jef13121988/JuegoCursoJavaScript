@@ -640,7 +640,7 @@ Cuando haya definido el personaje a utilizar, fíjese el el índice del mismo, e
 Confirme si quiere iniciar el combate o finalizamos`);
 
         if ( combatir ){
-            this.combate();
+            this.combate( this.jugador, this.jugadorRival );
         }
         
     }
@@ -682,11 +682,11 @@ Confirme si quiere iniciar el combate o finalizamos`);
     }
 
     // La función controla la velocidad y da lugar al combate entre los jugadores
-    combate(){
+    combate( player1, player2 ){
 
         // Realiza una copia para no pisar los atributos originales
-        const jugador1 = this.jugador.copiarPersonaje();
-        const jugador2 = this.jugadorRival.copiarPersonaje();
+        const jugador1 = player1.copiarPersonaje();
+        const jugador2 = player2.copiarPersonaje();
 
         while( jugador1.vida > 0 && jugador2.vida >0 ){
 
@@ -730,7 +730,7 @@ Confirme si quiere iniciar el combate o finalizamos`);
 
         if( jugarDeNuevo ){
             console.log("********************");
-            this.combate();
+            this.combate( player1, player2 );
         } else {
             alert("Juego finalizado.");
         }
