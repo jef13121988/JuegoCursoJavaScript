@@ -725,6 +725,16 @@ Confirme si quiere iniciar el combate o finalizamos`);
 
             }
         }
+
+        const jugarDeNuevo = confirm("¿Desea jugar de nuevo?");
+
+        if( jugarDeNuevo ){
+            console.log("********************");
+            this.combate();
+        } else {
+            alert("Juego finalizado.");
+        }
+
     }
 
     // hacer control con velocidad ataque, inicia el ataque del jugador y del rival
