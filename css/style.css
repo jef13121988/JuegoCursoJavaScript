@@ -143,9 +143,15 @@ button:hover {
 }
 
 /* Configuración de imagen de portada */
-
 .portada {
     width: 550px;
+    margin: 25px;
+    border-radius: 100px;
+}
+
+/* Configuración de imagen de personaje */
+.imgPersonaje {
+    width: 90%;
     margin: 25px;
     border-radius: 100px;
 }
