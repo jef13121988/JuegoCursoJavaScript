@@ -749,8 +749,12 @@ const seccion = document.querySelector('#seccion')
 const iniciarJuegos = document.querySelector('#iniciarJuego');
 let elNombre = "";
 const razas = [
-    { nombre: "Elfo Oscuro", ruta: "eo-r" },
-    { nombre: "Orco", ruta: "o-b" }
+    { id: 0, nombre: "Elfo", ruta: "e-r" },
+    { id: 1, nombre: "Elfo Oscuro", ruta: "eo-r" },
+    { id: 2, nombre: "Enano", ruta: "en-b" },
+    { id: 3, nombre: "Gnomo", ruta: "g-r" },
+    { id: 4, nombre: "Humano", ruta: "h-g" },
+    { id: 5, nombre: "Orco", ruta: "o-b" }
 ]
 
 function indicarNombre(){
@@ -774,12 +778,28 @@ function seleccionRaza(){
     const divRaza = document.querySelector('#cajaRaza');
     console.log(seccion.innerHTML);
     razas.forEach( raza => {
-        divRaza.innerHTML += `<div class="col-sm-12 col-md-6 col-xl-4 d-flex flex-column">
+        divRaza.innerHTML += `<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 d-flex flex-column">
                                 <h3 class="titulo tituloResponsive"> ${raza.nombre} </h3>
-                                <img class="imgPersonaje" src="../img/${raza.ruta}.jpg" alt="${raza.nombre}">
+                                <img id="${raza.ruta}" class="imgPersonaje" src="../img/${raza.ruta}.jpg" alt="Imagen de un ${raza.nombre}">
                             </div>`;
     });
-    
+
+    const imgRazas = document.querySelectorAll('.imgPersonaje');
+
+    imgRazas.forEach( imgRaza => {
+        imgRaza.addEventListener('click', ( evento )=>{
+            console.log( evento.target );
+            const id = evento.target.id;
+            console.log( id );
+            seleccionGenero();
+            // quizá que la otra fórmula reciba el id y que sea como está en el arreglo de las razas, un número
+        })
+    });
+
+}
+
+function seleccionGenero(){
+    console.log("Sigue");
 }
 
 iniciarJuegos.addEventListener('click', () => {indicarNombre()});

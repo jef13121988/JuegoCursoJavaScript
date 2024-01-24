@@ -156,6 +156,11 @@ button:hover {
     border-radius: 100px;
 }
 
+/* Efecto para las fotos */
+.imgPersonaje:hover {
+    opacity: 90%;
+  }
+
 /* Se achica el tamaño de la imagen por debajo de los 600px */
 @media (max-width: 600px) {
     .portada {
