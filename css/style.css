@@ -183,3 +183,30 @@ footer p {
     margin: 10px;
     border-radius: 10px;
 }
+
+/* Configuración de los tí­tulos h3 de las cards */
+.titulo {
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    font-size: 2rem;
+    margin-top: 1rem;
+    background-color: darkslategray;
+    border-radius: 30px;
+    padding: 0.5rem;
+}
+
+/* Se ajusta el tamaÃ±o de la fuente para pantallas menores a 440px */
+@media (max-width: 440px) {
+.titulo {
+    font-size: 1.15rem;
+}
+}
+  
+/* Para que los nombres sean responsive */
+.tituloResponsive {
+flex-grow: 1;
+display: flex;
+justify-content: center;
+align-items: center;
+}

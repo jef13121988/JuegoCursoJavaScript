@@ -743,4 +743,45 @@ Confirme si quiere iniciar el combate o finalizamos`);
 }
 
 // Creo una instancia del juego
-const juego = new ElJuego();
+//const juego = new ElJuego();
+
+const seccion = document.querySelector('#seccion')
+const iniciarJuegos = document.querySelector('#iniciarJuego');
+let elNombre = "";
+const razas = [
+    { nombre: "Elfo Oscuro", ruta: "eo-r" },
+    { nombre: "Orco", ruta: "o-b" }
+]
+
+function indicarNombre(){
+    seccion.innerHTML = `<div class="row justify-content-center">
+                            <input id="nombreIndicado" class="col" type="text" placeholder="Complete su nombre"></input>
+                        </div>
+                        <div class="row justify-content-center">
+                            <button id="nombreSubmitido" class="col"> Enviar </button>
+                        </div>`;
+
+    const nombreIndicados = document.querySelector('#nombreIndicado');
+    const nombreSubmitidos = document.querySelector('#nombreSubmitido');
+    nombreSubmitidos.addEventListener('click', () => {
+        elNombre = nombreIndicados.value;
+        seleccionRaza();
+    })
+}
+
+function seleccionRaza(){
+    seccion.innerHTML = `<div id="cajaRaza" class="row justify-content-center m-4"></div>`;
+    const divRaza = document.querySelector('#cajaRaza');
+    console.log(seccion.innerHTML);
+    razas.forEach( raza => {
+        divRaza.innerHTML += `<div class="col-sm-12 col-md-6 col-xl-4 d-flex flex-column">
+                                <h3 class="titulo tituloResponsive"> ${raza.nombre} </h3>
+                                <img class="imgPersonaje" src="../img/${raza.ruta}.jpg" alt="${raza.nombre}">
+                            </div>`;
+    });
+    
+}
+
+iniciarJuegos.addEventListener('click', () => {indicarNombre()});
+
+
