@@ -757,6 +757,12 @@ const razas = [
     { id: 5, nombre: "Orco", ruta: "o-b" }
 ]
 
+const clases = [
+    { id: 0, nombre: "Bárbaro", ruta: "eo-b" },
+    { id: 1, nombre: "Guerrero", ruta: "eo-g" },
+    { id: 2, nombre: "Rogue", ruta: "eo-r" }
+]
+
 function indicarNombre(){
     seccion.innerHTML = `<div class="row justify-content-center">
                             <input id="nombreIndicado" class="col" type="text" placeholder="Complete su nombre"></input>
@@ -787,21 +793,53 @@ function seleccionRaza(){
     const imgRazas = document.querySelectorAll('.imgPersonaje');
 
     imgRazas.forEach( imgRaza => {
-        imgRaza.addEventListener('click', ( evento )=>{
-            console.log( evento.target );
-            const id = evento.target.id;
-            console.log( id );
-            seleccionGenero();
-            // quizá que la otra fórmula reciba el id y que sea como está en el arreglo de las razas, un número
-        })
+        imgRaza.addEventListener('click', listenerRaza);
     });
-
 }
 
-function seleccionGenero(){
-    console.log("Sigue");
+function listenerRaza(evento){
+    console.log( evento.target );
+    const id = evento.target.id;
+    console.log( id );
+    seleccionClase();
+
+    const imgRazas = document.querySelectorAll('.imgPersonaje');
+
+    imgRazas.forEach( imgRaza => {
+        imgRaza.removeEventListener('click', listenerRaza);
+    });
+}
+
+function seleccionClase(){
+    seccion.innerHTML = `<div id="cajaRaza" class="row justify-content-center m-4"></div>`;
+    const divClase = document.querySelector('#cajaRaza');
+    console.log(seccion.innerHTML);
+    clases.forEach( clase => {
+        divClase.innerHTML += `<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 d-flex flex-column">
+                                <h3 class="titulo tituloResponsive"> ${clase.nombre} </h3>
+                                <img id="${clase.ruta}" class="imgPersonaje" src="../img/${clase.ruta}.jpg" alt="Imagen de un ${clase.nombre}">
+                            </div>`;
+    });
+
+    const imgClases = document.querySelectorAll('.imgPersonaje');
+
+    imgClases.forEach( imgClase => {
+        imgClase.addEventListener('click', listenerClase);
+    });
+}
+
+function listenerClase(evento){
+    console.log( evento.target );
+    const id = evento.target.id;
+    console.log( id );
+    seleccionClase();
+
+    const imgClases = document.querySelectorAll('.imgPersonaje');
+
+    imgClases.forEach( imgClase => {
+        imgClase.removeEventListener('click', listenerClase);
+    });
 }
 
 iniciarJuegos.addEventListener('click', () => {indicarNombre()});
-
 
