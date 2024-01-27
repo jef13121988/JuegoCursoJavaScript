@@ -764,12 +764,13 @@ const clases = [
 ]
 
 function indicarNombre(){
-    seccion.innerHTML = `<div class="row justify-content-center">
-                            <input id="nombreIndicado" class="col" type="text" placeholder="Complete su nombre"></input>
-                        </div>
-                        <div class="row justify-content-center">
-                            <button id="nombreSubmitido" class="col"> Enviar </button>
-                        </div>`;
+    seccion.innerHTML = //html
+        `<div class="row justify-content-center">
+            <input id="nombreIndicado" class="col" type="text" placeholder="Complete su nombre"></input>
+        </div>
+        <div class="row justify-content-center">
+            <button id="nombreSubmitido" class="col"> Enviar </button>
+        </div>`;
 
     const nombreIndicados = document.querySelector('#nombreIndicado');
     const nombreSubmitidos = document.querySelector('#nombreSubmitido');
@@ -780,14 +781,16 @@ function indicarNombre(){
 }
 
 function seleccionRaza(){
-    seccion.innerHTML = `<div id="cajaRaza" class="row justify-content-center m-4"></div>`;
+    seccion.innerHTML = //html
+        `<div id="cajaRaza" class="row justify-content-center m-4"></div>`;
     const divRaza = document.querySelector('#cajaRaza');
     console.log(seccion.innerHTML);
     razas.forEach( raza => {
-        divRaza.innerHTML += `<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 d-flex flex-column">
-                                <h3 class="titulo tituloResponsive"> ${raza.nombre} </h3>
-                                <img id="${raza.ruta}" class="imgPersonaje" src="../img/${raza.ruta}.jpg" alt="Imagen de un ${raza.nombre}">
-                            </div>`;
+        divRaza.innerHTML += //html
+            `<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 d-flex flex-column">
+                <h3 class="titulo tituloResponsive"> ${raza.nombre} </h3>
+                <img id="${raza.ruta}" class="imgPersonaje" src="../img/${raza.ruta}.jpg" alt="Imagen de un ${raza.nombre}">
+            </div>`;
     });
 
     const imgRazas = document.querySelectorAll('.imgPersonaje');
@@ -811,14 +814,16 @@ function listenerRaza(evento){
 }
 
 function seleccionClase(){
-    seccion.innerHTML = `<div id="cajaRaza" class="row justify-content-center m-4"></div>`;
+    seccion.innerHTML = //html
+        `<div id="cajaRaza" class="row justify-content-center m-4"></div>`;
     const divClase = document.querySelector('#cajaRaza');
     console.log(seccion.innerHTML);
     clases.forEach( clase => {
-        divClase.innerHTML += `<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 d-flex flex-column">
-                                <h3 class="titulo tituloResponsive"> ${clase.nombre} </h3>
-                                <img id="${clase.ruta}" class="imgPersonaje" src="../img/${clase.ruta}.jpg" alt="Imagen de un ${clase.nombre}">
-                            </div>`;
+        divClase.innerHTML += //html
+            `<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 d-flex flex-column">
+                <h3 class="titulo tituloResponsive"> ${clase.nombre} </h3>
+                <img id="${clase.ruta}" class="imgPersonaje" src="../img/${clase.ruta}.jpg" alt="Imagen de un ${clase.nombre}">
+            </div>`;
     });
 
     const imgClases = document.querySelectorAll('.imgPersonaje');
