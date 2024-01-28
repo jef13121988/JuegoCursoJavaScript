@@ -3,12 +3,13 @@ class Personaje {
 
     /* -------------------------------- Atributos ------------------------------- */
 
-    constructor( nombre, raza, clase ) {
+    constructor( nombre, raza, clase, imagen ) {
 
         // Atributos generales
         this.nombre = nombre;
         this.raza = raza;
         this.clase = clase;
+        this.imagen = imagen;
         this.nivel = 1; // No tiene aplicación práctica en esta versión, pero se puede aumentar
         this.experiencia = 0; // No tiene aplicación práctica en esta versión
         this.experienciaOtorgada = 50; // No tiene aplicación práctica en esta versión
@@ -442,29 +443,90 @@ class ElJuego {
 
     constructor(){
 
-        this.nombre = "";
-        this.raza = "";
-        this.clase = "";
-        this.nombreRival = "";
-        this.jugador = "";
-        this.jugadorRival = "";
+        this.referencia;
+        this.nombre = ""; // Nombre seleccionado
+        this.raza = ""; // Raza seleccionada
+        this.clase = ""; // Clase seleccionada
+        this.imagen = ""; // Imagen seleccionada
+        this.nombreRival = ""; // Nombre seleccionado del rival
+        this.jugador = ""; // Personaje creado para el jugador
+        this.jugadorRival = ""; // Personaje creado para el jugador rival
+        // Selecciono la sección que se va a modificar
+        this.seccion = document.querySelector('#seccion');
+        // Selecciono el botón para iniciar el juego
+        this.botonIniciarJuego = document.querySelector('#iniciarJuego');
+        // Listo las imágenes
+        this.imagenes = [
+            { id: "e-b", raza: "Elfo", clase: "Bárbaro" },
+            { id: "e-g", raza: "Elfo", clase: "Guerrero" },
+            { id: "e-r", raza: "Elfo", clase: "Rogue" },
+            { id: "e-b0", raza: "Elfo", clase: "Bárbaro" },
+            { id: "e-g0", raza: "Elfo", clase: "Guerrero" },
+            { id: "e-r0", raza: "Elfo", clase: "Rogue" },
+            { id: "e-b1", raza: "Elfo", clase: "Bárbaro" },
+            { id: "e-g1", raza: "Elfo", clase: "Guerrero" },
+            { id: "e-r1", raza: "Elfo", clase: "Rogue" },
+            { id: "eo-b", raza: "Elfo Oscuro", clase: "Bárbaro" },
+            { id: "eo-g", raza: "Elfo Oscuro", clase: "Guerrero" },
+            { id: "eo-r", raza: "Elfo Oscuro", clase: "Rogue" },
+            { id: "eo-b0", raza: "Elfo Oscuro", clase: "Bárbaro" },
+            { id: "eo-g0", raza: "Elfo Oscuro", clase: "Guerrero" },
+            { id: "eo-r0", raza: "Elfo Oscuro", clase: "Rogue" },
+            { id: "eo-b1", raza: "Elfo Oscuro", clase: "Bárbaro" },
+            { id: "eo-g1", raza: "Elfo Oscuro", clase: "Guerrero" },
+            { id: "eo-r1", raza: "Elfo Oscuro", clase: "Rogue" },
+            { id: "en-b", raza: "Enano", clase: "Bárbaro" },
+            { id: "en-g", raza: "Enano", clase: "Guerrero" },
+            { id: "en-r", raza: "Enano", clase: "Rogue" },
+            { id: "en-b0", raza: "Enano", clase: "Bárbaro" },
+            { id: "en-g0", raza: "Enano", clase: "Guerrero" },
+            { id: "en-r0", raza: "Enano", clase: "Rogue" },
+            { id: "en-b1", raza: "Enano", clase: "Bárbaro" },
+            { id: "en-g1", raza: "Enano", clase: "Guerrero" },
+            { id: "en-r1", raza: "Enano", clase: "Rogue" },
+            { id: "h-b", raza: "Humano", clase: "Bárbaro" },
+            { id: "h-g", raza: "Humano", clase: "Guerrero" },
+            { id: "h-r", raza: "Humano", clase: "Rogue" },
+            { id: "h-b0", raza: "Humano", clase: "Bárbaro" },
+            { id: "h-g0", raza: "Humano", clase: "Guerrero" },
+            { id: "h-r0", raza: "Humano", clase: "Rogue" },
+            { id: "h-b1", raza: "Humano", clase: "Bárbaro" },
+            { id: "h-g1", raza: "Humano", clase: "Guerrero" },
+            { id: "h-r1", raza: "Humano", clase: "Rogue" },
+            { id: "g-b", raza: "Gnomo", clase: "Bárbaro" },
+            { id: "g-g", raza: "Gnomo", clase: "Guerrero" },
+            { id: "g-r", raza: "Gnomo", clase: "Rogue" },
+            { id: "g-b0", raza: "Gnomo", clase: "Bárbaro" },
+            { id: "g-g0", raza: "Gnomo", clase: "Guerrero" },
+            { id: "g-r0", raza: "Gnomo", clase: "Rogue" },
+            { id: "g-b1", raza: "Gnomo", clase: "Bárbaro" },
+            { id: "g-g1", raza: "Gnomo", clase: "Guerrero" },
+            { id: "g-r1", raza: "Gnomo", clase: "Rogue" },
+            { id: "o-b", raza: "Orco", clase: "Bárbaro" },
+            { id: "o-g", raza: "Orco", clase: "Guerrero" },
+            { id: "o-r", raza: "Orco", clase: "Rogue" },
+            { id: "o-b0", raza: "Orco", clase: "Bárbaro" },
+            { id: "o-g0", raza: "Orco", clase: "Guerrero" },
+            { id: "o-r0", raza: "Orco", clase: "Rogue" },
+            { id: "o-b1", raza: "Orco", clase: "Bárbaro" },
+            { id: "o-g1", raza: "Orco", clase: "Guerrero" },
+            { id: "o-r1", raza: "Orco", clase: "Rogue" }   
+        ]
+        // Listo las razas
+        this.razas = [ "Elfo", "Elfo Oscuro", "Enano", "Gnomo", "Humano", "Orco" ];
+        // Listo las clases
+        this.clases = [ "Bárbaro", "Guerrero", "Rogue" ];
 
-        this.controlNombre();
-        this.controlRaza();
-        this.controlClase();
-        this.controlNombreRival();
-        this.crearJugadorRival();
-        this.empezar();
+        // Función para iniciar el juego
+        this.iniciarJuego();
 
     }
 
     /* --------------------------------- Métodos -------------------------------- */
     
-    // Solicito el nombre
-    solicitarNombre(){
-        let nombreSolicitado = prompt("Ingrese su nombre de jugador (entre 3 y 15 caracteres)");
-        nombreSolicitado = nombreSolicitado.replace(/\s+/g, ''); // Elimino los espacios
-        return nombreSolicitado;
+    // Listener para iniciar el juego y levantar el nombre
+    iniciarJuego(){
+        this.botonIniciarJuego.addEventListener('click', this.referencia = this.indicarNombre.bind(this));
     }
 
     // Valido el nombre suministrado por el usuario, entre 3 y 15 caracteres, no puede arrancar con números
@@ -474,128 +536,6 @@ class ElJuego {
         } else {
             return false;
         }
-    }
-
-    // Solicito y valido el nombre al usuario
-    controlNombre(){
-        while ( ! this.validarNombre( this.nombre ) ) {
-            this.nombre = this.solicitarNombre();
-        }
-    }
-
-    // Solicito el nombre del rival
-    solicitarNombreRival(){
-        let nombreSolicitado = prompt("Ingrese el nombre de su rival (entre 3 y 15 caracteres)");
-        nombreSolicitado = nombreSolicitado.replace(/\s+/g, ''); // Elimino los espacios
-        return nombreSolicitado;
-    }
-
-    // Solicito y valido el nombre del rival
-    controlNombreRival(){
-        while ( ! this.validarNombre( this.nombreRival ) ) {
-            this.nombreRival = this.solicitarNombreRival();
-        }
-    }
-
-    // Solicito la raza
-    solicitarRaza(){
-        let razaSolicitada = prompt("Ingrese una raza ('h' = humano, 'e' = elfo, 'eo' = elfo oscuro, 'en' = enano, 'g' = gnomo, 'o' = orco, 'a' = aleatorio)");
-        razaSolicitada = razaSolicitada.toLowerCase();
-
-        if ( razaSolicitada === "a" ) {
-            const sorteo = Math.random();
-            if ( sorteo > 5/6 ) {
-                razaSolicitada = "h";
-            } else if ( sorteo > 2/3 ){
-                razaSolicitada = "e";
-            } else if ( sorteo > 0.5 ){
-                razaSolicitada = "eo";
-            } else if ( sorteo > 1/3 ){
-                razaSolicitada = "en";
-            } else if ( sorteo > 1/6 ){
-                razaSolicitada = "g";
-            } else {
-                razaSolicitada = "o";
-            }
-        }
-
-        return razaSolicitada
-    }
-
-    // Valido la raza suministrada por el usuario, puede ser: 'h' = humano, 'e' = elfo, 'eo' = elfo oscuro,
-    // 'en' = enano, 'g' = gnomo, 'o' = orco, 'a' = aleatorio, este último se sortea en la función solicitarRaza()
-    validarRaza( raza ) {
-        if ( raza === "h" || raza === "e" || raza === "eo" || raza === "en" || raza === "g" || raza === "o" ) {
-            return true
-        } else {
-            return false
-        }
-    }
-
-    // Solicito y valido la raza del usuario
-    controlRaza(){
-        while ( ! this.validarRaza( this.raza ) ) {
-            this.raza = this.solicitarRaza();
-        }
-
-        if ( this.raza === "h" ) {
-            this.raza = "humano";
-        } else if ( this.raza === "e" ) {
-            this.raza = "elfo";
-        } else if ( this.raza === "eo" ) {
-            this.raza = "elfo oscuro";
-        } else if ( this.raza === "en" ) {
-            this.raza = "enano";
-        } else if ( this.raza === "g" ) {
-            this.raza = "gnomo";
-        } else {
-            this.raza = "orco";
-        }
-
-    }
-
-    // Solicito la clase
-    solicitarClase(){
-        let claseSolicitada = prompt("Ingrese una clase ('g' = guerrero, 'b' = bárbaro, 'r' = rogue, 'a' = aleatorio)");
-        claseSolicitada = claseSolicitada.toLowerCase();
-
-        if ( claseSolicitada === "a" ) {
-            const sorteo = Math.random();
-            if ( sorteo > 0.67 ) {
-                claseSolicitada = "g";
-            } else if ( sorteo > 0.34 ){
-                claseSolicitada = "b";
-            } else {
-                claseSolicitada = "r";
-            }
-        }
-
-        return claseSolicitada
-    }
-
-    // Valido la clase suministrada por el usuario, puede ser: 'g' = guerrero, 'b' = bárbaro, 'r' = rogue, 'a' = aleatorio, este último se sortea en la función solicitarClase()
-    validarClase( clase ) {
-        if ( clase === "g" || clase === "b" || clase === "r" ) {
-            return true
-        } else {
-            return false
-        }
-    }
-
-    // Solicito y valido la clase del usuario
-    controlClase(){
-        while ( ! this.validarClase( this.clase ) ) {
-            this.clase = this.solicitarClase();
-        }
-
-        if ( this.clase === "g" ) {
-            this.clase = "guerrero";
-        } else if ( this.clase === "b" ) {
-            this.clase = "bárbaro";
-        } else {
-            this.clase = "rogue";
-        }
-
     }
 
     // Creo el pool de personajes e indico como interactuar
@@ -676,8 +616,14 @@ Confirme si quiere iniciar el combate o finalizamos`);
             claseRival = "rogue";
         }
 
+        // Filtro las imágenes que cumplen con la raza y la clase sorteadas
+        let imagenRival = this.imagenes.filter( item => (item.raza.toLowerCase() === razaRival) && (item.clase.toLowerCase() === claseRival) );
+        // Sorteo la imagen
+        const sorteo3 = Math.floor(Math.random() * imagenRival.length);
+        imagenRival = imagenRival[sorteo3];
+
         // Creo el personaje
-        this.jugadorRival = new Personaje( this.nombreRival, razaRival, claseRival )
+        this.jugadorRival = new Personaje( this.nombreRival, imagenRival.raza, imagenRival.clase, imagenRival.id )
         this.jugadorRival.indice = -1;
     }
 
@@ -737,183 +683,190 @@ Confirme si quiere iniciar el combate o finalizamos`);
 
     }
 
-    // hacer control con velocidad ataque, inicia el ataque del jugador y del rival
-    // iniciar pelea
+    // Armo el grupo de imágenes para seleccionar la raza
+    grupoImagenesRazas(){
+        const arregloRaza = [];
+        this.razas.forEach( raza => {
+            let listaRaza = this.imagenes.filter( item => item.raza === raza );
+            let sorteo = Math.floor(Math.random() * listaRaza.length);
+            arregloRaza.push( listaRaza[sorteo] );
+        });
+            
+        return arregloRaza;
+
+    }
+
+    // Armo el grupo de imágenes para seleccionar la clase
+    grupoImagenesClases( razaSeleccionada ){
+        const listaRaza = this.imagenes.filter( item => item.raza === razaSeleccionada );
+        const arregloClase = [];
+        this.clases.forEach( clase => {
+            let listaClase = listaRaza.filter( item => item.clase === clase );
+            let sorteo = Math.floor(Math.random() * listaClase.length);
+            arregloClase.push( listaClase[sorteo] );
+        });
+        
+        return arregloClase;
+    
+    }
+
+    // Tomo el nombre de usuario
+    indicarNombre(){
+        this.seccion.innerHTML = //html
+            `<div class="row justify-content-center text-center">
+                <p id="aviso" class="text-light">Ingrese su nombre de jugador (entre 3 y 15 caracteres)</p>
+            </div>
+            <div class="row justify-content-center">
+                <input id="nombreIndicado" class="col" type="text" placeholder="Complete su nombre"></input>
+            </div>
+            <div class="row justify-content-center text-center mt-3">
+                <p id="avisoRival" class="text-light">Ingrese el nombre de su rival (entre 3 y 15 caracteres)</p>
+            </div>
+            <div class="row justify-content-center">
+                <input id="nombreRivalIndicado" class="col" type="text" placeholder="Complete el nombre de su rival"></input>
+            </div>
+            <div class="row justify-content-center">
+                <button id="nombreSubmitido" class="col"> Enviar </button>
+            </div>`;
+
+        this.botonIniciarJuego.removeEventListener('click', this.referencia);
+        
+        const nombreIndicado = document.querySelector('#nombreIndicado');
+        const nombreRivalIndicado = document.querySelector('#nombreRivalIndicado');
+        const nombresSubmitidos = document.querySelector('#nombreSubmitido');
+
+        nombresSubmitidos.addEventListener('click',  this.referencia = () => {
+            this.nombre = nombreIndicado.value;
+            this.nombre = this.nombre.replace(/\s+/g, ''); // Elimino los espacios
+            this.nombreRival = nombreRivalIndicado.value;
+            this.nombreRival = this.nombreRival.replace(/\s+/g, ''); // Elimino los espacios
+
+            if ( this.validarNombre( this.nombre ) && this.validarNombre( this.nombreRival ) ) {
+                nombresSubmitidos.removeEventListener('click', this.referencia);
+                this.seleccionRaza();
+
+            } else {
+                if ( ! this.validarNombre( this.nombre ) ) {
+                    let aviso = document.querySelector('#aviso');
+
+                    if ( aviso.classList.contains('text-light')){
+                        aviso.classList.remove('text-light');
+                        aviso.classList.add('text-danger');
+                    }
+
+                    if ( this.validarNombre( this.nombreRival ) ) {
+                        let avisoRival = document.querySelector('#avisoRival');
+
+                        if ( avisoRival.classList.contains('text-danger')){
+                            avisoRival.classList.remove('text-danger');
+                            avisoRival.classList.add('text-light');
+                        }
+                    }
+                }                
+
+                if ( ! this.validarNombre( this.nombreRival ) ) {
+                    let avisoRival = document.querySelector('#avisoRival');
+    
+                    if ( avisoRival.classList.contains('text-light')){
+                        avisoRival.classList.remove('text-light');
+                        avisoRival.classList.add('text-danger');
+                    }
+    
+                    if ( this.validarNombre( this.nombre ) ) {
+                        let aviso = document.querySelector('#aviso');
+    
+                        if ( aviso.classList.contains('text-danger')){
+                            aviso.classList.remove('text-danger');
+                            aviso.classList.add('text-light');
+                        }
+                    }
+                }
+
+            }  
+
+        })
+
+
+    }
+
+    // Función que levanta la raza seleccionada
+    seleccionRaza(){
+        this.seccion.innerHTML = //html
+            `<div id="cajaRaza" class="row justify-content-center m-4"></div>`;
+
+        const divRaza = document.querySelector('#cajaRaza');
+        const arregloRaza = this.grupoImagenesRazas();
+
+        arregloRaza.forEach( item => {
+            divRaza.innerHTML += //html
+                `<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 d-flex flex-column">
+                    <h3 class="titulo tituloResponsive"> ${item.raza} </h3>
+                    <img id="${item.id}" class="imgPersonaje" src="../img/${item.id}.jpg" alt="Imagen de un ${item.raza}">
+                </div>`;
+        })
+    
+        const imgRazas = document.querySelectorAll('.imgPersonaje');
+    
+        imgRazas.forEach( imgRaza => {
+            imgRaza.addEventListener('click', this.referencia = this.listenerRaza.bind(this));
+        })
+
+    }
+
+    // Event Listener que reconoce la raza seleccionada
+    listenerRaza( evento ){
+        const id = evento.target.id;
+        const razaSeleccionada = this.imagenes.filter( item => item.id === id)[0];
+        
+        const imgRazas = document.querySelectorAll('.imgPersonaje');
+    
+        imgRazas.forEach( imgRaza => {
+            imgRaza.removeEventListener('click', this.referencia);
+        });
+
+        this.seleccionClase( razaSeleccionada.raza );
+
+    }
+
+    // Función que levanta la clase seleccionada
+    seleccionClase( razaSeleccionada ){
+        this.seccion.innerHTML = //html
+            `<div id="cajaClase" class="row justify-content-center m-4"></div>`;
+
+        const divClase = document.querySelector('#cajaClase');
+        const arregloClase = this.grupoImagenesClases( razaSeleccionada );
+
+        arregloClase.forEach( item => {
+            divClase.innerHTML += //html
+                `<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 d-flex flex-column">
+                    <h3 class="titulo tituloResponsive"> ${item.clase} </h3>
+                    <img id="${item.id}" class="imgPersonaje" src="../img/${item.id}.jpg" alt="Imagen de un ${item.clase}">
+                </div>`;
+        });
+    
+        const imgClases = document.querySelectorAll('.imgPersonaje');
+    
+        imgClases.forEach( imgClase => {
+            imgClase.addEventListener('click', this.referencia = this.listenerClase.bind(this));
+        });
+
+    }
+
+    // Event Listener que reconoce la clase seleccionada
+    listenerClase( evento ){
+        const id = evento.target.id;
+    
+        const imgClases = document.querySelectorAll('.imgPersonaje');
+    
+        imgClases.forEach( imgClase => {
+            imgClase.removeEventListener('click', this.referencia);
+        });      
+
+        this.imagen = this.imagenes.filter( item => item.id === id)[0].id;
+
+    }
 
 }
 
 // Creo una instancia del juego
-//const juego = new ElJuego();
-
-const seccion = document.querySelector('#seccion')
-const iniciarJuegos = document.querySelector('#iniciarJuego');
-let elNombre = "";
-const imagenes = [
-    { id: "e-b", raza: "Elfo", clase: "Bárbaro" },
-    { id: "e-g", raza: "Elfo", clase: "Guerrero" },
-    { id: "e-r", raza: "Elfo", clase: "Rogue" },
-    { id: "e-b0", raza: "Elfo", clase: "Bárbaro" },
-    { id: "e-g0", raza: "Elfo", clase: "Guerrero" },
-    { id: "e-r0", raza: "Elfo", clase: "Rogue" },
-    { id: "e-b1", raza: "Elfo", clase: "Bárbaro" },
-    { id: "e-g1", raza: "Elfo", clase: "Guerrero" },
-    { id: "e-r1", raza: "Elfo", clase: "Rogue" },
-    { id: "eo-b", raza: "Elfo Oscuro", clase: "Bárbaro" },
-    { id: "eo-g", raza: "Elfo Oscuro", clase: "Guerrero" },
-    { id: "eo-r", raza: "Elfo Oscuro", clase: "Rogue" },
-    { id: "eo-b0", raza: "Elfo Oscuro", clase: "Bárbaro" },
-    { id: "eo-g0", raza: "Elfo Oscuro", clase: "Guerrero" },
-    { id: "eo-r0", raza: "Elfo Oscuro", clase: "Rogue" },
-    { id: "eo-b1", raza: "Elfo Oscuro", clase: "Bárbaro" },
-    { id: "eo-g1", raza: "Elfo Oscuro", clase: "Guerrero" },
-    { id: "eo-r1", raza: "Elfo Oscuro", clase: "Rogue" },
-    { id: "en-b", raza: "Enano", clase: "Bárbaro" },
-    { id: "en-g", raza: "Enano", clase: "Guerrero" },
-    { id: "en-r", raza: "Enano", clase: "Rogue" },
-    { id: "en-b0", raza: "Enano", clase: "Bárbaro" },
-    { id: "en-g0", raza: "Enano", clase: "Guerrero" },
-    { id: "en-r0", raza: "Enano", clase: "Rogue" },
-    { id: "en-b1", raza: "Enano", clase: "Bárbaro" },
-    { id: "en-g1", raza: "Enano", clase: "Guerrero" },
-    { id: "en-r1", raza: "Enano", clase: "Rogue" },
-    { id: "h-b", raza: "Humano", clase: "Bárbaro" },
-    { id: "h-g", raza: "Humano", clase: "Guerrero" },
-    { id: "h-r", raza: "Humano", clase: "Rogue" },
-    { id: "h-b0", raza: "Humano", clase: "Bárbaro" },
-    { id: "h-g0", raza: "Humano", clase: "Guerrero" },
-    { id: "h-r0", raza: "Humano", clase: "Rogue" },
-    { id: "h-b1", raza: "Humano", clase: "Bárbaro" },
-    { id: "h-g1", raza: "Humano", clase: "Guerrero" },
-    { id: "h-r1", raza: "Humano", clase: "Rogue" },
-    { id: "g-b", raza: "Gnomo", clase: "Bárbaro" },
-    { id: "g-g", raza: "Gnomo", clase: "Guerrero" },
-    { id: "g-r", raza: "Gnomo", clase: "Rogue" },
-    { id: "g-b0", raza: "Gnomo", clase: "Bárbaro" },
-    { id: "g-g0", raza: "Gnomo", clase: "Guerrero" },
-    { id: "g-r0", raza: "Gnomo", clase: "Rogue" },
-    { id: "g-b1", raza: "Gnomo", clase: "Bárbaro" },
-    { id: "g-g1", raza: "Gnomo", clase: "Guerrero" },
-    { id: "g-r1", raza: "Gnomo", clase: "Rogue" },
-    { id: "o-b", raza: "Orco", clase: "Bárbaro" },
-    { id: "o-g", raza: "Orco", clase: "Guerrero" },
-    { id: "o-r", raza: "Orco", clase: "Rogue" },
-    { id: "o-b0", raza: "Orco", clase: "Bárbaro" },
-    { id: "o-g0", raza: "Orco", clase: "Guerrero" },
-    { id: "o-r0", raza: "Orco", clase: "Rogue" },
-    { id: "o-b1", raza: "Orco", clase: "Bárbaro" },
-    { id: "o-g1", raza: "Orco", clase: "Guerrero" },
-    { id: "o-r1", raza: "Orco", clase: "Rogue" }
-    
-]
-
-const razas = [ "Elfo", "Elfo Oscuro", "Enano", "Gnomo", "Humano", "Orco" ];
-const clases = [ "Bárbaro", "Guerrero", "Rogue" ];
-
-function grupoImagenesRazas(){
-    const arregloRaza = [];
-    razas.forEach( raza => {
-        let listaRaza = imagenes.filter( item => item.raza === raza );
-        let sorteo = Math.floor(Math.random() * listaRaza.length);
-        arregloRaza.push( listaRaza[sorteo] );
-    });
-    
-    return arregloRaza;
-
-}
-
-function grupoImagenesClases( razaSeleccionada ){
-    const listaRaza = imagenes.filter( item => item.raza === razaSeleccionada );
-    const arregloClase = [];
-    clases.forEach( clase => {
-        let listaClase = listaRaza.filter( item => item.clase === clase );
-        let sorteo = Math.floor(Math.random() * listaClase.length);
-        arregloClase.push( listaClase[sorteo] );
-    });
-    
-    return arregloClase;
-
-}
-
-function indicarNombre(){
-    seccion.innerHTML = //html
-        `<div class="row justify-content-center">
-            <input id="nombreIndicado" class="col" type="text" placeholder="Complete su nombre"></input>
-        </div>
-        <div class="row justify-content-center">
-            <button id="nombreSubmitido" class="col"> Enviar </button>
-        </div>`;
-
-    const nombreIndicados = document.querySelector('#nombreIndicado');
-    const nombreSubmitidos = document.querySelector('#nombreSubmitido');
-    nombreSubmitidos.addEventListener('click', () => {
-        elNombre = nombreIndicados.value;
-        seleccionRaza();
-    })
-}
-
-function seleccionRaza(){
-    seccion.innerHTML = //html
-        `<div id="cajaRaza" class="row justify-content-center m-4"></div>`;
-    const divRaza = document.querySelector('#cajaRaza');
-    const arregloRaza = grupoImagenesRazas();
-    arregloRaza.forEach( item => {
-        divRaza.innerHTML += //html
-            `<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 d-flex flex-column">
-                <h3 class="titulo tituloResponsive"> ${item.raza} </h3>
-                <img id="${item.id}" class="imgPersonaje" src="../img/${item.id}.jpg" alt="Imagen de un ${item.raza}">
-            </div>`;
-    });
-
-    const imgRazas = document.querySelectorAll('.imgPersonaje');
-
-    imgRazas.forEach( imgRaza => {
-        imgRaza.addEventListener('click', listenerRaza);
-    });
-}
-
-function listenerRaza(evento){
-    const id = evento.target.id;
-    const razaSeleccionada = imagenes.filter( item => item.id === id)[0];
-
-    seleccionClase( razaSeleccionada.raza );
-
-    const imgRazas = document.querySelectorAll('.imgPersonaje');
-
-    imgRazas.forEach( imgRaza => {
-        imgRaza.removeEventListener('click', listenerRaza);
-    });
-}
-
-function seleccionClase( razaSeleccionada ){
-    seccion.innerHTML = //html
-        `<div id="cajaClase" class="row justify-content-center m-4"></div>`;
-    const divClase = document.querySelector('#cajaClase');
-    const arregloClase = grupoImagenesClases( razaSeleccionada );
-    arregloClase.forEach( item => {
-        divClase.innerHTML += //html
-            `<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 d-flex flex-column">
-                <h3 class="titulo tituloResponsive"> ${item.clase} </h3>
-                <img id="${item.id}" class="imgPersonaje" src="../img/${item.id}.jpg" alt="Imagen de un ${item.clase}">
-            </div>`;
-    });
-
-    const imgClases = document.querySelectorAll('.imgPersonaje');
-
-    imgClases.forEach( imgClase => {
-        imgClase.addEventListener('click', listenerClase);
-    });
-}
-
-function listenerClase( evento ){
-    const id = evento.target.id;
-    console.log( id );
-
-    const imgClases = document.querySelectorAll('.imgPersonaje');
-
-    imgClases.forEach( imgClase => {
-        imgClase.removeEventListener('click', listenerClase);
-    });
-}
-
-iniciarJuegos.addEventListener('click', () => {indicarNombre()});
-
+const juego = new ElJuego();
