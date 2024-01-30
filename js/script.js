@@ -310,7 +310,7 @@ Atributos derivados:
 
 }
 
-// Clase que arma el pool con 10 personajes para elegir al que tenga mejores atributos
+// Clase que arma el pool con 9 personajes para elegir al que tenga mejores atributos
 class PoolPersonajes {
 
     /* -------------------------------- Atributos ------------------------------- */
@@ -327,9 +327,9 @@ class PoolPersonajes {
 
     /* --------------------------------- Métodos -------------------------------- */
 
-    // Creo el array con 10 Personajes
+    // Creo el array con 9 Personajes
     crearPersonajes(){
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < 9; i++) {
             this.arreglo.push(new Personaje( this.nombre, this.raza, this.clase ));
             this.arreglo[i].indice = i + 1;
         }
