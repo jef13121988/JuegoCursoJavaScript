@@ -125,6 +125,11 @@ h1 {
     border-radius: 15px;
 }
 
+/* Configuración caja con descripción de personajes */
+.descripcionPersonaje {
+    width: 100%;
+}
+
 /* Decoración de botones */
 button {
     background-color: darkslategray;
@@ -171,6 +176,14 @@ button:hover {
 /* Efecto para las fotos */
 .portada:hover {
   opacity: 90%;
+}
+
+/* Imagen para el switch de selección de personaje */
+.switch {
+    width: 64px;
+    align-items: center;
+    justify-content: center;
+
 }
 
 /* Footer */
