@@ -315,11 +315,12 @@ class PoolPersonajes {
 
     /* -------------------------------- Atributos ------------------------------- */
 
-    constructor( nombre, raza, clase ) {
+    constructor( nombre, raza, clase, imagen ) {
 
         this.nombre = nombre;
         this.raza = raza;
         this.clase = clase;
+        this.imagen = imagen;
         this.arreglo = [];
 
         this.crearPersonajes();
@@ -330,7 +331,7 @@ class PoolPersonajes {
     // Creo el array con 9 Personajes
     crearPersonajes(){
         for (let i = 0; i < 9; i++) {
-            this.arreglo.push(new Personaje( this.nombre, this.raza, this.clase ));
+            this.arreglo.push(new Personaje( this.nombre, this.raza, this.clase, this.imagen ));
             this.arreglo[i].indice = i + 1;
         }
 
@@ -540,7 +541,7 @@ class ElJuego {
 
     // Creo el pool de personajes e indico como interactuar
     empezar(){
-        this.personajes = new PoolPersonajes( this.nombre, this.raza, this.clase );
+        this.personajes = new PoolPersonajes( this.nombre, this.raza, this.clase, this.imagen );
 
         alert(`Se crearon 10 personajes con los parámetros indicados para que pueda elegir el más conveniente.`);
 
