@@ -147,6 +147,36 @@ button:hover {
     border: 3px solid white;
 }
 
+/* Estilo de botón inicio y de seleccionar nombre */
+.botonInicio {
+    width: 300px;
+}
+
+/* Estilo de input */
+input[type=text] {
+    width: 300px;
+    padding: 10px;
+    border: 3px solid darkslategray;
+    border-radius: 10px;
+    font-size: 1rem;
+    margin-bottom: 10px;
+    transition: all 1s;
+  }
+  
+/* Contorno y relleno del input cuando se lo selecciona */
+input[type=text]:focus {
+    outline: 2px solid hsla(195, 83%, 58%, 0.2);
+    background-color: rgb(40, 60, 70);
+    color: white;
+}
+  
+/* Responsive para pantallas menores a 396px */
+@media (max-width: 396px) {
+    input[type=text], .botonInicio {
+        width: 100%;
+    }
+}
+
 /* Configuración de imagen de portada */
 .portada {
     width: 550px;

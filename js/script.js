@@ -677,16 +677,16 @@ class ElJuego {
                 <p id="aviso" class="text-light">Ingrese su nombre de jugador (entre 3 y 15 caracteres)</p>
             </div>
             <div class="row justify-content-center">
-                <input id="nombreIndicado" class="col" type="text" placeholder="Complete su nombre"></input>
+                <input id="nombreIndicado" type="text" placeholder="Complete su nombre"></input>
             </div>
             <div class="row justify-content-center text-center mt-3">
                 <p id="avisoRival" class="text-light">Ingrese el nombre de su rival (entre 3 y 15 caracteres)</p>
             </div>
             <div class="row justify-content-center">
-                <input id="nombreRivalIndicado" class="col" type="text" placeholder="Complete el nombre de su rival"></input>
+                <input id="nombreRivalIndicado" type="text" placeholder="Complete el nombre de su rival"></input>
             </div>
             <div class="row justify-content-center">
-                <button id="nombreSubmitido" class="col"> Enviar </button>
+                <button id="nombreSubmitido" class="botonInicio"> Enviar </button>
             </div>`;
 
         this.botonIniciarJuego.removeEventListener('click', this.referencia);
@@ -1002,7 +1002,7 @@ class ElJuego {
             </div>
 
             <div id="cajaCombate" class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center">
-                <button id="iniciarCombate"> Iniciar Combate </button>
+                <button id="iniciarCombate" class="botonInicio"> Iniciar Combate </button>
             </div>
 
             <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 d-flex flex-column">
@@ -1028,18 +1028,21 @@ class ElJuego {
         // Event Listener para identificar cuándo inicia el combate
         iniciarCombate.addEventListener("click", this.referencia = () => {
 
-            let vida = this.combate( this.jugador, this.jugadorRival );
+            // Desestructuro el return de combate
+            let [vidaJ1, vidaJ2] = this.combate( this.jugador, this.jugadorRival );
             
+            // Genero el nuevo layout
             cajaCombate.innerHTML = // html
                 `<h2 class="incidenciasTitulo">Incidencias</h2>
                 <p id="listaEventos" class="eventos">${this.mensaje}
                 </p>
-                <button id="reiniciarCombate"> Combatir de nuevo </button>`;
+                <button id="reiniciarCombate" class="botonInicio"> Combatir de nuevo </button>`;
             
             iniciarCombate.removeEventListener("click", this.referencia);
 
-            vida1.innerHTML = vida[0];
-            vida2.innerHTML = vida[1];
+            // Muestro la vida final de cada jugador
+            vida1.innerHTML = vidaJ1;
+            vida2.innerHTML = vidaJ2;
 
             // Inicio la siguiente función
             this.combatirDeNuevo();
@@ -1053,6 +1056,7 @@ class ElJuego {
         // Identifico el ID para reiniciar el combate
         const reiniciarCombate = document.querySelector("#reiniciarCombate");
 
+        // Event Listener para identificar cuándo reinicia el combate
         reiniciarCombate.addEventListener("click", this.referencia = () => {
 
             reiniciarCombate.removeEventListener("click", this.referencia);
