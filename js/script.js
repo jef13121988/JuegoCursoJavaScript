@@ -7,8 +7,8 @@ class Personaje {
 
         // Atributos generales
         this.nombre = nombre;
-        this.raza = raza;
-        this.clase = clase;
+        this.raza = raza.toLowerCase();
+        this.clase = clase.toLowerCase();
         this.imagen = imagen;
         this.nivel = 1; // No tiene aplicación práctica en esta versión, pero se puede aumentar
         this.experiencia = 0; // No tiene aplicación práctica en esta versión
@@ -254,8 +254,11 @@ class Personaje {
     }
 
     // Muestra los stats del personaje
-    mostrarStats(){
-        console.log(`Los stats de ${this.nombre} son:
+    mostrarStats( caja, trueOrFalse ){
+
+        if ( trueOrFalse ) {
+
+            caja.innerText = `Los stats de ${this.nombre} son:
 
 Atributos generales:
     - Raza: ${this.raza}.
@@ -279,7 +282,38 @@ Atributos derivados:
     - Evasión: ${this.evasion}.
     - Velocidad: ${this.velocidad}.
 
-`)
+Personaje número: ${this.indice}
+
+`;
+
+        } else {
+            caja.innerText = `Los stats de ${this.nombre} son:
+
+Atributos generales:
+    - Raza: ${this.raza}.
+    - Clase: ${this.clase}.
+    - Nivel: ${this.nivel}.
+    - Experiencia: ${this.experiencia}.
+    - Precisión del arma: ${this.precisionArma}.
+
+Atributos principales:
+    - Agilidad: ${this.agilidad}.
+    - Constitución: ${this.constitucion}.
+    - Destreza: ${this.destreza}.
+    - Fuerza: ${this.fuerza}.
+    - Inteligencia: ${this.inteligencia}.
+
+Atributos derivados:
+    - Ataque: ${this.ataque}.
+    - Vida: ${this.vida}.
+    - Maná: ${this.mana}.
+    - Precisión: ${this.precision}.
+    - Evasión: ${this.evasion}.
+    - Velocidad: ${this.velocidad}.
+
+`;
+            
+        }
     }
 
     // Realiza la copia de un personaje
@@ -452,6 +486,7 @@ class ElJuego {
         this.nombreRival = ""; // Nombre seleccionado del rival
         this.jugador = ""; // Personaje creado para el jugador
         this.jugadorRival = ""; // Personaje creado para el jugador rival
+        this.personajes = ""; // 9 personajes creados para que pueda elegir
         // Selecciono la sección que se va a modificar
         this.seccion = document.querySelector('#seccion');
         // Selecciono el botón para iniciar el juego
@@ -698,8 +733,8 @@ Confirme si quiere iniciar el combate o finalizamos`);
     }
 
     // Armo el grupo de imágenes para seleccionar la clase
-    grupoImagenesClases( razaSeleccionada ){
-        const listaRaza = this.imagenes.filter( item => item.raza === razaSeleccionada );
+    grupoImagenesClases(){
+        const listaRaza = this.imagenes.filter( item => item.raza === this.raza );
         const arregloClase = [];
         this.clases.forEach( clase => {
             let listaClase = listaRaza.filter( item => item.clase === clase );
@@ -798,16 +833,18 @@ Confirme si quiere iniciar el combate o finalizamos`);
         const divRaza = document.querySelector('#cajaRaza');
         const arregloRaza = this.grupoImagenesRazas();
 
+        // Despliego en una caja el listado de razas
         arregloRaza.forEach( item => {
             divRaza.innerHTML += //html
                 `<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 d-flex flex-column">
                     <h3 class="titulo tituloResponsive"> ${item.raza} </h3>
-                    <img id="${item.id}" class="imgPersonaje" src="../img/${item.id}.jpg" alt="Imagen de un ${item.raza}">
+                    <img id="${item.id}" class="imgPersonaje" src="../img/${item.id}.jpg" alt="Imagen de un ${item.raza} con clase ${item.clase}">
                 </div>`;
         })
     
         const imgRazas = document.querySelectorAll('.imgPersonaje');
     
+        // Levanto la raza que se selecciona
         imgRazas.forEach( imgRaza => {
             imgRaza.addEventListener('click', this.referencia = this.listenerRaza.bind(this));
         })
@@ -819,34 +856,39 @@ Confirme si quiere iniciar el combate o finalizamos`);
         const id = evento.target.id;
         const razaSeleccionada = this.imagenes.filter( item => item.id === id)[0];
         
+        // Tomo la raza
+        this.raza = razaSeleccionada.raza;
+
         const imgRazas = document.querySelectorAll('.imgPersonaje');
     
         imgRazas.forEach( imgRaza => {
             imgRaza.removeEventListener('click', this.referencia);
         });
 
-        this.seleccionClase( razaSeleccionada.raza );
+        this.seleccionClase();
 
     }
 
     // Función que levanta la clase seleccionada
-    seleccionClase( razaSeleccionada ){
+    seleccionClase(){
         this.seccion.innerHTML = //html
             `<div id="cajaClase" class="row justify-content-center m-4"></div>`;
 
         const divClase = document.querySelector('#cajaClase');
-        const arregloClase = this.grupoImagenesClases( razaSeleccionada );
+        const arregloClase = this.grupoImagenesClases( this.raza );
 
+        // Despliego en una caja el listado de clases
         arregloClase.forEach( item => {
             divClase.innerHTML += //html
                 `<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 d-flex flex-column">
                     <h3 class="titulo tituloResponsive"> ${item.clase} </h3>
-                    <img id="${item.id}" class="imgPersonaje" src="../img/${item.id}.jpg" alt="Imagen de un ${item.clase}">
+                    <img id="${item.id}" class="imgPersonaje" src="../img/${item.id}.jpg" alt="Imagen de un ${item.raza} con clase ${item.clase}">
                 </div>`;
         });
     
         const imgClases = document.querySelectorAll('.imgPersonaje');
     
+        // Levanto la clase que se selecciona
         imgClases.forEach( imgClase => {
             imgClase.addEventListener('click', this.referencia = this.listenerClase.bind(this));
         });
@@ -856,6 +898,10 @@ Confirme si quiere iniciar el combate o finalizamos`);
     // Event Listener que reconoce la clase seleccionada
     listenerClase( evento ){
         const id = evento.target.id;
+        const claseSeleccionada = this.imagenes.filter( item => item.id === id)[0];
+        
+        // Tomo la clase
+        this.clase = claseSeleccionada.clase;
     
         const imgClases = document.querySelectorAll('.imgPersonaje');
     
@@ -863,9 +909,157 @@ Confirme si quiere iniciar el combate o finalizamos`);
             imgClase.removeEventListener('click', this.referencia);
         });      
 
+        // Fijo la imagen seleccionada
         this.imagen = this.imagenes.filter( item => item.id === id)[0].id;
 
+        this.seleccionPoolPersonaje();
+
     }
+
+    // Función que corre las funciones para levantar el personaje seleccionado
+    seleccionPoolPersonaje(){
+
+        // Creo Pool de Personajes
+        this.personajes = new PoolPersonajes( this.nombre, this.raza, this.clase, this.imagen );
+        
+        // Genero el nuevo layout
+        this.seccion.innerHTML = //html
+            `<div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 d-flex flex-column align-items-center">
+                <img id="switch1" class="switch" src="../img/switch-on.png" alt="activo">
+                <p id="statsPersonaje1" class="fondoTexto descripcionPersonaje">
+                </p>
+                <button id="seleccionarPersonaje1"> Seleccionar personaje </button>
+            </div>
+
+            <div id="cajaPoolPersonajes"
+                class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 d-flex flex-wrap justify-content-center">
+            </div>
+
+            <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 d-flex flex-column align-items-center">
+                <img id="switch2" class="switch" src="../img/switch-off.png" alt="inactivo">
+                <p id="statsPersonaje2" class="fondoTexto descripcionPersonaje">
+                </p>
+                <button id="seleccionarPersonaje2"> Seleccionar personaje </button>
+            </div>`;
+
+        // Cambio la disposición del contenedor
+        this.seccion.classList.add('row');
+
+        // Identifico los IDs de todos los elementos
+        const switch1 = document.querySelector("#switch1");
+        const switch2 = document.querySelector("#switch2");
+        const statsPersonaje1 = document.querySelector("#statsPersonaje1");
+        const statsPersonaje2 = document.querySelector("#statsPersonaje2");
+        const seleccionarPersonaje1 = document.querySelector("#seleccionarPersonaje1");
+        const seleccionarPersonaje2 = document.querySelector("#seleccionarPersonaje2");
+        const cajaPoolPersonajes = document.querySelector("#cajaPoolPersonajes");
+        let personajeEnCaja1 = this.personajes.arreglo[0]; // Contiene el personaje seleccionado en la caja de párrafo 1
+        let personajeEnCaja2 = this.personajes.arreglo[1]; // Contiene el personaje seleccionado en la caja de párrafo 2
+        let refSwitch1; // Fórmula para Event Listener del swtich1
+        let refSwitch2; // Fórmula para Event Listener del swtich2
+        let refSel1; // Fórmula para Event Listener del seleccionarPersonaje1
+        let refSel2; // Fórmula para Event Listener del seleccionarPersonaje2
+
+        // Muestro Stats en las cajas
+        personajeEnCaja1.mostrarStats( statsPersonaje1, true );
+        personajeEnCaja2.mostrarStats( statsPersonaje2, true );
+
+        // Despliego en una caja el listado de personajes del pool
+        this.personajes.arreglo.forEach( item => {
+            cajaPoolPersonajes.innerHTML += // html
+                `<div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                    <img id="${item.indice}" class="imgPersonaje" src="../img/${item.imagen}.jpg" alt="Imagen de un ${item.raza} con clase ${item.clase}">
+                </div>`
+        });
+    
+        const imgPool = document.querySelectorAll('.imgPersonaje');
+        
+        // Event Listener que reconoce el personaje seleccionado para análisis
+        imgPool.forEach( imgEnPool => {
+            imgEnPool.addEventListener('click', this.referencia = ( evento ) => {
+                // Identifico la ID de la imagen
+                const id = evento.target.id;
+
+                // Busco el ID en el arreglo
+                const personajePreSeleccionado = this.personajes.arreglo.filter( item => item.indice === parseInt(id))[0];
+
+                // Muestro los stats del personaje en la caja correspondiente
+                if ( switch1.alt === "activo" ) {
+                    personajePreSeleccionado.mostrarStats( statsPersonaje1, true );
+                    personajeEnCaja1 = personajePreSeleccionado;
+                } else {
+                    personajePreSeleccionado.mostrarStats( statsPersonaje2, true );
+                    personajeEnCaja2 = personajePreSeleccionado;
+                }
+            })
+        })
+
+        // Agrego Event Listener que identifica el estado del switch 1
+        switch1.addEventListener("click", refSwitch1 = () => {
+            if ( switch1.alt === "activo" ) {
+                switch1.src = "../img/switch-off.png";
+                switch1.alt = "inactivo";
+                switch2.src = "../img/switch-on.png";
+                switch2.alt = "activo";
+            } else {
+                switch1.src = "../img/switch-on.png";
+                switch1.alt = "activo";
+                switch2.src = "../img/switch-off.png";
+                switch2.alt = "inactivo";
+            }
+        })
+        
+        // Agrego Event Listener que identifica el estado del switch 2
+        switch2.addEventListener("click", refSwitch2 = () => {
+            if ( switch2.alt === "activo" ) {
+                switch2.src = "../img/switch-off.png";
+                switch2.alt = "inactivo";
+                switch1.src = "../img/switch-on.png";
+                switch1.alt = "activo";
+            } else {
+                switch2.src = "../img/switch-on.png";
+                switch2.alt = "activo";
+                switch1.src = "../img/switch-off.png";
+                switch1.alt = "inactivo";
+            }
+        })
+
+        // Event Listener para cuando se define el personaje
+        seleccionarPersonaje1.addEventListener("click", refSel1 = () => {
+            // Defino el personaje escogido por el jugador
+            this.jugador = personajeEnCaja1;
+
+            seleccionarPersonaje1.removeEventListener("click", refSel1);
+            seleccionarPersonaje2.removeEventListener("click", refSel2);
+            switch1.removeEventListener("click", refSwitch1);
+            switch2.removeEventListener("click", refSwitch2);
+            imgPool.forEach( imgEnPool => {
+                imgEnPool.removeEventListener('click', this.referencia);
+            })
+
+            // corre la función siguiente
+        })
+
+        // Event Listener para cuando se define el personaje
+        seleccionarPersonaje2.addEventListener("click", refSel2 = () => {
+            // Defino el personaje escogido por el jugador
+            this.jugador = personajeEnCaja2;
+
+            seleccionarPersonaje1.removeEventListener("click", refSel1);
+            seleccionarPersonaje2.removeEventListener("click", refSel2);
+            switch1.removeEventListener("click", refSwitch1);
+            switch2.removeEventListener("click", refSwitch2);
+            imgPool.forEach( imgEnPool => {
+                imgEnPool.removeEventListener('click', this.referencia);
+            })
+
+            // corre la función siguiente
+        })
+
+
+
+    }
+
 
 }
 
