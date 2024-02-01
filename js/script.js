@@ -156,26 +156,24 @@ class Personaje {
         if ( controlPrecision ) {
             objetivo.vida = objetivo.vida - this.ataque;
             if ( objetivo.vida <= 0 ) {
-                mensaje = `${this.nombre} ha ganado. ${objetivo.nombre} ha sido derrotado`;
+                mensaje = `${this.nombre} ha ganado. ${objetivo.nombre} ha sido derrotado.<br>`;
                 objetivo.vida = 0;
             } else {
-                mensaje = `A ${objetivo.nombre} le queda ${objetivo.vida} de vida`;
+                mensaje = `El ataque de ${this.nombre} dejó a ${objetivo.nombre} con ${objetivo.vida} de vida.<br>`;
             }
         } else {
-            mensaje = `El ataque de ${this.nombre} ha fallado`;
+            mensaje = `El ataque de ${this.nombre} ha fallado.<br>`;
         }
-        console.log(mensaje);
+        
+        return mensaje;
     }
 
     // Define si el ataque va a impactar
     precisionAtaque( objetivo ){
         const preciso = this.precisionArma*this.precision/objetivo.evasion;
         const sorteo = Math.random();
-        if ( preciso >= sorteo ) {
-            return true;
-        } else {
-            return false;
-        }
+        return ( preciso >= sorteo ) ? true: false;
+
     }
 
     // Aumenta en un nivel y actualiza los atributos
@@ -478,7 +476,7 @@ class ElJuego {
 
     constructor(){
 
-        this.referencia;
+        this.referencia; // Para los Event Listeners
         this.nombre = ""; // Nombre seleccionado
         this.raza = ""; // Raza seleccionada
         this.clase = ""; // Clase seleccionada
@@ -487,6 +485,7 @@ class ElJuego {
         this.jugador = ""; // Personaje creado para el jugador
         this.jugadorRival = ""; // Personaje creado para el jugador rival
         this.personajes = ""; // 9 personajes creados para que pueda elegir
+        this.mensaje = ""; // Lista los eventos del combate
         // Selecciono la sección que se va a modificar
         this.seccion = document.querySelector('#seccion');
         // Selecciono el botón para iniciar el juego
@@ -567,57 +566,7 @@ class ElJuego {
 
     // Valido el nombre suministrado por el usuario, entre 3 y 15 caracteres, no puede arrancar con números
     validarNombre( nombre ) {
-        if ( nombre.length >= 3 && nombre.length <= 15 && isNaN(parseInt(nombre)) ) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    // Creo el pool de personajes e indico como interactuar
-    empezar(){
-        this.personajes = new PoolPersonajes( this.nombre, this.raza, this.clase, this.imagen );
-
-        alert(`Se crearon 10 personajes con los parámetros indicados para que pueda elegir el más conveniente.`);
-
-        alert(`Escribiendo en la consola 'juego.personajes.funcion()', siendo 'funcion()' la función de máximos deseada, puede ir navegando indagando en los atributos de los personajes.`);
-        
-        alert(`Se accede al array mediante 'juego.personajes.arreglo', así se podrá visualizar personajes específicos o aplicar funciones de arrays.`);
-
-        alert(`Cuando haya definido el personaje a utilizar, fíjese el el índice del mismo, escribe en la consola 'juego.seguir()' y se le solicitará el índice seleccionado.`);
-
-        console.log(`Se crearon 10 personajes con los parámetros indicados para que pueda elegir el más conveniente.
-
-Escribiendo en la consola 'juego.personajes.funcion()', siendo 'funcion()' la función de máximos deseada, puede ir navegando indagando en los atributos de los personajes.
-
-Se accede al array mediante 'juego.personajes.arreglo', así se podrá visualizar personajes específicos o aplicar funciones de arrays.
-
-Cuando haya definido el personaje a utilizar, fíjese el el índice del mismo, escribe en la consola 'juego.seguir()' y se le solicitará el índice seleccionado.
-        `);
-
-    }
-
-    // Se selecciona un personaje para que el juego avance
-    seguir(){
-        let personajeElegido = prompt("Indique el índice del personaje con el que desea continuar");
-
-        while ( isNaN(parseInt(personajeElegido)) || parseInt(personajeElegido)<1 || parseInt(personajeElegido)>10 ){
-            personajeElegido = prompt("Indique el índice del personaje con el que desea continuar");
-        }
-
-        personajeElegido = parseInt(personajeElegido)-1;
-
-        this.jugador = this.personajes.arreglo[personajeElegido];
-
-        this.jugador.mostrarStats();
-        this.jugadorRival.mostrarStats();
-
-        const combatir = confirm(`Los stats aparecen en la consola.
-Confirme si quiere iniciar el combate o finalizamos`);
-
-        if ( combatir ){
-            this.combate( this.jugador, this.jugadorRival );
-        }
+        return ( nombre.length >= 3 && nombre.length <= 15 && isNaN(parseInt(nombre)) ) ? true : false;
         
     }
 
@@ -627,33 +576,15 @@ Confirme si quiere iniciar el combate o finalizamos`);
         let claseRival = "";
 
         // Sorteo la raza
-        const sorteo1 = Math.random();
-        if ( sorteo1 > 5/6 ) {
-            razaRival = "humano";
-        } else if ( sorteo1 > 2/3 ){
-            razaRival = "elfo";
-        } else if ( sorteo1 > 0.5 ){
-            razaRival = "elfo oscuro";
-        } else if ( sorteo1 > 1/3 ){
-            razaRival = "enano";
-        } else if ( sorteo1 > 1/6 ){
-            razaRival = "gnomo";
-        } else {
-            razaRival = "orco";
-        }
+        const sorteo1 = Math.floor(Math.random() * this.razas.length);
+        razaRival = this.razas[sorteo1];
 
         // Sorteo la clase
-        const sorteo2 = Math.random();
-        if ( sorteo2 > 0.67 ) {
-            claseRival = "guerrero";
-        } else if ( sorteo2 > 0.34 ){
-            claseRival = "bárbaro";
-        } else {
-            claseRival = "rogue";
-        }
+        const sorteo2 = Math.floor(Math.random() * this.clases.length);
+        claseRival = this.clases[sorteo2];
 
         // Filtro las imágenes que cumplen con la raza y la clase sorteadas
-        let imagenRival = this.imagenes.filter( item => (item.raza.toLowerCase() === razaRival) && (item.clase.toLowerCase() === claseRival) );
+        let imagenRival = this.imagenes.filter( item => (item.raza.toLowerCase() === razaRival.toLowerCase()) && (item.clase.toLowerCase() === claseRival.toLowerCase()) );
         // Sorteo la imagen
         const sorteo3 = Math.floor(Math.random() * imagenRival.length);
         imagenRival = imagenRival[sorteo3];
@@ -673,34 +604,34 @@ Confirme si quiere iniciar el combate o finalizamos`);
         while( jugador1.vida > 0 && jugador2.vida >0 ){
 
             if( jugador1.velocidad > jugador2.velocidad ){
-                jugador1.atacar( jugador2 );
+                this.mensaje += jugador1.atacar( jugador2 );
 
                 if( jugador2.vida > 0 ){
-                    jugador2.atacar( jugador1 );
+                    this.mensaje += jugador2.atacar( jugador1 );
                 }
                 
             } else if( jugador1.velocidad < jugador2.velocidad ){
-                jugador2.atacar( jugador1 );
+                this.mensaje += jugador2.atacar( jugador1 );
 
                 if( jugador1.vida > 0 ){
-                    jugador1.atacar( jugador2 );
+                    this.mensaje += jugador1.atacar( jugador2 );
                 }
 
             } else {
                 const sorteo = Math.random();
 
                 if( sorteo >= 0.5){
-                    jugador1.atacar( jugador2 );
+                    this.mensaje += jugador1.atacar( jugador2 );
 
                     if( jugador2.vida > 0 ){
-                        jugador2.atacar( jugador1 );
+                        this.mensaje += jugador2.atacar( jugador1 );
                     }
 
                 } else {
-                    jugador2.atacar( jugador1 );
+                    this.mensaje += jugador2.atacar( jugador1 );
 
                     if( jugador1.vida > 0 ){
-                        jugador1.atacar( jugador2 );
+                        this.mensaje += jugador1.atacar( jugador2 );
                     }
 
                 }
@@ -708,14 +639,7 @@ Confirme si quiere iniciar el combate o finalizamos`);
             }
         }
 
-        const jugarDeNuevo = confirm("¿Desea jugar de nuevo?");
-
-        if( jugarDeNuevo ){
-            console.log("********************");
-            this.combate( player1, player2 );
-        } else {
-            alert("Juego finalizado.");
-        }
+        return [jugador1.vida, jugador2.vida];
 
     }
 
@@ -919,6 +843,9 @@ Confirme si quiere iniciar el combate o finalizamos`);
     // Función que corre las funciones para levantar el personaje seleccionado
     pantallaSeleccionPoolPersonaje(){
 
+        // Creo al personaje del rival
+        this.crearJugadorRival();
+
         // Creo Pool de Personajes
         this.personajes = new PoolPersonajes( this.nombre, this.raza, this.clase, this.imagen );
         
@@ -1064,9 +991,6 @@ Confirme si quiere iniciar el combate o finalizamos`);
 
     pantallaCombate(){
 
-        // Creo al personaje del rival
-        this.crearJugadorRival();
-
         // Genero el nuevo layout
         this.seccion.innerHTML = //html
             `<div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 d-flex flex-column">
@@ -1077,10 +1001,8 @@ Confirme si quiere iniciar el combate o finalizamos`);
                 <img class="imgPersonaje" src="../img/${this.jugador.imagen}.jpg" alt="Imagen de un ${this.jugador.raza} con clase ${this.jugador.clase}">
             </div>
 
-            <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                <h2 class="incidenciasTitulo">Incidencias</h2>
-                <p id="listaEventos" class="eventos">
-                </p>
+            <div id="cajaCombate" class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center">
+                <button id="iniciarCombate"> Iniciar Combate </button>
             </div>
 
             <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 d-flex flex-column">
@@ -1092,6 +1014,8 @@ Confirme si quiere iniciar el combate o finalizamos`);
             </div>`;
 
         // Identifico los IDs de todos los elementos
+        const cajaCombate = document.querySelector("#cajaCombate");
+        const iniciarCombate = document.querySelector("#iniciarCombate");
         const vida1 = document.querySelector("#vida1");
         const vida2 = document.querySelector("#vida2");
         const statsPersonaje1 = document.querySelector("#statsPersonaje1");
@@ -1100,6 +1024,46 @@ Confirme si quiere iniciar el combate o finalizamos`);
         // Muestro Stats en las cajas
         this.jugador.mostrarStats( statsPersonaje1, false );
         this.jugadorRival.mostrarStats( statsPersonaje2, false );
+
+        // Event Listener para identificar cuándo inicia el combate
+        iniciarCombate.addEventListener("click", this.referencia = () => {
+
+            let vida = this.combate( this.jugador, this.jugadorRival );
+            
+            cajaCombate.innerHTML = // html
+                `<h2 class="incidenciasTitulo">Incidencias</h2>
+                <p id="listaEventos" class="eventos">${this.mensaje}
+                </p>
+                <button id="reiniciarCombate"> Combatir de nuevo </button>`;
+            
+            iniciarCombate.removeEventListener("click", this.referencia);
+
+            vida1.innerHTML = vida[0];
+            vida2.innerHTML = vida[1];
+
+            // Inicio la siguiente función
+            this.combatirDeNuevo();
+
+        })
+
+    }
+
+    combatirDeNuevo(){
+
+        // Identifico el ID para reiniciar el combate
+        const reiniciarCombate = document.querySelector("#reiniciarCombate");
+
+        reiniciarCombate.addEventListener("click", this.referencia = () => {
+
+            reiniciarCombate.removeEventListener("click", this.referencia);
+
+            // Reseteo el mensaje
+            this.mensaje = "";
+
+            // Vuelvo a iniciar el combate
+            this.pantallaCombate();
+            
+        })
 
     }
 
