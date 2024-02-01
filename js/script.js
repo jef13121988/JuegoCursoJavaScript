@@ -372,7 +372,7 @@ class PoolPersonajes {
     // Busco el máximo en agilidad
     maxAgilidad(){
         // Calculo el máximo
-        const maximo=this.arreglo.reduce((acumulado,item)=>((acumulado<item.agilidad) ? (acumulado=item.agilidad) : acumulado),0);
+        const maximo = Math.max( ...this.arreglo.map( item => item.agilidad ) );
 
         // Filtro el máximo y lo retorno
         return this.arreglo.filter(item => item.agilidad === maximo);
@@ -381,7 +381,7 @@ class PoolPersonajes {
     // Busco el máximo en constitución
     maxConstitucion(){
         // Calculo el máximo
-        const maximo=this.arreglo.reduce((acumulado,item)=>((acumulado<item.constitucion) ? (acumulado=item.constitucion) : acumulado),0);
+        const maximo = Math.max( ...this.arreglo.map( item => item.constitucion ) );
 
         // Filtro el máximo y lo retorno
         return this.arreglo.filter(item => item.constitucion === maximo);
@@ -390,7 +390,7 @@ class PoolPersonajes {
     // Busco el máximo en destreza
     maxDestreza(){
         // Calculo el máximo
-        const maximo=this.arreglo.reduce((acumulado,item)=>((acumulado<item.destreza) ? (acumulado=item.destreza) : acumulado),0);
+        const maximo = Math.max( ...this.arreglo.map( item => item.destreza ) );
 
         // Filtro el máximo y lo retorno
         return this.arreglo.filter(item => item.destreza === maximo);
@@ -399,7 +399,7 @@ class PoolPersonajes {
     // Busco el máximo en fuerza
     maxFuerza(){
         // Calculo el máximo
-        const maximo=this.arreglo.reduce((acumulado,item)=>((acumulado<item.fuerza) ? (acumulado=item.fuerza) : acumulado),0);
+        const maximo = Math.max( ...this.arreglo.map( item => item.fuerza ) );
 
         // Filtro el máximo y lo retorno
         return this.arreglo.filter(item => item.fuerza === maximo);
@@ -408,7 +408,7 @@ class PoolPersonajes {
     // Busco el máximo en inteligencia
     maxInteligencia(){
         // Calculo el máximo
-        const maximo=this.arreglo.reduce((acumulado,item)=>((acumulado<item.inteligencia) ? (acumulado=item.inteligencia) : acumulado),0);
+        const maximo = Math.max( ...this.arreglo.map( item => item.inteligencia ) );
 
         // Filtro el máximo y lo retorno
         return this.arreglo.filter(item => item.inteligencia === maximo);
@@ -417,7 +417,7 @@ class PoolPersonajes {
     // Busco el máximo en ataque
     maxAtaque(){
         // Calculo el máximo
-        const maximo=this.arreglo.reduce((acumulado,item)=>((acumulado<item.ataque) ? (acumulado=item.ataque) : acumulado),0);
+        const maximo = Math.max( ...this.arreglo.map( item => item.ataque ) );
 
         // Filtro el máximo y lo retorno
         return this.arreglo.filter(item => item.ataque === maximo);
@@ -426,7 +426,7 @@ class PoolPersonajes {
     // Busco el máximo en vida
     maxVida(){
         // Calculo el máximo
-        const maximo=this.arreglo.reduce((acumulado,item)=>((acumulado<item.vida) ? (acumulado=item.vida) : acumulado),0);
+        const maximo = Math.max( ...this.arreglo.map( item => item.vida ) );
 
         // Filtro el máximo y lo retorno
         return this.arreglo.filter(item => item.vida === maximo);
@@ -435,7 +435,7 @@ class PoolPersonajes {
     // Busco el máximo en maná
     maxMana(){
         // Calculo el máximo
-        const maximo=this.arreglo.reduce((acumulado,item)=>((acumulado<item.mana) ? (acumulado=item.mana) : acumulado),0);
+        const maximo = Math.max( ...this.arreglo.map( item => item.mana ) );
 
         // Filtro el máximo y lo retorno
         return this.arreglo.filter(item => item.mana === maximo);
@@ -444,7 +444,7 @@ class PoolPersonajes {
     // Busco el máximo en precisión
     maxPrecision(){
         // Calculo el máximo
-        const maximo=this.arreglo.reduce((acumulado,item)=>((acumulado<item.precision) ? (acumulado=item.precision) : acumulado),0);
+        const maximo = Math.max( ...this.arreglo.map( item => item.precision ) );
 
         // Filtro el máximo y lo retorno
         return this.arreglo.filter(item => item.precision === maximo);
@@ -453,7 +453,7 @@ class PoolPersonajes {
     // Busco el máximo en evasión
     maxEvasion(){
         // Calculo el máximo
-        const maximo=this.arreglo.reduce((acumulado,item)=>((acumulado<item.evasion) ? (acumulado=item.evasion) : acumulado),0);
+        const maximo = Math.max( ...this.arreglo.map( item => item.evasion ) );
 
         // Filtro el máximo y lo retorno
         return this.arreglo.filter(item => item.evasion === maximo);
@@ -462,7 +462,7 @@ class PoolPersonajes {
     // Busco el máximo en velocidad
     maxVelocidad(){
         // Calculo el máximo
-        const maximo=this.arreglo.reduce((acumulado,item)=>((acumulado<item.velocidad) ? (acumulado=item.velocidad) : acumulado),0);
+        const maximo = Math.max( ...this.arreglo.map( item => item.velocidad ) );
 
         // Filtro el máximo y lo retorno
         return this.arreglo.filter(item => item.velocidad === maximo);
