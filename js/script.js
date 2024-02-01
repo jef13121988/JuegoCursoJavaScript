@@ -470,6 +470,7 @@ class PoolPersonajes {
 
 }
 
+// Clase que hace que el juego avance en las distintas pantallas
 class ElJuego {
 
     /* -------------------------------- Atributos ------------------------------- */
@@ -483,9 +484,11 @@ class ElJuego {
         this.imagen = ""; // Imagen seleccionada
         this.nombreRival = ""; // Nombre seleccionado del rival
         this.jugador = ""; // Personaje creado para el jugador
-        this.jugadorRival = ""; // Personaje creado para el jugador rival
+        this.jugadorRival = ""; // Personaje creado para el rival
         this.personajes = ""; // 9 personajes creados para que pueda elegir
         this.mensaje = ""; // Lista los eventos del combate
+        [ this.victoriasJugador, this.victoriasRival ] = this.descargarJSON(); // Levanta del storage las victorias del jugador, de existir
+        //this.victoriasRival = 0; // Levanta del storage las victorias del rival, de existir
         // Selecciono la sección que se va a modificar
         this.seccion = document.querySelector('#seccion');
         // Selecciono el botón para iniciar el juego
@@ -639,6 +642,7 @@ class ElJuego {
             }
         }
 
+        // Retorno la vida con la que finalizó cada jugador
         return [jugador1.vida, jugador2.vida];
 
     }
@@ -989,13 +993,15 @@ class ElJuego {
 
     }
 
+    // Función que presenta la pantalla de combate y da lugar a iniciarlo
     pantallaCombate(){
 
         // Genero el nuevo layout
         this.seccion.innerHTML = //html
             `<div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 d-flex flex-column">
-                <h2 class="vidaTitulo">Vida ${this.jugador.nombre}</h2>
-                <p id="vida1" class="vida align-self-center">${this.jugador.vida}</p>
+                <p id="victorias1" class="align-self-center m-0 text-light">Victorias: ${this.victoriasJugador}</p>
+                <h2 class="vidaTitulo my-1">${this.jugador.nombre}</h2>
+                <p id="vida1" class="vida align-self-center">Vida: ${this.jugador.vida}</p>
                 <p id="statsPersonaje1" class="fondoTexto">
                 </p>
                 <img class="imgPersonaje" src="../img/${this.jugador.imagen}.jpg" alt="Imagen de un ${this.jugador.raza} con clase ${this.jugador.clase}">
@@ -1006,8 +1012,9 @@ class ElJuego {
             </div>
 
             <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 d-flex flex-column">
-                <h2 class="vidaTitulo">Vida ${this.jugadorRival.nombre}</h2>
-                <p id="vida2" class="vida align-self-center">${this.jugadorRival.vida}</p>
+                <p id="victorias2" class="align-self-center m-0 text-light">Victorias: ${this.victoriasRival}</p>
+                <h2 class="vidaTitulo my-1">${this.jugadorRival.nombre}</h2>
+                <p id="vida2" class="vida align-self-center">Vida: ${this.jugadorRival.vida}</p>
                 <p id="statsPersonaje2" class="fondoTexto">
                 </p>
                 <img class="imgPersonaje" src="../img/${this.jugadorRival.imagen}.jpg" alt="Imagen de un ${this.jugadorRival.raza} con clase ${this.jugadorRival.clase}">
@@ -1016,6 +1023,8 @@ class ElJuego {
         // Identifico los IDs de todos los elementos
         const cajaCombate = document.querySelector("#cajaCombate");
         const iniciarCombate = document.querySelector("#iniciarCombate");
+        const victorias1 = document.querySelector("#victorias1");
+        const victorias2 = document.querySelector("#victorias2");
         const vida1 = document.querySelector("#vida1");
         const vida2 = document.querySelector("#vida2");
         const statsPersonaje1 = document.querySelector("#statsPersonaje1");
@@ -1031,6 +1040,16 @@ class ElJuego {
             // Desestructuro el return de combate
             let [vidaJ1, vidaJ2] = this.combate( this.jugador, this.jugadorRival );
             
+            // Le concedo la victoria al que corresponda
+            if ( vidaJ1 === 0 ) {
+                this.victoriasRival += 1;
+            } else {
+                this.victoriasJugador+= 1;
+            }
+
+            // Subo el archivo JSON a local storage
+            this.subirJSON();
+
             // Genero el nuevo layout
             cajaCombate.innerHTML = // html
                 `<h2 class="incidenciasTitulo">Incidencias</h2>
@@ -1040,9 +1059,13 @@ class ElJuego {
             
             iniciarCombate.removeEventListener("click", this.referencia);
 
+            // Muestro las victorias de cada jugador
+            victorias1.innerHTML = `Victorias: ${this.victoriasJugador}`;
+            victorias2.innerHTML = `Victorias: ${this.victoriasRival}`;
+
             // Muestro la vida final de cada jugador
-            vida1.innerHTML = vidaJ1;
-            vida2.innerHTML = vidaJ2;
+            vida1.innerHTML = `Vida: ${vidaJ1}`;
+            vida2.innerHTML = `Vida: ${vidaJ2}`;
 
             // Inicio la siguiente función
             this.combatirDeNuevo();
@@ -1051,6 +1074,7 @@ class ElJuego {
 
     }
 
+    // Función que presenta la la opción de reiniciar el combate
     combatirDeNuevo(){
 
         // Identifico el ID para reiniciar el combate
@@ -1069,6 +1093,24 @@ class ElJuego {
             
         })
 
+    }
+
+    // Función que sube this a local storage
+    subirJSON(){
+        const objetoSubido = JSON.stringify(this);
+        localStorage.setItem("juego", objetoSubido);
+    }
+
+    // Función que descarga las victorias desde local storage
+    descargarJSON(){
+        const objetoDescargado = JSON.parse( localStorage.getItem( 'juego' ) );
+        if ( objetoDescargado ) {
+            const { victoriasJugador, victoriasRival } = objetoDescargado;
+            return [ victoriasJugador, victoriasRival ];
+        } else {
+            return [ 0, 0 ];
+        }
+        
     }
 
 }
