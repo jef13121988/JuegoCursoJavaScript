@@ -562,7 +562,7 @@ class ElJuego {
     
     // Listener para iniciar el juego y levantar el nombre
     iniciarJuego(){
-        this.botonIniciarJuego.addEventListener('click', this.referencia = this.indicarNombre.bind(this));
+        this.botonIniciarJuego.addEventListener('click', this.referencia = this.pantallaIndicarNombre.bind(this));
     }
 
     // Valido el nombre suministrado por el usuario, entre 3 y 15 caracteres, no puede arrancar con números
@@ -747,7 +747,7 @@ Confirme si quiere iniciar el combate o finalizamos`);
     }
 
     // Tomo el nombre de usuario
-    indicarNombre(){
+    pantallaIndicarNombre(){
         this.seccion.innerHTML = //html
             `<div class="row justify-content-center text-center">
                 <p id="aviso" class="text-light">Ingrese su nombre de jugador (entre 3 y 15 caracteres)</p>
@@ -779,7 +779,7 @@ Confirme si quiere iniciar el combate o finalizamos`);
 
             if ( this.validarNombre( this.nombre ) && this.validarNombre( this.nombreRival ) ) {
                 nombresSubmitidos.removeEventListener('click', this.referencia);
-                this.seleccionRaza();
+                this.pantallaSeleccionRaza();
 
             } else {
                 if ( ! this.validarNombre( this.nombre ) ) {
@@ -826,7 +826,7 @@ Confirme si quiere iniciar el combate o finalizamos`);
     }
 
     // Función que levanta la raza seleccionada
-    seleccionRaza(){
+    pantallaSeleccionRaza(){
         this.seccion.innerHTML = //html
             `<div id="cajaRaza" class="row justify-content-center m-4"></div>`;
 
@@ -865,12 +865,12 @@ Confirme si quiere iniciar el combate o finalizamos`);
             imgRaza.removeEventListener('click', this.referencia);
         });
 
-        this.seleccionClase();
+        this.pantallaSeleccionClase();
 
     }
 
     // Función que levanta la clase seleccionada
-    seleccionClase(){
+    pantallaSeleccionClase(){
         this.seccion.innerHTML = //html
             `<div id="cajaClase" class="row justify-content-center m-4"></div>`;
 
@@ -912,12 +912,12 @@ Confirme si quiere iniciar el combate o finalizamos`);
         // Fijo la imagen seleccionada
         this.imagen = this.imagenes.filter( item => item.id === id)[0].id;
 
-        this.seleccionPoolPersonaje();
+        this.pantallaSeleccionPoolPersonaje();
 
     }
 
     // Función que corre las funciones para levantar el personaje seleccionado
-    seleccionPoolPersonaje(){
+    pantallaSeleccionPoolPersonaje(){
 
         // Creo Pool de Personajes
         this.personajes = new PoolPersonajes( this.nombre, this.raza, this.clase, this.imagen );
@@ -1037,7 +1037,9 @@ Confirme si quiere iniciar el combate o finalizamos`);
                 imgEnPool.removeEventListener('click', this.referencia);
             })
 
-            // corre la función siguiente
+            // Inicia la función siguiente
+            this.pantallaCombate();
+
         })
 
         // Event Listener para cuando se define el personaje
@@ -1053,13 +1055,53 @@ Confirme si quiere iniciar el combate o finalizamos`);
                 imgEnPool.removeEventListener('click', this.referencia);
             })
 
-            // corre la función siguiente
+            // Inicia la función siguiente
+            this.pantallaCombate();
+
         })
-
-
 
     }
 
+    pantallaCombate(){
+
+        // Creo al personaje del rival
+        this.crearJugadorRival();
+
+        // Genero el nuevo layout
+        this.seccion.innerHTML = //html
+            `<div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 d-flex flex-column">
+                <h2 class="vidaTitulo">Vida ${this.jugador.nombre}</h2>
+                <p id="vida1" class="vida align-self-center">${this.jugador.vida}</p>
+                <p id="statsPersonaje1" class="fondoTexto">
+                </p>
+                <img class="imgPersonaje" src="../img/${this.jugador.imagen}.jpg" alt="Imagen de un ${this.jugador.raza} con clase ${this.jugador.clase}">
+            </div>
+
+            <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                <h2 class="incidenciasTitulo">Incidencias</h2>
+                <p id="listaEventos" class="eventos">
+                </p>
+            </div>
+
+            <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 d-flex flex-column">
+                <h2 class="vidaTitulo">Vida ${this.jugadorRival.nombre}</h2>
+                <p id="vida2" class="vida align-self-center">${this.jugadorRival.vida}</p>
+                <p id="statsPersonaje2" class="fondoTexto">
+                </p>
+                <img class="imgPersonaje" src="../img/${this.jugadorRival.imagen}.jpg" alt="Imagen de un ${this.jugadorRival.raza} con clase ${this.jugadorRival.clase}">
+            </div>`;
+
+        // Identifico los IDs de todos los elementos
+        const vida1 = document.querySelector("#vida1");
+        const vida2 = document.querySelector("#vida2");
+        const statsPersonaje1 = document.querySelector("#statsPersonaje1");
+        const statsPersonaje2 = document.querySelector("#statsPersonaje2");
+
+        // Muestro Stats en las cajas
+        this.jugador.mostrarStats( statsPersonaje1, false );
+        this.jugadorRival.mostrarStats( statsPersonaje2, false );
+
+    }
 
 }
 
