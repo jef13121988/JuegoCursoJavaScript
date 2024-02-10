@@ -213,7 +213,25 @@ input[type=text]:focus {
     width: 64px;
     align-items: center;
     justify-content: center;
+}
 
+/* Número para identificar personaje en selección */
+.imagenSeleccion{
+    display: inline-block;
+    position: relative;
+}
+
+.numeroSeleccion{
+    position: absolute;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    top: 5%;
+    right: 5%;
+    transform: translate(-5%, -5%); 
+    background-color: darkslategray;
+    padding: 2px 7px;
+    border-radius: 100px;
 }
 
 /* Footer */
