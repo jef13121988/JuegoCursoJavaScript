@@ -1,0 +1,311 @@
+[33mcommit bd352bb80ae6ed44929fdfae622b198a523a6664[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: jef13121988 <jef_1988@hotmail.com>
+Date:   Sat Feb 10 18:19:39 2024 -0300
+
+    eliminada prueba
+
+[33mcommit f5e3115c40e391afddefa6a20854df9c95231b44[m
+Author: jef13121988 <jef_1988@hotmail.com>
+Date:   Sat Feb 10 18:19:10 2024 -0300
+
+    prueba
+
+[33mcommit 26b6f5d2ad706d12b15b860849de3261356e01e9[m
+Author: jef13121988 <jef_1988@hotmail.com>
+Date:   Thu Feb 1 20:58:10 2024 -0300
+
+    Agregado manejo local storage
+
+[33mcommit 8c8333bd432b9a3da072971633b4572bc7f15a91[m
+Author: jef13121988 <jef_1988@hotmail.com>
+Date:   Thu Feb 1 19:09:59 2024 -0300
+
+    Máximos calculados con Spread
+
+[33mcommit edc1efaf7b68a679b1f95cad1b2078628349cd89[m
+Author: jef13121988 <jef_1988@hotmail.com>
+Date:   Thu Feb 1 00:44:44 2024 -0300
+
+    Eliminada hoja con modelo para HTML
+
+[33mcommit e24d41413e371f9f0c5f128ab0c1308f7d3de31f[m
+Author: jef13121988 <jef_1988@hotmail.com>
+Date:   Thu Feb 1 00:44:04 2024 -0300
+
+    Agregados comentarios y estilos
+
+[33mcommit 6b8e77fb3bcc3e9b0476fed8d3f8c52f536ddbd6[m
+Author: jef13121988 <jef_1988@hotmail.com>
+Date:   Thu Feb 1 00:17:08 2024 -0300
+
+    Finalizadas funcionalidades para ver resultados del combate y reiniciarlo
+
+[33mcommit d45f72c45da93fd0e1ca3e07e0f9b8ab253ab6fb[m
+Author: jef13121988 <jef_1988@hotmail.com>
+Date:   Wed Jan 31 22:58:44 2024 -0300
+
+    Agregada pantalla de combate
+
+[33mcommit c79c1864bda93540dae19136a3cb21b1687d7b81[m
+Author: jef13121988 <jef_1988@hotmail.com>
+Date:   Wed Jan 31 21:17:30 2024 -0300
+
+    Agregadas funcionalidades de selección de personaje del pool a la clase
+
+[33mcommit b656e8a06d1c762d688878fb1e5f689758c70a81[m
+Author: jef13121988 <jef_1988@hotmail.com>
+Date:   Tue Jan 30 23:05:55 2024 -0300
+
+    Últimas pruebas de display de selección personaje de array
+
+[33mcommit d408120c85763b096954a4a418b89d4e35769792[m
+Author: jef13121988 <jef_1988@hotmail.com>
+Date:   Tue Jan 30 19:50:25 2024 -0300
+
+    Agregados parámetro imagen a clase de PoolPersonajes
+
+[33mcommit ad76f34f1b2098697bb2d9b61b6cb4cb8f767822[m
+Author: jef13121988 <jef_1988@hotmail.com>
+Date:   Tue Jan 30 19:14:36 2024 -0300
+
+    Pasado pool de 10 personajes a 9 personajes
+
+[33mcommit febf6ae37a0f83005ede403db88735d34044e0b6[m
+Author: jef13121988 <jef_1988@hotmail.com>
+Date:   Tue Jan 30 18:57:17 2024 -0300
+
+    Pruebas display selección personaje de array
+
+[33mcommit 3030685ddf52292ecca3b08baa3bdd182840ce06[m
+Author: jef13121988 <jef_1988@hotmail.com>
+Date:   Sun Jan 28 21:01:49 2024 -0300
+
+    Probando página para seleccionar personaje
+
+[33mcommit 2375180e85ccebc957732614d940ebef9b8bd32b[m
+Author: jef13121988 <jef_1988@hotmail.com>
+Date:   Sun Jan 28 20:47:04 2024 -0300
+
+    Agregadas funciones para ralizar selecciones sin prompts  a la clase
+
+[33mcommit 8cc234fca782d5e1157a62b2317ffdd5370a40b5[m
+Author: jef13121988 <jef_1988@hotmail.com>
+Date:   Sat Jan 27 22:50:16 2024 -0300
+
+    Funcionamiento display imágenes, pendiente de agregar a la class
+
+[33mcommit 84bec226fa28712b9e0de390ca5b8897f2e92f49[m
+Author: jef13121988 <jef_1988@hotmail.com>
+Date:   Sat Jan 27 20:35:30 2024 -0300
+
+    Agregadas imágenes para cards
+
+[33mcommit 4e9cd4a68b64eadbeda8679eb4e5da26e9c55915[m
+Author: jef13121988 <jef_1988@hotmail.com>
+Date:   Thu Jan 25 21:02:26 2024 -0300
+
+    Eliminados HTML replicados
+
+[33mcommit 6a559e0c02ff129d95804c01f1ef1eacfc746a8b[m
+Author: jef13121988 <jef_1988@hotmail.com>
+Date:   Wed Jan 24 23:11:25 2024 -0300
+
+    Avanzando con pruebas para remover Event Listeners
+
+[33mcommit 8c465f2772cdb411f11b6e5c4cf9b420666c3e57[m
+Author: jef13121988 <jef_1988@hotmail.com>
+Date:   Tue Jan 23 23:13:13 2024 -0300
+
+    Agregadas pruebas de eventos
+
+[33mcommit 619477fd7bfa0e59674858d9d398fb3016bd0736[m
+Author: jef13121988 <jef_1988@hotmail.com>
+Date:   Tue Jan 23 21:02:48 2024 -0300
+
+    Agregadas pruebas de funciones para modificar HTML
+
+[33mcommit f0dfde397bfb2098e6f27fd95ed8736c22e2a566[m
+Author: jef13121988 <jef_1988@hotmail.com>
+Date:   Mon Jan 22 22:43:05 2024 -0300
+
+    Maquetando pantallas del juego
+
+[33mcommit 611adee0e6b9fe250437ca73a5dfc8f67838812c[m
+Author: jef13121988 <jef_1988@hotmail.com>
+Date:   Sun Jan 21 14:18:00 2024 -0300
+
+    Actualizados títulos
+
+[33mcommit a58ccde311c0103d9e488d49d9b5a6775f2c41be[m
+Author: jef13121988 <jef_1988@hotmail.com>
+Date:   Sat Jan 20 20:55:26 2024 -0300
+
+    Prueba exitosa
+
+[33mcommit f43cf4c269e019d47b7bf6ec869bb54d5c6260b6[m
+Author: jef13121988 <jef_1988@hotmail.com>
+Date:   Sat Jan 20 20:52:53 2024 -0300
+
+    Prueba
+
+[33mcommit 74f5c5c2e39192460dba7be58af97316280252d9[m
+Author: jef13121988 <jef_1988@hotmail.com>
+Date:   Thu Jan 18 22:32:57 2024 -0300
+
+    Agregadas imágenes faltantes
+
+[33mcommit cf8f25add21a6230201293a0aeaf1e283ab35408[m
+Author: jef13121988 <jef_1988@hotmail.com>
+Date:   Thu Jan 18 21:06:26 2024 -0300
+
+    Pulido layout HTML y agregada una imagen
+
+[33mcommit 4891a5094016f7c20ae6a42cf29b7e0b7ea4fb63[m
+Author: jef13121988 <jef_1988@hotmail.com>
+Date:   Thu Jan 18 19:06:19 2024 -0300
+
+    Modificaciones varias en HTML y CSS
+
+[33mcommit f877a672253610a2c974b4c3031e65ab2fb52cce[m
+Author: jef13121988 <jef_1988@hotmail.com>
+Date:   Thu Jan 18 14:39:02 2024 -0300
+
+    Cambios menores de HTML
+
+[33mcommit 32dc3554bf1e3f6f6e0440edf6c63db8f481452e[m
+Author: jef13121988 <jef_1988@hotmail.com>
+Date:   Thu Jan 18 00:03:05 2024 -0300
+
+    Agregado primer bosquejo del html
+
+[33mcommit 4379184a1f769041dcb641caff8e30d9f00668d8[m
+Author: jef13121988 <jef_1988@hotmail.com>
+Date:   Wed Jan 17 00:37:57 2024 -0300
+
+    Mejorado funcionamiento del método combate
+
+[33mcommit 873c777af7d06fa746d9f53fe36cf04c032a264e[m
+Author: jef13121988 <jef_1988@hotmail.com>
+Date:   Tue Jan 16 23:13:31 2024 -0300
+
+    Agregada opción de jugar de nuevo
+
+[33mcommit c50fa715be0a039c709961c465d84bc572661131[m
+Author: jef13121988 <jef_1988@hotmail.com>
+Date:   Tue Jan 16 23:06:05 2024 -0300
+
+    Creados métodos para mostrar stats y para copiar personaje
+
+[33mcommit f25f078b1d19addfc7cb95669147eed273f1873f[m
+Author: jef13121988 <jef_1988@hotmail.com>
+Date:   Tue Jan 16 21:58:58 2024 -0300
+
+    Modificados cálculos de las mecánicas
+
+[33mcommit 519780fe782ab9031c5bbae051e628f394d63f48[m
+Author: jef13121988 <jef_1988@hotmail.com>
+Date:   Tue Jan 16 20:36:48 2024 -0300
+
+    Agregadas fórmulas de distribución normal a clase, modificadas mecánicas
+
+[33mcommit 27ff64760bf38796e29fdccbf4ff0d6381bc9653[m
+Author: jef13121988 <jef_1988@hotmail.com>
+Date:   Tue Jan 16 18:57:36 2024 -0300
+
+    Movido al script principal
+
+[33mcommit af877fda5bbba2b2d09163ac4449da80210f6070[m
+Author: jef13121988 <jef_1988@hotmail.com>
+Date:   Tue Jan 16 18:56:46 2024 -0300
+
+    Modificados let por const
+
+[33mcommit 1cb8e4ec7a631d1e49a0f04cdb8ad1d1670a5889[m
+Author: jef13121988 <jef_1988@hotmail.com>
+Date:   Tue Jan 16 14:07:54 2024 -0300
+
+    Creado método de combate
+
+[33mcommit 9f344157ba7bbb522307e961c44491df8c387ff4[m
+Author: jef13121988 <jef_1988@hotmail.com>
+Date:   Mon Jan 15 23:33:57 2024 -0300
+
+    Agregada creación de personaje rival
+
+[33mcommit 8fafc83f20b463c7f1db6a4bb176168aac04318d[m
+Author: jef13121988 <jef_1988@hotmail.com>
+Date:   Mon Jan 15 23:21:15 2024 -0300
+
+    Agregada posibilidad de elegir un personaje del pool
+
+[33mcommit 2d916ad2a1de75e77ac57d72bfa5824533261f93[m
+Author: jef13121988 <jef_1988@hotmail.com>
+Date:   Mon Jan 15 21:01:38 2024 -0300
+
+    Creados métodos para nombre de usuario, nombre de rival, pendiente perfeccionar clase
+
+[33mcommit 52131a6cb326e6e3f1af61567665d7bc75f564a6[m
+Author: jef13121988 <jef_1988@hotmail.com>
+Date:   Sun Jan 14 23:54:01 2024 -0300
+
+    Agregada clase para crear pool de personajes
+
+[33mcommit 248fa714d5045d4e50e776008e7b7fe37ac44714[m
+Author: jef13121988 <jef_1988@hotmail.com>
+Date:   Sun Jan 14 20:49:23 2024 -0300
+
+    Actualizada precisión arma de Bárbaro
+
+[33mcommit d728a63155966f3626e380f9d6a3d4823cd4727d[m
+Author: jef13121988 <jef_1988@hotmail.com>
+Date:   Sun Jan 14 20:37:26 2024 -0300
+
+    Finalizados métodos de ataque y de subir nivel
+
+[33mcommit 2563b100be384d76bc926a75c48f58b88e89e596[m
+Author: jef13121988 <jef_1988@hotmail.com>
+Date:   Sun Jan 14 10:17:03 2024 -0300
+
+    Mejorado y compactado cálculo de atributos principalesderivados
+
+[33mcommit 50897ab89dc77e2a366102a0495c78c07e20c141[m
+Author: jef13121988 <jef_1988@hotmail.com>
+Date:   Sun Jan 14 09:55:28 2024 -0300
+
+    Mejorado y compactado cálculo de atributos principales
+
+[33mcommit 54c80258992e1797cf2343b6c121aa28c2977abd[m
+Author: jef13121988 <jef_1988@hotmail.com>
+Date:   Sun Jan 14 09:43:35 2024 -0300
+
+    Ajustado desvío estándar
+
+[33mcommit 1cb9578c6ba57c5f37bdee7f3a3d0d368954616b[m
+Author: jef13121988 <jef_1988@hotmail.com>
+Date:   Sun Jan 14 00:17:23 2024 -0300
+
+    Eliminado link a script piloto
+
+[33mcommit cfd127c2c20b08abd1dcb37c7d224dd4db7228cd[m
+Author: jef13121988 <jef_1988@hotmail.com>
+Date:   Sun Jan 14 00:16:27 2024 -0300
+
+    Agregados métodos a la clase
+
+[33mcommit ec9e164f4de804c0261290402088fcc68f112a35[m
+Author: jef13121988 <jef_1988@hotmail.com>
+Date:   Sat Jan 13 21:02:19 2024 -0300
+
+    Funciones de Distribución Normal
+
+[33mcommit f13a282b00c70a07d1c5ef8e34595e3439e37abb[m
+Author: jef13121988 <jef_1988@hotmail.com>
+Date:   Fri Jan 12 23:23:48 2024 -0300
+
+    Primer avance con clases
+
+[33mcommit 74873b7f3a51cb39474ffe6dbe7ec7e9f66ba132[m
+Author: jef13121988 <jef_1988@hotmail.com>
+Date:   Thu Jan 11 19:05:33 2024 -0300
+
+    Carga Inicial con Preentrega 1
