@@ -28,7 +28,9 @@ const importarPortada = async () => {
         const json = await response.json();
         // Declaro la variable que va a contener el array
         const imagenesPortada = json.imagenesPortada;
+        // Sorteo la imagen a mostrar
         const imagenPortada = sortearPortada(imagenesPortada);
+        // Muestro la imagen sorteada
         mostrarPortada(imagenPortada);
     } catch (error) {
         alert("Error");

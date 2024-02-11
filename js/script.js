@@ -493,67 +493,9 @@ class ElJuego {
         this.seccion = document.querySelector('#seccion');
         // Selecciono el botón para iniciar el juego
         this.botonIniciarJuego = document.querySelector('#iniciarJuego');
-        // Listo las imágenes
-        this.imagenes = [
-            { id: "e-b", raza: "Elfo", clase: "Bárbaro" },
-            { id: "e-g", raza: "Elfo", clase: "Guerrero" },
-            { id: "e-r", raza: "Elfo", clase: "Rogue" },
-            { id: "e-b0", raza: "Elfo", clase: "Bárbaro" },
-            { id: "e-g0", raza: "Elfo", clase: "Guerrero" },
-            { id: "e-r0", raza: "Elfo", clase: "Rogue" },
-            { id: "e-b1", raza: "Elfo", clase: "Bárbaro" },
-            { id: "e-g1", raza: "Elfo", clase: "Guerrero" },
-            { id: "e-r1", raza: "Elfo", clase: "Rogue" },
-            { id: "eo-b", raza: "Elfo Oscuro", clase: "Bárbaro" },
-            { id: "eo-g", raza: "Elfo Oscuro", clase: "Guerrero" },
-            { id: "eo-r", raza: "Elfo Oscuro", clase: "Rogue" },
-            { id: "eo-b0", raza: "Elfo Oscuro", clase: "Bárbaro" },
-            { id: "eo-g0", raza: "Elfo Oscuro", clase: "Guerrero" },
-            { id: "eo-r0", raza: "Elfo Oscuro", clase: "Rogue" },
-            { id: "eo-b1", raza: "Elfo Oscuro", clase: "Bárbaro" },
-            { id: "eo-g1", raza: "Elfo Oscuro", clase: "Guerrero" },
-            { id: "eo-r1", raza: "Elfo Oscuro", clase: "Rogue" },
-            { id: "en-b", raza: "Enano", clase: "Bárbaro" },
-            { id: "en-g", raza: "Enano", clase: "Guerrero" },
-            { id: "en-r", raza: "Enano", clase: "Rogue" },
-            { id: "en-b0", raza: "Enano", clase: "Bárbaro" },
-            { id: "en-g0", raza: "Enano", clase: "Guerrero" },
-            { id: "en-r0", raza: "Enano", clase: "Rogue" },
-            { id: "en-b1", raza: "Enano", clase: "Bárbaro" },
-            { id: "en-g1", raza: "Enano", clase: "Guerrero" },
-            { id: "en-r1", raza: "Enano", clase: "Rogue" },
-            { id: "h-b", raza: "Humano", clase: "Bárbaro" },
-            { id: "h-g", raza: "Humano", clase: "Guerrero" },
-            { id: "h-r", raza: "Humano", clase: "Rogue" },
-            { id: "h-b0", raza: "Humano", clase: "Bárbaro" },
-            { id: "h-g0", raza: "Humano", clase: "Guerrero" },
-            { id: "h-r0", raza: "Humano", clase: "Rogue" },
-            { id: "h-b1", raza: "Humano", clase: "Bárbaro" },
-            { id: "h-g1", raza: "Humano", clase: "Guerrero" },
-            { id: "h-r1", raza: "Humano", clase: "Rogue" },
-            { id: "g-b", raza: "Gnomo", clase: "Bárbaro" },
-            { id: "g-g", raza: "Gnomo", clase: "Guerrero" },
-            { id: "g-r", raza: "Gnomo", clase: "Rogue" },
-            { id: "g-b0", raza: "Gnomo", clase: "Bárbaro" },
-            { id: "g-g0", raza: "Gnomo", clase: "Guerrero" },
-            { id: "g-r0", raza: "Gnomo", clase: "Rogue" },
-            { id: "g-b1", raza: "Gnomo", clase: "Bárbaro" },
-            { id: "g-g1", raza: "Gnomo", clase: "Guerrero" },
-            { id: "g-r1", raza: "Gnomo", clase: "Rogue" },
-            { id: "o-b", raza: "Orco", clase: "Bárbaro" },
-            { id: "o-g", raza: "Orco", clase: "Guerrero" },
-            { id: "o-r", raza: "Orco", clase: "Rogue" },
-            { id: "o-b0", raza: "Orco", clase: "Bárbaro" },
-            { id: "o-g0", raza: "Orco", clase: "Guerrero" },
-            { id: "o-r0", raza: "Orco", clase: "Rogue" },
-            { id: "o-b1", raza: "Orco", clase: "Bárbaro" },
-            { id: "o-g1", raza: "Orco", clase: "Guerrero" },
-            { id: "o-r1", raza: "Orco", clase: "Rogue" }   
-        ]
-        // Listo las razas
-        this.razas = [ "Elfo", "Elfo Oscuro", "Enano", "Gnomo", "Humano", "Orco" ];
-        // Listo las clases
-        this.clases = [ "Bárbaro", "Guerrero", "Rogue" ];
+        this.imagenes = []; // Para listar las imágenes importadas del JSON
+        this.razas = []; // Para listar las razas importadas del JSON
+        this.clases = []; // Para listar las clases importadas del JSON
 
         // Función para iniciar el juego
         this.iniciarJuego();
@@ -564,7 +506,27 @@ class ElJuego {
     
     // Listener para iniciar el juego y levantar el nombre
     iniciarJuego(){
+        this.importarJSON();
         this.botonIniciarJuego.addEventListener('click', this.referencia = this.pantallaIndicarNombre.bind(this));
+    }
+
+    // Importar arrays de imagenes, razas y clases desde JSON
+    async importarJSON(){
+        try {
+            // Indico la ruta del json
+            const endPoint = '../models/data.json';
+            // Intento conectarme con la ruta
+            const response  = await fetch(endPoint);
+            // Intento levantar la informaicón
+            const json = await response.json();
+            // Importo los arrays
+            this.imagenes = json.imagenes;
+            this.razas = json.razas;
+            this.clases = json.clases;
+
+        } catch (error) {
+            alert("Error");
+        }
     }
 
     // Valido el nombre suministrado por el usuario, entre 3 y 15 caracteres, no puede arrancar con números
