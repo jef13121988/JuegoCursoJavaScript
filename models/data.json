@@ -58,5 +58,7 @@
 
     "razas": [ "Elfo", "Elfo Oscuro", "Enano", "Gnomo", "Humano", "Orco" ],
     
-    "clases": [ "Bárbaro", "Guerrero", "Rogue" ]
+    "clases": [ "Bárbaro", "Guerrero", "Rogue" ],
+
+    "imagenesPortada": [ "portada0", "portada1", "portada2", "portada3", "portada4" ]
 }
