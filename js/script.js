@@ -867,7 +867,7 @@ class ElJuego {
                     </span>
                 </div>`
         });
-    
+
         const imgPool = document.querySelectorAll('.imgPersonaje');
         
         // Event Listener que reconoce el personaje seleccionado para análisis
@@ -890,6 +890,31 @@ class ElJuego {
             })
         })
 
+        // Declaro la constante que va a contener los máximos
+        const maximo = [];
+
+        // Identifico los máximos
+        maximo.push(...this.personajes.maxVida());
+        maximo.push(...this.personajes.maxPrecision());
+        maximo.push(...this.personajes.maxEvasion());
+        maximo.push(...this.personajes.maxVelocidad());
+
+        // Quito los duplicados
+        const maximoIndice = [];
+        maximo.forEach( item => {
+            if (maximoIndice.indexOf( item.indice ) === -1) {
+                maximoIndice.push( item.indice );
+            }
+        } );
+
+        // Cambio el fondo a las imágenes con máximos
+        imgPool.forEach( imgEnPool => {
+            const id = parseInt( imgEnPool.id );
+            if ( maximoIndice.indexOf( id ) != -1 ) {
+                imgEnPool.classList.add('maximo');
+            }
+        });
+      
         // Agrego Event Listener que identifica el estado del switch 1
         switch1.addEventListener("click", refSwitch1 = () => {
             if ( switch1.alt === "activo" ) {

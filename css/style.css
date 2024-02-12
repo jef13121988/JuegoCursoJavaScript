@@ -194,7 +194,12 @@ input[type=text]:focus {
 /* Efecto para las fotos */
 .imgPersonaje:hover {
     opacity: 90%;
-  }
+}
+
+/* Borde para las fotos que tienen el máximo del array en alguna habilidad */
+.maximo {
+    filter: drop-shadow(0 0 1rem orange);
+}
 
 /* Se achica el tamaño de la imagen por debajo de los 600px */
 @media (max-width: 600px) {
