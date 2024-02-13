@@ -259,26 +259,26 @@ class Personaje {
             caja.innerText = `Los stats de ${this.nombre} son:
 
 Atributos generales:
-    - Raza: ${this.raza}.
-    - Clase: ${this.clase}.
-    - Nivel: ${this.nivel}.
-    - Experiencia: ${this.experiencia}.
-    - Precisión del arma: ${this.precisionArma}.
+    - Raza: ${this.raza}
+    - Clase: ${this.clase}
+    - Nivel: ${this.nivel}
+    - Experiencia: ${this.experiencia}
+    - Precisión del arma: ${this.precisionArma}
 
 Atributos principales:
-    - Agilidad: ${this.agilidad}.
-    - Constitución: ${this.constitucion}.
-    - Destreza: ${this.destreza}.
-    - Fuerza: ${this.fuerza}.
-    - Inteligencia: ${this.inteligencia}.
+    - Agilidad: ${this.agilidad}
+    - Constitución: ${this.constitucion}
+    - Destreza: ${this.destreza}
+    - Fuerza: ${this.fuerza}
+    - Inteligencia: ${this.inteligencia}
 
 Atributos derivados:
-    - Ataque: ${this.ataque}.
-    - Vida: ${this.vida}.
-    - Maná: ${this.mana}.
-    - Precisión: ${this.precision}.
-    - Evasión: ${this.evasion}.
-    - Velocidad: ${this.velocidad}.
+    - Ataque: ${this.ataque}
+    - Vida: ${this.vida}
+    - Maná: ${this.mana}
+    - Precisión: ${this.precision}
+    - Evasión: ${this.evasion}
+    - Velocidad: ${this.velocidad}
 
 Personaje número: ${this.indice}
 
@@ -288,26 +288,26 @@ Personaje número: ${this.indice}
             caja.innerText = `Los stats de ${this.nombre} son:
 
 Atributos generales:
-    - Raza: ${this.raza}.
-    - Clase: ${this.clase}.
-    - Nivel: ${this.nivel}.
-    - Experiencia: ${this.experiencia}.
-    - Precisión del arma: ${this.precisionArma}.
+    - Raza: ${this.raza}
+    - Clase: ${this.clase}
+    - Nivel: ${this.nivel}
+    - Experiencia: ${this.experiencia}
+    - Precisión del arma: ${this.precisionArma}
 
 Atributos principales:
-    - Agilidad: ${this.agilidad}.
-    - Constitución: ${this.constitucion}.
-    - Destreza: ${this.destreza}.
-    - Fuerza: ${this.fuerza}.
-    - Inteligencia: ${this.inteligencia}.
+    - Agilidad: ${this.agilidad}
+    - Constitución: ${this.constitucion}
+    - Destreza: ${this.destreza}
+    - Fuerza: ${this.fuerza}
+    - Inteligencia: ${this.inteligencia}
 
 Atributos derivados:
-    - Ataque: ${this.ataque}.
-    - Vida: ${this.vida}.
-    - Maná: ${this.mana}.
-    - Precisión: ${this.precision}.
-    - Evasión: ${this.evasion}.
-    - Velocidad: ${this.velocidad}.
+    - Ataque: ${this.ataque}
+    - Vida: ${this.vida}
+    - Maná: ${this.mana}
+    - Precisión: ${this.precision}
+    - Evasión: ${this.evasion}
+    - Velocidad: ${this.velocidad}
 
 `;
             
@@ -525,7 +525,11 @@ class ElJuego {
             this.clases = json.clases;
 
         } catch (error) {
-            alert("Error");
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "No se pudo encontrar el archivo.",
+              });
         }
     }
 
