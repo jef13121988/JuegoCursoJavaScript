@@ -315,27 +315,22 @@ Atributos derivados:
     }
 
     // Realiza la copia de un personaje
-    copiarPersonaje(){
+    copiarPersonaje( personajeACopiar ){
         // crea una instancia de la clase
-        const copia = new Personaje( this.nombre, this.raza, this.clase );
+        const copia = new Personaje( personajeACopiar.nombre, personajeACopiar.raza, personajeACopiar.clase, personajeACopiar.imagen );
 
         // Copia los valores en la nueva instancia
-        copia.nivel = this.nivel;
-        copia.nivel = this.experiencia;
-        copia.nivel = this.experienciaOtorgada;
-        copia.nivel = this.indice;
-        copia.agilidad = this.agilidad;
-        copia.constitucion = this.constitucion;
-        copia.destreza = this.destreza;
-        copia.fuerza = this.fuerza;
-        copia.inteligencia = this.inteligencia;
-        copia.ataque = this.ataque;
-        copia.vida = this.vida;
-        copia.mana = this.mana;
-        copia.precision = this.precision;
-        copia.evasion = this.evasion;
-        copia.velocidad = this.velocidad;
-        copia.precisionArma = this.precisionArma;
+        copia.nivel = personajeACopiar.nivel;
+        copia.experiencia = personajeACopiar.experiencia;
+        copia.indice = personajeACopiar.indice;
+        copia.agilidad = personajeACopiar.agilidad;
+        copia.constitucion = personajeACopiar.constitucion;
+        copia.destreza = personajeACopiar.destreza;
+        copia.fuerza = personajeACopiar.fuerza;
+        copia.inteligencia = personajeACopiar.inteligencia;
+
+        // Calculo los atributos derivados en función de los principales
+        copia.calculoAtributosDerivados();
 
         return copia;
     }
@@ -477,7 +472,8 @@ class ElJuego {
 
     constructor(){
 
-        this.referencia; // Para los Event Listeners
+        this.referencia1; // Para los Event Listeners
+        this.referencia2; // Para los Event Listeners
         this.nombre = ""; // Nombre seleccionado
         this.raza = ""; // Raza seleccionada
         this.clase = ""; // Clase seleccionada
@@ -507,7 +503,7 @@ class ElJuego {
     // Listener para iniciar el juego y levantar el nombre
     iniciarJuego(){
         this.importarJSON();
-        this.botonIniciarJuego.addEventListener('click', this.referencia = this.pantallaIndicarNombre.bind(this));
+        this.botonIniciarJuego.addEventListener('click', this.referencia1 = this.pantallaIndicarNombre.bind(this));
     }
 
     // Importar arrays de imagenes, razas y clases desde JSON
@@ -567,8 +563,8 @@ class ElJuego {
     combate( player1, player2 ){
 
         // Realiza una copia para no pisar los atributos originales
-        const jugador1 = player1.copiarPersonaje();
-        const jugador2 = player2.copiarPersonaje();
+        const jugador1 = player1.copiarPersonaje( player1 );
+        const jugador2 = player2.copiarPersonaje( player2 );
 
         while( jugador1.vida > 0 && jugador2.vida >0 ){
 
@@ -659,20 +655,20 @@ class ElJuego {
                 <button id="nombreSubmitido" class="botonInicio"> Enviar </button>
             </div>`;
 
-        this.botonIniciarJuego.removeEventListener('click', this.referencia);
+        this.botonIniciarJuego.removeEventListener('click', this.referencia1);
         
         const nombreIndicado = document.querySelector('#nombreIndicado');
         const nombreRivalIndicado = document.querySelector('#nombreRivalIndicado');
         const nombresSubmitidos = document.querySelector('#nombreSubmitido');
 
-        nombresSubmitidos.addEventListener('click',  this.referencia = () => {
+        nombresSubmitidos.addEventListener('click',  this.referencia1 = () => {
             this.nombre = nombreIndicado.value;
             this.nombre = this.nombre.replace(/\s+/g, ''); // Elimino los espacios
             this.nombreRival = nombreRivalIndicado.value;
             this.nombreRival = this.nombreRival.replace(/\s+/g, ''); // Elimino los espacios
 
             if ( this.validarNombre( this.nombre ) && this.validarNombre( this.nombreRival ) ) {
-                nombresSubmitidos.removeEventListener('click', this.referencia);
+                nombresSubmitidos.removeEventListener('click', this.referencia1);
                 this.pantallaSeleccionRaza();
 
             } else {
@@ -740,7 +736,7 @@ class ElJuego {
     
         // Levanto la raza que se selecciona
         imgRazas.forEach( imgRaza => {
-            imgRaza.addEventListener('click', this.referencia = this.listenerRaza.bind(this));
+            imgRaza.addEventListener('click', this.referencia1 = this.listenerRaza.bind(this));
         })
 
     }
@@ -756,7 +752,7 @@ class ElJuego {
         const imgRazas = document.querySelectorAll('.imgPersonaje');
     
         imgRazas.forEach( imgRaza => {
-            imgRaza.removeEventListener('click', this.referencia);
+            imgRaza.removeEventListener('click', this.referencia1);
         });
 
         this.pantallaSeleccionClase();
@@ -784,7 +780,7 @@ class ElJuego {
     
         // Levanto la clase que se selecciona
         imgClases.forEach( imgClase => {
-            imgClase.addEventListener('click', this.referencia = this.listenerClase.bind(this));
+            imgClase.addEventListener('click', this.referencia1 = this.listenerClase.bind(this));
         });
 
     }
@@ -800,7 +796,7 @@ class ElJuego {
         const imgClases = document.querySelectorAll('.imgPersonaje');
     
         imgClases.forEach( imgClase => {
-            imgClase.removeEventListener('click', this.referencia);
+            imgClase.removeEventListener('click', this.referencia1);
         });      
 
         // Fijo la imagen seleccionada
@@ -876,7 +872,7 @@ class ElJuego {
         
         // Event Listener que reconoce el personaje seleccionado para análisis
         imgPool.forEach( imgEnPool => {
-            imgEnPool.addEventListener('click', this.referencia = ( evento ) => {
+            imgEnPool.addEventListener('click', this.referencia1 = ( evento ) => {
                 // Identifico la ID de la imagen
                 const id = evento.target.id;
 
@@ -959,7 +955,7 @@ class ElJuego {
             switch1.removeEventListener("click", refSwitch1);
             switch2.removeEventListener("click", refSwitch2);
             imgPool.forEach( imgEnPool => {
-                imgEnPool.removeEventListener('click', this.referencia);
+                imgEnPool.removeEventListener('click', this.referencia1);
             })
 
             // Inicia la función siguiente
@@ -977,7 +973,7 @@ class ElJuego {
             switch1.removeEventListener("click", refSwitch1);
             switch2.removeEventListener("click", refSwitch2);
             imgPool.forEach( imgEnPool => {
-                imgEnPool.removeEventListener('click', this.referencia);
+                imgEnPool.removeEventListener('click', this.referencia1);
             })
 
             // Inicia la función siguiente
@@ -989,6 +985,9 @@ class ElJuego {
 
     // Función que presenta la pantalla de combate y da lugar a iniciarlo
     pantallaCombate(){
+
+        // Reseteo el mensaje
+        this.mensaje = "";
 
         // Genero el nuevo layout
         this.seccion.innerHTML = //html
@@ -1029,7 +1028,7 @@ class ElJuego {
         this.jugadorRival.mostrarStats( statsPersonaje2, false );
 
         // Event Listener para identificar cuándo inicia el combate
-        iniciarCombate.addEventListener("click", this.referencia = () => {
+        iniciarCombate.addEventListener("click", this.referencia1 = () => {
 
             // Desestructuro el return de combate
             let [vidaJ1, vidaJ2] = this.combate( this.jugador, this.jugadorRival );
@@ -1049,9 +1048,12 @@ class ElJuego {
                 `<h2 class="incidenciasTitulo">Incidencias</h2>
                 <p id="listaEventos" class="eventos">${this.mensaje}
                 </p>
-                <button id="reiniciarCombate" class="botonInicio"> Combatir de nuevo </button>`;
+                <div class="row justify-content-center">
+                    <button id="reiniciarCombate" class="botonInicio"> Combatir de nuevo </button>
+                    <button id="cambiarRival" class="botonInicio"> Cambiar Rival </button>
+                </div>`;
             
-            iniciarCombate.removeEventListener("click", this.referencia);
+            iniciarCombate.removeEventListener("click", this.referencia1);
 
             // Muestro las victorias de cada jugador
             victorias1.innerHTML = `Victorias: ${this.victoriasJugador}`;
@@ -1062,25 +1064,42 @@ class ElJuego {
             vida2.innerHTML = `Vida: ${vidaJ2}`;
 
             // Inicio la siguiente función
-            this.combatirDeNuevo();
+            this.continuar();
 
         })
 
     }
 
-    // Función que presenta la la opción de reiniciar el combate
-    combatirDeNuevo(){
+    // Función que presenta la opción de reiniciar el combate o cambiar el rival
+    continuar(){
 
         // Identifico el ID para reiniciar el combate
         const reiniciarCombate = document.querySelector("#reiniciarCombate");
 
-        // Event Listener para identificar cuándo reinicia el combate
-        reiniciarCombate.addEventListener("click", this.referencia = () => {
+        // Identifico el ID para cambiar el rival
+        const cambiarRival = document.querySelector("#cambiarRival");
 
-            reiniciarCombate.removeEventListener("click", this.referencia);
+        // Event Listener para identificar cuándo se opta por reiniciar el combate
+        reiniciarCombate.addEventListener("click", this.referencia1 = () => {
 
-            // Reseteo el mensaje
-            this.mensaje = "";
+            // Remuevo los event listeners
+            reiniciarCombate.removeEventListener("click", this.referencia1);
+            cambiarRival.removeEventListener("click", this.referencia2);
+
+            // Vuelvo a iniciar el combate
+            this.pantallaCombate();
+            
+        })
+
+        // Event Listener para identificar cuándo se opta por cambiar el rival
+        cambiarRival.addEventListener("click", this.referencia2 = () => {
+
+            // Remuevo los event listeners
+            reiniciarCombate.removeEventListener("click", this.referencia1);
+            cambiarRival.removeEventListener("click", this.referencia2);
+
+            // Creo al nuevo rival
+            this.crearJugadorRival();
 
             // Vuelvo a iniciar el combate
             this.pantallaCombate();
