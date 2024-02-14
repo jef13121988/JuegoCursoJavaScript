@@ -860,7 +860,7 @@ class ElJuego {
         // Despliego en una caja el listado de personajes del pool
         this.personajes.arreglo.forEach( item => {
             cajaPoolPersonajes.innerHTML += // html
-                `<div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                `<div class="col-4">
                     <span class="imagenSeleccion">
                         <img id="${item.indice}" class="imgPersonaje" src="../img/${item.imagen}.jpg" alt="Imagen de un ${item.raza} con clase ${item.clase}">
                         <span class="numeroSeleccion">${item.indice}</span>
