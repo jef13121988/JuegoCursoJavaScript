@@ -105,6 +105,18 @@ h1 {
     border-radius: 30px;
 }
 
+/* Estilo de caja presentando stats de partidas anteriores */
+#statsAnteriores {
+    width: 300px;
+}
+
+/* Ajusto ancho de stats anteriores */
+@media (max-width: 300px) {
+    #statsAnteriores {
+        width: 100%;
+    }
+}
+
 /* Decoración párrafos de vida */
 .vida {
     color: darkred;

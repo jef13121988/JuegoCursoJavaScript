@@ -483,12 +483,9 @@ class ElJuego {
         this.jugadorRival = ""; // Personaje creado para el rival
         this.personajes = ""; // 9 personajes creados para que pueda elegir
         this.mensaje = ""; // Lista los eventos del combate
-        [ this.victoriasJugador, this.victoriasRival ] = this.descargarJSON(); // Levanta del storage las victorias del jugador, de existir
-        //this.victoriasRival = 0; // Levanta del storage las victorias del rival, de existir
-        // Selecciono la sección que se va a modificar
-        this.seccion = document.querySelector('#seccion');
-        // Selecciono el botón para iniciar el juego
-        this.botonIniciarJuego = document.querySelector('#iniciarJuego');
+        this.victoriasJugador = 0; // Contador de victorias del jugador
+        this.victoriasRival = 0; // Contador de victorias del rival
+        this.seccion = document.querySelector('#seccion'); // Selecciono la sección que se va a modificar
         this.imagenes = []; // Para listar las imágenes importadas del JSON
         this.razas = []; // Para listar las razas importadas del JSON
         this.clases = []; // Para listar las clases importadas del JSON
@@ -500,12 +497,101 @@ class ElJuego {
 
     /* --------------------------------- Métodos -------------------------------- */
     
-    // Listener para iniciar el juego y levantar el nombre
+    // Función para dar inicio al juego
     iniciarJuego(){
-        this.importarJSON();
-        this.botonIniciarJuego.addEventListener('click', this.referencia1 = this.pantallaIndicarNombre.bind(this));
+        this.importarJSON(); // Importo los arrays del JSON
+        this.chequearPartidaGuardada(); // Chequeo si hay alguna partida guardada
+
     }
 
+    // Chequeo si hay alguna partida guardada
+    chequearPartidaGuardada(){
+        // Descargo la información alojada en el local storage
+        const objetoDescargado = JSON.parse( localStorage.getItem( 'juego' ) );
+
+        // Reviso si existe información alojada
+        if ( objetoDescargado ) {
+            this.conPartidaGuardada();
+        } else {
+            this.sinPartidaGuardada();
+        }
+    }
+
+    // Inicio el juego con una partida guardada
+    conPartidaGuardada(){
+
+        // Genero el código HTML
+        this.seccion.innerHTML = //html
+            `<div class="row justify-content-center">
+                <p id="statsAnteriores" class="fondoTexto row justify-content-center">
+                </p>
+            </div>
+
+            <div class="row justify-content-center">
+                <button id="iniciarJuego" class="botonInicio"> Iniciar Partida Nueva </button>
+                <button id="reiniciarJuego" class="botonInicio"> Reestablecer Partida Anterior </button>
+            </div>`;
+
+        // Selecciono el botón para iniciar un juego nuevo
+        const botonIniciarJuego = document.querySelector('#iniciarJuego');
+
+        // Selecciono el botón para reiniciar partida anterior
+        const botonReiniciarJuego = document.querySelector('#reiniciarJuego');
+
+        // Muestro los datos del personaje de la partida anterior
+        this.personajeLocalStorage();
+
+        // Creo el Event Listener que levante si el jugador decide iniciar un juego nuevo
+        botonIniciarJuego.addEventListener('click', this.referencia1 = () => {
+
+            // Elimino la información del local storage
+            localStorage.clear();
+
+            // Remuevo los Event Listeners
+            botonIniciarJuego.removeEventListener('click', this.referencia1);
+            botonReiniciarJuego.removeEventListener('click', this.referencia2);
+
+            // Inicio la pantalla para indicar el nombre
+            this.pantallaIndicarNombre();
+        });
+
+        // Creo el Event Listener que levante si el jugador decide reiniciar la partida anterior
+        botonReiniciarJuego.addEventListener('click', this.referencia2 = () => {
+
+            // Remuevo los Event Listeners
+            botonIniciarJuego.removeEventListener('click', this.referencia1);
+            botonReiniciarJuego.removeEventListener('click', this.referencia2);
+
+            // Inicio la función para descargar la información del local storage
+            this.descargarLocalStorage();
+        });
+
+    }
+
+    // Inicio el juego sin una partida guardada
+    sinPartidaGuardada(){
+
+        // Genero el código HTML
+        this.seccion.innerHTML = //html
+            `<div class="row justify-content-center">
+                <button id="iniciarJuego" class="botonInicio"> Iniciar Partida Nueva </button>
+            </div>`;
+
+        // Selecciono el botón para iniciar un juego nuevo
+        const botonIniciarJuego = document.querySelector('#iniciarJuego');
+
+        // Creo el Event Listener que levante si el jugador decide iniciar un juego nuevo
+        botonIniciarJuego.addEventListener('click', this.referencia1 = () => {
+
+            // Remuevo el Event Listener
+            botonIniciarJuego.removeEventListener('click', this.referencia1);
+
+            // Inicio la pantalla para indicar el nombre
+            this.pantallaIndicarNombre();
+        });
+
+    }
+    
     // Importar arrays de imagenes, razas y clases desde JSON
     async importarJSON(){
         try {
@@ -638,6 +724,8 @@ class ElJuego {
 
     // Tomo el nombre de usuario
     pantallaIndicarNombre(){
+
+        // Genero el código HTML
         this.seccion.innerHTML = //html
             `<div class="row justify-content-center text-center">
                 <p id="aviso" class="text-light">Ingrese su nombre de jugador (entre 3 y 15 caracteres)</p>
@@ -655,8 +743,6 @@ class ElJuego {
                 <button id="nombreSubmitido" class="botonInicio"> Enviar </button>
             </div>`;
 
-        this.botonIniciarJuego.removeEventListener('click', this.referencia1);
-        
         const nombreIndicado = document.querySelector('#nombreIndicado');
         const nombreRivalIndicado = document.querySelector('#nombreRivalIndicado');
         const nombresSubmitidos = document.querySelector('#nombreSubmitido');
@@ -1041,7 +1127,7 @@ class ElJuego {
             }
 
             // Subo el archivo JSON a local storage
-            this.subirJSON();
+            this.subirLocalStorage();
 
             // Genero el nuevo layout
             cajaCombate.innerHTML = // html
@@ -1109,21 +1195,64 @@ class ElJuego {
     }
 
     // Función que sube this a local storage
-    subirJSON(){
+    subirLocalStorage(){
         const objetoSubido = JSON.stringify(this);
         localStorage.setItem("juego", objetoSubido);
     }
 
-    // Función que descarga las victorias desde local storage
-    descargarJSON(){
+    // Función que descarga el personaje alojado en local storage
+    personajeLocalStorage(){
+        // Descargo la información alojada en el local storage
         const objetoDescargado = JSON.parse( localStorage.getItem( 'juego' ) );
-        if ( objetoDescargado ) {
-            const { victoriasJugador, victoriasRival } = objetoDescargado;
-            return [ victoriasJugador, victoriasRival ];
-        } else {
-            return [ 0, 0 ];
-        }
-        
+        // Tomo la información del personaje creado para el jugador
+        const { jugador } = objetoDescargado;
+        // Tomo la información requerida para crear un personaje nuevo
+        const {  nombre, raza, clase, imagen } = jugador;
+        // Creo un personaje nuevo
+        const nuevoPersonaje = new Personaje( nombre, raza, clase, imagen );
+        // Lo utilizo para generar la copia del personaje con la información del local storage
+        const jugadorDescargado = nuevoPersonaje.copiarPersonaje(jugador);
+        // Selecciono la caja en donde se van a mostrar los stats
+        const statsAnteriores = document.querySelector("#statsAnteriores");
+        // Muestro los stats
+        jugadorDescargado.mostrarStats( statsAnteriores, false );
+    }
+
+    // Función que descarga el local storage si el jugador decide reiniciar una partida guardada
+    descargarLocalStorage(){
+        // Descargo la información alojada en el local storage
+        const objetoDescargado = JSON.parse( localStorage.getItem( 'juego' ) );
+
+        // Desestructuro toda la información relevante del local storage
+        const { nombre, raza, clase, imagen, nombreRival,
+            jugador, jugadorRival, personajes,
+            victoriasJugador, victoriasRival } = objetoDescargado;
+
+        // Tomo los datos desestructurados para el juego
+        this.nombre = nombre;
+        this.raza = raza;
+        this.clase = clase;
+        this.imagen = imagen;
+        this.nombreRival = nombreRival;
+        this.jugador = jugador;
+        this.jugadorRival = jugadorRival;
+        this.personajes = personajes;
+        this.victoriasJugador = victoriasJugador;
+        this.victoriasRival = victoriasRival;
+
+        //Creo un personaje para utilizarlo en el copiado
+        const personaje = new Personaje( this.nombre, this.raza, this.clase, this.imagen );
+
+        // Copio los personajes alojados en el local storage
+        this.jugador = personaje.copiarPersonaje( this.jugador );
+        this.jugadorRival = personaje.copiarPersonaje( this.jugadorRival );
+
+        // Cambio la disposición del contenedor
+        this.seccion.classList.add('row');
+
+        // Inicio la pantalla para el combate
+        this.pantallaCombate();
+
     }
 
 }
