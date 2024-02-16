@@ -64,11 +64,6 @@ header div nav ul li a:hover {
     background-color: rgb(31, 51, 51);
 }
 
-/* Decorado ícono de ayuda/info */
-#ayuda {
-    /* sads */
-}
-
 /* Decoración de h1 */
 h1 {
     border: 3px solid darkslategray;
@@ -167,6 +162,20 @@ button:hover {
 /* Estilo de botón inicio y de seleccionar nombre */
 .botonInicio {
     width: 300px;
+}
+
+/* Decorado del botón con las instrucciones */
+#ayuda {
+    color: #bbb;
+    background-color: rgb(24, 48, 48);
+    border: 3px solid #bbb;
+
+}
+
+#ayuda:hover {
+    color: white;
+    background-color: black;
+    border: 3px solid darkslategray;
 }
 
 /* Estilo de input */
