@@ -474,6 +474,7 @@ class ElJuego {
 
         this.referencia1; // Para los Event Listeners
         this.referencia2; // Para los Event Listeners
+        this.referenciaInstrucciones; // Para los Event Listeners de las instrucciones
         this.nombre = ""; // Nombre seleccionado
         this.raza = ""; // Raza seleccionada
         this.clase = ""; // Clase seleccionada
@@ -486,6 +487,9 @@ class ElJuego {
         this.victoriasJugador = 0; // Contador de victorias del jugador
         this.victoriasRival = 0; // Contador de victorias del rival
         this.seccion = document.querySelector('#seccion'); // Selecciono la sección que se va a modificar
+        this.btnInstrucciones = document.querySelector('#ayuda'); // Selecciono el botón para mostrar la ayuda
+        this.tituloInstrucciones = ""; // Rótulo de las instrucciones que se muestran al apretar el botón de instrucciones
+        this.instrucciones = ""; // Instrucciones que se muestran al apretar el botón de instrucciones
         this.imagenes = []; // Para listar las imágenes importadas del JSON
         this.razas = []; // Para listar las razas importadas del JSON
         this.clases = []; // Para listar las clases importadas del JSON
@@ -520,6 +524,24 @@ class ElJuego {
     // Inicio el juego con una partida guardada
     conPartidaGuardada(){
 
+        // Indico título y detalle de las instrucciones
+        this.tituloInstrucciones = "Seleccionar partida";
+        this.instrucciones = `De existir una partida anterior guardada, la misma se puede recuperar seleccionando "Reestablecer Partida Anterior", sino se puede pulsar "Iniciar Partida Nueva".`;
+
+        // Creo el Event Listener que muestra el cartel con las instrucciones
+        this.btnInstrucciones.addEventListener('click', this.referenciaInstrucciones = () => {
+            Swal.fire({
+                title: this.tituloInstrucciones,
+                html: this.instrucciones,
+                icon: "info",
+                color: "#fff",
+                background: "#000009",
+                confirmButtonColor: "#2f4f4f",
+                confirmButtonText: "Entendido"
+            });
+
+        });
+
         // Genero el código HTML
         this.seccion.innerHTML = //html
             `<div class="row justify-content-center">
@@ -550,6 +572,7 @@ class ElJuego {
             // Remuevo los Event Listeners
             botonIniciarJuego.removeEventListener('click', this.referencia1);
             botonReiniciarJuego.removeEventListener('click', this.referencia2);
+            this.btnInstrucciones.removeEventListener('click', this.referenciaInstrucciones);
 
             // Inicio la pantalla para indicar el nombre
             this.pantallaIndicarNombre();
@@ -561,6 +584,7 @@ class ElJuego {
             // Remuevo los Event Listeners
             botonIniciarJuego.removeEventListener('click', this.referencia1);
             botonReiniciarJuego.removeEventListener('click', this.referencia2);
+            this.btnInstrucciones.removeEventListener('click', this.referenciaInstrucciones);
 
             // Inicio la función para descargar la información del local storage
             this.descargarLocalStorage();
@@ -570,6 +594,24 @@ class ElJuego {
 
     // Inicio el juego sin una partida guardada
     sinPartidaGuardada(){
+
+        // Indico título y detalle de las instrucciones
+        this.tituloInstrucciones = "Seleccionar partida";
+        this.instrucciones = `De existir una partida anterior guardada, la misma se puede recuperar seleccionando "Reestablecer Partida Anterior", sino se puede pulsar "Iniciar Partida Nueva".`;
+
+        // Creo el Event Listener que muestra el cartel con las instrucciones
+        this.btnInstrucciones.addEventListener('click', this.referenciaInstrucciones = () => {
+            Swal.fire({
+                title: this.tituloInstrucciones,
+                html: this.instrucciones,
+                icon: "info",
+                color: "#fff",
+                background: "#000009",
+                confirmButtonColor: "#2f4f4f",
+                confirmButtonText: "Entendido"
+            });
+
+        });
 
         // Genero el código HTML
         this.seccion.innerHTML = //html
@@ -585,6 +627,7 @@ class ElJuego {
 
             // Remuevo el Event Listener
             botonIniciarJuego.removeEventListener('click', this.referencia1);
+            this.btnInstrucciones.removeEventListener('click', this.referenciaInstrucciones);
 
             // Inicio la pantalla para indicar el nombre
             this.pantallaIndicarNombre();
@@ -725,6 +768,24 @@ class ElJuego {
     // Tomo el nombre de usuario
     pantallaIndicarNombre(){
 
+        // Indico título y detalle de las instrucciones
+        this.tituloInstrucciones = "Indicar nombre";
+        this.instrucciones = `Complete el nombre del jugador y del rival (entre 3 y 15 caracteres).`;
+
+        // Creo el Event Listener que muestra el cartel con las instrucciones
+        this.btnInstrucciones.addEventListener('click', this.referenciaInstrucciones = () => {
+            Swal.fire({
+                title: this.tituloInstrucciones,
+                html: this.instrucciones,
+                icon: "info",
+                color: "#fff",
+                background: "#000009",
+                confirmButtonColor: "#2f4f4f",
+                confirmButtonText: "Entendido"
+            });
+
+        });
+        
         // Genero el código HTML
         this.seccion.innerHTML = //html
             `<div class="row justify-content-center text-center">
@@ -743,21 +804,31 @@ class ElJuego {
                 <button id="nombreSubmitido" class="botonInicio"> Enviar </button>
             </div>`;
 
+        // Linkeo los ID de los input y del botón
         const nombreIndicado = document.querySelector('#nombreIndicado');
         const nombreRivalIndicado = document.querySelector('#nombreRivalIndicado');
         const nombresSubmitidos = document.querySelector('#nombreSubmitido');
 
+        // Controlo si al intentar submitir los nombres los mismos superan la validación
         nombresSubmitidos.addEventListener('click',  this.referencia1 = () => {
             this.nombre = nombreIndicado.value;
             this.nombre = this.nombre.replace(/\s+/g, ''); // Elimino los espacios
             this.nombreRival = nombreRivalIndicado.value;
             this.nombreRival = this.nombreRival.replace(/\s+/g, ''); // Elimino los espacios
 
+            // Si pasa la validación avanzo a la siguiente pantalla
             if ( this.validarNombre( this.nombre ) && this.validarNombre( this.nombreRival ) ) {
+
+                //Remuevo los Event Listeners
                 nombresSubmitidos.removeEventListener('click', this.referencia1);
+                this.btnInstrucciones.removeEventListener('click', this.referenciaInstrucciones);
+
+                // Inicio la pantalla de selección de raza
                 this.pantallaSeleccionRaza();
 
             } else {
+
+                // Si no pasa la validación destaco el comentario del input que no está cumpliendo con el mismo
                 if ( ! this.validarNombre( this.nombre ) ) {
                     let aviso = document.querySelector('#aviso');
 
@@ -803,10 +874,38 @@ class ElJuego {
 
     // Función que levanta la raza seleccionada
     pantallaSeleccionRaza(){
+
+        // Indico título y detalle de las instrucciones
+        this.tituloInstrucciones = "Seleccionar raza";
+        this.instrucciones = `Elija entre las 6 razas:<br>
+        - Humano ("h"): enfocado en inteligencia y constitución que implican maná y vida.<br>
+        - Elfo ("e"): enfocado en agilidad, destreza e inteligencia que implican velocidad, evasión, precisión y maná.<br>
+        - Elfo Oscuro ("eo"): enfocado en agilidad, destreza e inteligencia que implican velocidad, evasión, precisión y maná.<br>
+        - Enano ("en"): enfocado en constitución, fuerza y destreza que implican vida, ataque, precisión y evasión.<br>
+        - Gnomo ("g"): enfocado en inteligencia, agilidad y destreza que implican maná, velocidad, evasión y precisión.<br>
+        - Orco ("o"): enfocado en fuerza y constitución que implican ataque y vida.`;
+
+        // Creo el Event Listener que muestra el cartel con las instrucciones
+        this.btnInstrucciones.addEventListener('click', this.referenciaInstrucciones = () => {
+            Swal.fire({
+                title: this.tituloInstrucciones,
+                html: this.instrucciones,
+                icon: "info",
+                color: "#fff",
+                background: "#000009",
+                confirmButtonColor: "#2f4f4f",
+                confirmButtonText: "Entendido"
+            });
+
+        });
+
+        // Genero el código HTML
         this.seccion.innerHTML = //html
             `<div id="cajaRaza" class="row justify-content-center m-4"></div>`;
 
+        // Selecciono el contenedor para el listado de razas
         const divRaza = document.querySelector('#cajaRaza');
+        // Genero el arreglo con imágenes aleatorias de las distintas razas
         const arregloRaza = this.grupoImagenesRazas();
 
         // Despliego en una caja el listado de razas
@@ -818,6 +917,7 @@ class ElJuego {
                 </div>`;
         })
     
+        // Selecciono las imágenes de las razas
         const imgRazas = document.querySelectorAll('.imgPersonaje');
     
         // Levanto la raza que se selecciona
@@ -829,28 +929,59 @@ class ElJuego {
 
     // Event Listener que reconoce la raza seleccionada
     listenerRaza( evento ){
+
+        // Identifico el ID de la raza seleccionada
         const id = evento.target.id;
+        // Lo comparo con las imágenes para identificarla
         const razaSeleccionada = this.imagenes.filter( item => item.id === id)[0];
-        
-        // Tomo la raza
+        // Tomo la raza de la imagen seleccionada
         this.raza = razaSeleccionada.raza;
 
+        // Selecciono las imágenes de las razas
         const imgRazas = document.querySelectorAll('.imgPersonaje');
     
+        // Remuevo los Event Listeners
         imgRazas.forEach( imgRaza => {
             imgRaza.removeEventListener('click', this.referencia1);
         });
+        this.btnInstrucciones.removeEventListener('click', this.referenciaInstrucciones);
 
+        // Inicio la pantalla de selección de clase
         this.pantallaSeleccionClase();
 
     }
 
     // Función que levanta la clase seleccionada
     pantallaSeleccionClase(){
+        
+        // Indico título y detalle de las instrucciones
+        this.tituloInstrucciones = "Seleccionar clase";
+        this.instrucciones = `Elija entre las tres clases de luchadores:<br>
+        - Guerrero ("g"): enfocado en destreza, fuerza y constitución que implican precisión, ataque, vida y evasión.<br>
+        - Bárbaro ("b"): enfocado en fuerza y constitución que implican ataque y vida.<br>
+        - Rogue ("r"): enfocado en destreza y agilidad que implican precisión, evasión y velocidad.`;
+
+        // Creo el Event Listener que muestra el cartel con las instrucciones
+        this.btnInstrucciones.addEventListener('click', this.referenciaInstrucciones = () => {
+            Swal.fire({
+                title: this.tituloInstrucciones,
+                html: this.instrucciones,
+                icon: "info",
+                color: "#fff",
+                background: "#000009",
+                confirmButtonColor: "#2f4f4f",
+                confirmButtonText: "Entendido"
+            });
+
+        });
+
+        // Genero el código HTML
         this.seccion.innerHTML = //html
             `<div id="cajaClase" class="row justify-content-center m-4"></div>`;
 
+        // Selecciono el contenedor para el listado de clases
         const divClase = document.querySelector('#cajaClase');
+        // Genero el arreglo con imágenes aleatorias de las distintas clases
         const arregloClase = this.grupoImagenesClases( this.raza );
 
         // Despliego en una caja el listado de clases
@@ -862,6 +993,7 @@ class ElJuego {
                 </div>`;
         });
     
+        // Selecciono las imágenes de las clases
         const imgClases = document.querySelectorAll('.imgPersonaje');
     
         // Levanto la clase que se selecciona
@@ -873,27 +1005,51 @@ class ElJuego {
 
     // Event Listener que reconoce la clase seleccionada
     listenerClase( evento ){
+
+        // Identifico el ID de la clase seleccionada
         const id = evento.target.id;
+        // Lo comparo con las imágenes para identificarla
         const claseSeleccionada = this.imagenes.filter( item => item.id === id)[0];
-        
-        // Tomo la clase
+        // Tomo la clase de la imagen seleccionada
         this.clase = claseSeleccionada.clase;
     
+        // Selecciono las imágenes de las clases
         const imgClases = document.querySelectorAll('.imgPersonaje');
     
+        // Remuevo los Event Listeners
         imgClases.forEach( imgClase => {
             imgClase.removeEventListener('click', this.referencia1);
         });      
+        this.btnInstrucciones.removeEventListener('click', this.referenciaInstrucciones);
 
         // Fijo la imagen seleccionada
         this.imagen = this.imagenes.filter( item => item.id === id)[0].id;
 
+        // Inicio la pantalla de selección de personaje
         this.pantallaSeleccionPoolPersonaje();
 
     }
 
     // Función que corre las funciones para levantar el personaje seleccionado
     pantallaSeleccionPoolPersonaje(){
+
+        // Indico título y detalle de las instrucciones
+        this.tituloInstrucciones = "Seleccionar personaje";
+        this.instrucciones = `Analice los 9 personajes creados, seleccionándolos y comparando los atributos haciendo que figuren a la izquierda o derecha clickeando en los switches de off y on. Finalizado el análisis puede seleccionar uno.`;
+
+        // Creo el Event Listener que muestra el cartel con las instrucciones
+        this.btnInstrucciones.addEventListener('click', this.referenciaInstrucciones = () => {
+            Swal.fire({
+                title: this.tituloInstrucciones,
+                html: this.instrucciones,
+                icon: "info",
+                color: "#fff",
+                background: "#000009",
+                confirmButtonColor: "#2f4f4f",
+                confirmButtonText: "Entendido"
+            });
+
+        });
 
         // Creo al personaje del rival
         this.crearJugadorRival();
@@ -954,6 +1110,7 @@ class ElJuego {
                 </div>`
         });
 
+        // Selecciono las imágenes de los personajes
         const imgPool = document.querySelectorAll('.imgPersonaje');
         
         // Event Listener que reconoce el personaje seleccionado para análisis
@@ -1036,15 +1193,17 @@ class ElJuego {
             // Defino el personaje escogido por el jugador
             this.jugador = personajeEnCaja1;
 
+            // Remuevo los Event Listeners
             seleccionarPersonaje1.removeEventListener("click", refSel1);
             seleccionarPersonaje2.removeEventListener("click", refSel2);
             switch1.removeEventListener("click", refSwitch1);
             switch2.removeEventListener("click", refSwitch2);
+            this.btnInstrucciones.removeEventListener('click', this.referenciaInstrucciones);
             imgPool.forEach( imgEnPool => {
                 imgEnPool.removeEventListener('click', this.referencia1);
             })
 
-            // Inicia la función siguiente
+            // Inicia la pantalla de combate
             this.pantallaCombate();
 
         })
@@ -1054,15 +1213,17 @@ class ElJuego {
             // Defino el personaje escogido por el jugador
             this.jugador = personajeEnCaja2;
 
+            // Remuevo los Event Listeners
             seleccionarPersonaje1.removeEventListener("click", refSel1);
             seleccionarPersonaje2.removeEventListener("click", refSel2);
             switch1.removeEventListener("click", refSwitch1);
             switch2.removeEventListener("click", refSwitch2);
+            this.btnInstrucciones.removeEventListener('click', this.referenciaInstrucciones);
             imgPool.forEach( imgEnPool => {
                 imgEnPool.removeEventListener('click', this.referencia1);
             })
 
-            // Inicia la función siguiente
+            // Inicia la pantalla de combate
             this.pantallaCombate();
 
         })
@@ -1071,6 +1232,24 @@ class ElJuego {
 
     // Función que presenta la pantalla de combate y da lugar a iniciarlo
     pantallaCombate(){
+
+        // Indico título y detalle de las instrucciones
+        this.tituloInstrucciones = "Iniciar combate";
+        this.instrucciones = `De inicio el combate presionando el botón.`;
+
+        // Creo el Event Listener que muestra el cartel con las instrucciones
+        this.btnInstrucciones.addEventListener('click', this.referenciaInstrucciones = () => {
+            Swal.fire({
+                title: this.tituloInstrucciones,
+                html: this.instrucciones,
+                icon: "info",
+                color: "#fff",
+                background: "#000009",
+                confirmButtonColor: "#2f4f4f",
+                confirmButtonText: "Entendido"
+            });
+
+        });
 
         // Reseteo el mensaje
         this.mensaje = "";
@@ -1126,7 +1305,7 @@ class ElJuego {
                 this.victoriasJugador+= 1;
             }
 
-            // Subo el archivo JSON a local storage
+            // Subo la información en JSON a local storage
             this.subirLocalStorage();
 
             // Genero el nuevo layout
@@ -1139,7 +1318,9 @@ class ElJuego {
                     <button id="cambiarRival" class="botonInicio"> Cambiar Rival </button>
                 </div>`;
             
+            // Remuevo los Event Listeners
             iniciarCombate.removeEventListener("click", this.referencia1);
+            this.btnInstrucciones.removeEventListener('click', this.referenciaInstrucciones);
 
             // Muestro las victorias de cada jugador
             victorias1.innerHTML = `Victorias: ${this.victoriasJugador}`;
@@ -1159,6 +1340,24 @@ class ElJuego {
     // Función que presenta la opción de reiniciar el combate o cambiar el rival
     continuar(){
 
+        // Indico título y detalle de las instrucciones
+        this.tituloInstrucciones = "Volver a jugar";
+        this.instrucciones = `Se puede repetir el mismo combate o cambiar el rival..`;
+
+        // Creo el Event Listener que muestra el cartel con las instrucciones
+        this.btnInstrucciones.addEventListener('click', this.referenciaInstrucciones = () => {
+            Swal.fire({
+                title: this.tituloInstrucciones,
+                html: this.instrucciones,
+                icon: "info",
+                color: "#fff",
+                background: "#000009",
+                confirmButtonColor: "#2f4f4f",
+                confirmButtonText: "Entendido"
+            });
+
+        });
+
         // Identifico el ID para reiniciar el combate
         const reiniciarCombate = document.querySelector("#reiniciarCombate");
 
@@ -1171,6 +1370,7 @@ class ElJuego {
             // Remuevo los event listeners
             reiniciarCombate.removeEventListener("click", this.referencia1);
             cambiarRival.removeEventListener("click", this.referencia2);
+            this.btnInstrucciones.removeEventListener('click', this.referenciaInstrucciones);
 
             // Vuelvo a iniciar el combate
             this.pantallaCombate();
@@ -1183,6 +1383,7 @@ class ElJuego {
             // Remuevo los event listeners
             reiniciarCombate.removeEventListener("click", this.referencia1);
             cambiarRival.removeEventListener("click", this.referencia2);
+            this.btnInstrucciones.removeEventListener('click', this.referenciaInstrucciones);
 
             // Creo al nuevo rival
             this.crearJugadorRival();
