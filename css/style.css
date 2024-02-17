@@ -227,6 +227,26 @@ input[type=text]:focus {
     filter: drop-shadow(0 0 1rem orange);
 }
 
+/* Borde para la caja en la selección 1 */
+.cajaSeleccion1 {
+    border: 3px solid blue;
+}
+
+/* Borde para la caja en la selección 2 */
+.cajaSeleccion2 {
+    border: 3px solid red;
+}
+
+/* Borde para la foto en la selección 1 */
+.seleccionado1 {
+    border: 2px solid blue;
+}
+
+/* Borde para la foto en la selección 2 */
+.seleccionado2 {
+    outline: 2px solid red;
+}
+
 /* Se achica el tamaño de la imagen por debajo de los 600px */
 @media (max-width: 600px) {
     .portada {

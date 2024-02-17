@@ -1035,7 +1035,10 @@ class ElJuego {
 
         // Indico título y detalle de las instrucciones
         this.tituloInstrucciones = "Seleccionar personaje";
-        this.instrucciones = `Analice los 9 personajes creados, seleccionándolos y comparando los atributos haciendo que figuren a la izquierda o derecha clickeando en los switches de off y on. Finalizado el análisis puede seleccionar uno.`;
+        this.instrucciones = `Analice los 9 personajes creados, seleccionándolos y comparando 
+        los atributos haciendo que figuren a la izquierda o derecha clickeando en los 
+        switches de off y on. Con borde amarillo aparecen los que tienen el máximo en 
+        Vida, Precisión, Evasión o Velocidad. Finalizado el análisis puede seleccionar uno.`;
 
         // Creo el Event Listener que muestra el cartel con las instrucciones
         this.btnInstrucciones.addEventListener('click', this.referenciaInstrucciones = () => {
@@ -1061,7 +1064,7 @@ class ElJuego {
         this.seccion.innerHTML = //html
             `<div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 d-flex flex-column align-items-center">
                 <img id="switch1" class="switch" src="../img/switch-on.png" alt="activo">
-                <p id="statsPersonaje1" class="fondoTexto descripcionPersonaje">
+                <p id="statsPersonaje1" class="fondoTexto descripcionPersonaje cajaSeleccion1">
                 </p>
                 <button id="seleccionarPersonaje1"> Seleccionar personaje </button>
             </div>
@@ -1072,7 +1075,7 @@ class ElJuego {
 
             <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 d-flex flex-column align-items-center">
                 <img id="switch2" class="switch" src="../img/switch-off.png" alt="inactivo">
-                <p id="statsPersonaje2" class="fondoTexto descripcionPersonaje">
+                <p id="statsPersonaje2" class="fondoTexto descripcionPersonaje cajaSeleccion2">
                 </p>
                 <button id="seleccionarPersonaje2"> Seleccionar personaje </button>
             </div>`;
@@ -1112,6 +1115,10 @@ class ElJuego {
 
         // Selecciono las imágenes de los personajes
         const imgPool = document.querySelectorAll('.imgPersonaje');
+
+        // Marco imágenes seleccionadas
+        imgPool[0].classList.add('seleccionado1');
+        imgPool[1].classList.add('seleccionado2');
         
         // Event Listener que reconoce el personaje seleccionado para análisis
         imgPool.forEach( imgEnPool => {
@@ -1120,15 +1127,33 @@ class ElJuego {
                 const id = evento.target.id;
 
                 // Busco el ID en el arreglo
-                const personajePreSeleccionado = this.personajes.arreglo.filter( item => item.indice === parseInt(id))[0];
+                const personajePreSeleccionado = this.personajes.arreglo.filter( item => item.indice === parseInt(id) )[0];
 
                 // Muestro los stats del personaje en la caja correspondiente
                 if ( switch1.alt === "activo" ) {
+
+                    // Elimino el borde del anterior seleccionado
+                    imgPool[(personajeEnCaja1.indice)-1].classList.remove('seleccionado1');
+
+                    // Muestro los stats del nuevo seleccionado
                     personajePreSeleccionado.mostrarStats( statsPersonaje1, true );
                     personajeEnCaja1 = personajePreSeleccionado;
+
+                    // Agrego el borde al nuevo seleccionado
+                    imgPool[(personajeEnCaja1.indice)-1].classList.add('seleccionado1');
+
                 } else {
+
+                    // Elimino el borde del anterior seleccionado
+                    imgPool[(personajeEnCaja2.indice)-1].classList.remove('seleccionado2');
+
+                    // Muestro los stats del nuevo seleccionado
                     personajePreSeleccionado.mostrarStats( statsPersonaje2, true );
                     personajeEnCaja2 = personajePreSeleccionado;
+
+                    // Agrego el borde al nuevo seleccionado
+                    imgPool[(personajeEnCaja2.indice)-1].classList.add('seleccionado2');
+                    
                 }
             })
         })
