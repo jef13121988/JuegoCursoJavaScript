@@ -37,7 +37,7 @@ class Personaje {
     
     /* --------------------------------- Métodos -------------------------------- */
 
-    // Funciones para la utilización de la distribución estándar
+    // Función para la utilización de la distribución estándar
     boxMullerTransform() {
         const u1 = Math.random();
         const u2 = Math.random();
@@ -151,8 +151,11 @@ class Personaje {
 
     // Realiza el ataque contra un objetivo
     atacar( objetivo ){
+        // Chequeo si el ataque fue preciso
         const controlPrecision = this.precisionAtaque( objetivo );
+        // Creo la variable que va a contener el mensaje
         let mensaje = "";
+        // Si el ataque tuvo éxito, bajo la vida del rival
         if ( controlPrecision ) {
             objetivo.vida = objetivo.vida - this.ataque;
             if ( objetivo.vida <= 0 ) {
@@ -170,9 +173,12 @@ class Personaje {
 
     // Define si el ataque va a impactar
     precisionAtaque( objetivo ){
+        // Calculo la precisión
         const preciso = this.precisionArma*this.precision/objetivo.evasion;
+        // Sorteo la probabilidad
         const sorteo = Math.random();
-        return ( preciso >= sorteo ) ? true: false;
+        // Comparo para saber si el ataque fue exitoso
+        return ( preciso >= sorteo ) ? true : false;
 
     }
 
